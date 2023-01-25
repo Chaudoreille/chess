@@ -1,0 +1,46 @@
+.black-bishop {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/b4/Chess_Maurizio_Monge_Fantasy_bb.svg")
+}
+.black-king {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/d/dd/Chess_Maurizio_Monge_Fantasy_bk.svg")
+}
+
+.black-knight {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/2f/Chess_Maurizio_Monge_Fantasy_bn.svg")
+}
+
+.black-pawn {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/e1/Chess_Maurizio_Monge_Fantasy_bp.svg")
+}
+
+.black-queen {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/b7/Chess_Maurizio_Monge_Fantasy_bq.svg")
+}
+
+.black-rook {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/79/Chess_Maurizio_Monge_Fantasy_br.svg")
+}
+
+.white-bishop {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/8/80/Chess_Maurizio_Monge_Fantasy_wb.svg")
+}
+
+.white-king {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/57/Chess_Maurizio_Monge_Fantasy_wk.svg")
+}
+
+.white-knight {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/99/Chess_Maurizio_Monge_Fantasy_wn.svg")
+}
+
+.white-pawn {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/58/Chess_Maurizio_Monge_Fantasy_wp.svg")
+}
+
+.white-queen {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/3/3b/Chess_Maurizio_Monge_Fantasy_wq.svg")
+}
+
+.white-rook {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/29/Chess_Maurizio_Monge_Fantasy_wr.svg")
+}
