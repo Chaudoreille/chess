@@ -1,0 +1,17 @@
+#chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+}
+
+#chess-board .square {
+    aspect-ratio: 1;
+}
+
+#chess-board .square.dark {
+    background-color: brown;
+}
+
+#chess-board .square.light {
+    background-color: white;
+}

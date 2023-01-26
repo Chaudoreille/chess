@@ -1,3 +1,11 @@
+.chess-piece {
+    background-size: contain;
+    background-position-x: 0.5vw;
+    width: auto;
+    height: 100%;
+
+}
+
 .black-bishop {
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/b4/Chess_Maurizio_Monge_Fantasy_bb.svg")
 }
