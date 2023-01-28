@@ -34,15 +34,11 @@ class DisplayChessBoard {
             let evenRow = Math.floor(i / 8) % 2
             let squareColor = (i % 2 === evenRow) ? "light" : "dark"
             square.className = `square ${squareColor}`
-
-            let chessPiece = document.createElement("div")
-            chessPiece.className = "chess-piece hidden"
-            square.appendChild(chessPiece)
-
             this.dom.board.appendChild(square)
             this.squares.push(null)
         }
-        this.dom.squares = this.dom.board.getElementsByClassName("square")
+        this.dom.squares = this.dom.board.querySelectorAll(".square")
+        this.selectedPiece = false
     }
 
     setupPieces() {
@@ -76,17 +72,43 @@ class DisplayChessBoard {
         return this
     }
 
+    addEvents() {
+        this.dom.squares.forEach((square) => {
+            square.addEventListener("click", this.movePiece)
+        })
+        return this
+    }
+
+    movePiece = event => {
+        const square = event.currentTarget
+        const piece = square.querySelector(".chess-piece")
+
+        if (this.selectedPiece) {
+            square.appendChild(this.selectedPiece)
+            if (piece) piece.remove()
+            this.selectedPiece = false
+            square.classList.add("highlight")
+        } else {
+            this.dom.squares.forEach((square) => square.classList.remove("highlight"))
+            if (piece) {
+                square.classList.add("highlight");
+                this.selectedPiece = piece
+            }
+        }
+    }
+
     render() {
         this.squares.forEach((square, i) => {
-            let chessPiece = this.dom.squares[i].getElementsByClassName("chess-piece")[0]
+            let chessPiece = this.dom.squares[i].querySelector(".chess-piece")
             if (square) {
-                chessPiece.className = "chess-piece visible " + square
-            } else {
-                chessPiece.className = "chess-piece hidden"
+                let chessPiece = document.createElement("div")
+                chessPiece.className = "chess-piece " + square
+                this.dom.squares[i].appendChild(chessPiece)
             }
         })
         return this
     }
+
 }
 
 export default DisplayChessBoard
