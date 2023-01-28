@@ -1,0 +1,11 @@
+:root {
+    --dark-background: #00072d;
+    --dark-text: #4f6d7a;
+    --middle-ground: #4A6FA5;
+    --light-background: #C0D6DF;
+    --light-text: #dbe9ee;
+    --light-square: #E9EDDE;
+    --light-square-highlight: #BDA689;
+    --dark-square: #6D3D14;
+    --dark-square-highlight: #4C2B0E;
+}

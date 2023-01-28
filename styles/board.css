@@ -2,6 +2,9 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
+    min-width: 500px;
+    width: 50%;
+    padding: 40px;
 }
 
 #chess-board .square {
@@ -9,9 +12,16 @@
 }
 
 #chess-board .square.dark {
-    background-color: brown;
+    background-color: var(--dark-square);
 }
 
+#chess-board .square.dark.highlight {
+    background-color:var(--dark-square-highlight)
+}
 #chess-board .square.light {
-    background-color: white;
+    background-color: var(--light-square);
+}
+
+#chess-board .square.light.highlight {
+    background-color:var(--light-square-highlight)
 }

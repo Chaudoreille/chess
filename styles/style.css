@@ -1,2 +1,44 @@
+@import url(reset.css);
+@import url(theme.css);
 @import url(board.css);
 @import url(pieces.css);
+
+body{
+    background-color: var(--light-background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header {
+    min-height: 100px;
+    width: 100%;
+    background-color: var(--dark-background);
+}
+
+#section-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+#taken-pieces {
+    height: 100%;
+    background-color: var(--dark-background);
+    flex-grow: 1;
+}
+
+#ui-container {
+    height: 100%;
+    background-color: var(--dark-background);
+    flex-grow: 1;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    height:100px;
+    background-color: var(--dark-background);
+    width: 100%;
+}
