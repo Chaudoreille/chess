@@ -19,7 +19,7 @@ class ChessPiece {
      *      - false otherwise
      */
     move(square) {
-        if (!legalMoves.find((move) => move.name === square.name)) {
+        if (!this.legalMoves.find((move) => move.name === square.name)) {
             throw(new Error("Illegal Move"))
         }
 

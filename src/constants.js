@@ -1,2 +1,2 @@
-export const WHITE = false
-export const BLACK = true
+const WHITE = false
+const BLACK = true

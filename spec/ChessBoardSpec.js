@@ -15,9 +15,9 @@ describe('ChessBoard', function() {
             const chess = new ChessBoard()
             expect(chess.blackPieces).toEqual([])
         });
-        it('should create a turn property set to false', () => {
+        it('should create a turn property set to WHITE', () => {
             const chess = new ChessBoard()
-            expect(chess.turn).toBe(false)
+            expect(chess.turn).toEqual(WHITE)
         });
         it('should create a board property set to a null-filled 8*8 matrix', () => {
             const chess = new ChessBoard()

@@ -3,7 +3,7 @@ class ChessBoard {
         this.kings = []
         this.blackPieces = []
         this.whitePieces = []
-        this.turn = 0
+        this.turn = WHITE
         this.collisions = initCollisionBoard()
     }
 
