@@ -1,11 +1,5 @@
 class Knight {
-    legalMoves() {
-        return []
-    }
-
-    move(square) {
-        this.pos = square
-        return this
+    updateLegalMoves() {
     }
 
     targets(ChessPiece) {

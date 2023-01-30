@@ -3,13 +3,8 @@ class Pawn {
         super()
         this.direction = direction
     }
-    legalMoves() {
-        return []
-    }
 
-    move(square) {
-        this.pos = square
-        return this
+    updateLegalMoves() {
     }
 
     targets(ChessPiece) {
