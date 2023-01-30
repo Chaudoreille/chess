@@ -1,9 +1,4 @@
-class ChessPiece {
-    constructor(chessBoard, square) {
-        this.pos = square
-        this.board = chessBoard
-    }
-
+class King {
     legalMoves() {
         return []
     }
@@ -14,6 +9,14 @@ class ChessPiece {
     }
 
     targets(ChessPiece) {
+        return false
+    }
+
+    isCheck() {
+        return false
+    }
+
+    isCheckmate() {
         return false
     }
 }

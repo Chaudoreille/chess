@@ -1,9 +1,8 @@
-class ChessPiece {
-    constructor(chessBoard, square) {
-        this.pos = square
-        this.board = chessBoard
+class Pawn {
+    constructor(direction) {
+        super()
+        this.direction = direction
     }
-
     legalMoves() {
         return []
     }
