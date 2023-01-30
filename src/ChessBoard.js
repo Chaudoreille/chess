@@ -1,8 +1,9 @@
 class ChessBoard {
     constructor() {
+        this.kings = []
         this.blackPieces = []
         this.whitePieces = []
-        this.turn = false
+        this.turn = 0
         this.collisions = initCollisionBoard()
     }
 
@@ -11,9 +12,10 @@ class ChessBoard {
     }
 }
 
-/*
- * creates a null - filled 8 * 8 matrix 
- */ 
+/**
+ *
+ * @returns a null - filled 8 * 8 matrix
+ */
 function initCollisionBoard() {
     const board = []
 
