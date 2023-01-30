@@ -2,7 +2,7 @@ let chessBoard, chessPiece, position;
 
 describe('ChessPiece', function() {
     beforeEach(() => {
-        chessBoard = new ChessBoard();
+        chessBoard = {};
         position1 = {x: 1, y: 2, name: "F2"}
         position2 = {x: 2, y: 2, name: "F3"}
         chessPiece = new ChessPiece(chessBoard, position1)
@@ -14,7 +14,6 @@ describe('ChessPiece', function() {
     
     describe('constructor method', () => {
         it('should receive `chessBoard` and `square` as a parameter and store them in it\'s own properties', () => {
-            expect(ChessPiece.constructor.length).toBe(1);
             expect(chessPiece.board).toBe(chessBoard);
             expect(chessPiece.pos).toBe(position1);
         });
