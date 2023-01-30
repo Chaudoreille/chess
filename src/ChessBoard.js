@@ -1,4 +1,4 @@
-class chessBoard {
+class ChessBoard {
     constructor() {
         this.blackPieces = []
         this.whitePieces = []

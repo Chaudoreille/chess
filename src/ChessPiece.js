@@ -1,4 +1,4 @@
-class chessPiece {
+class ChessPiece {
     constructor() {
 
     }
@@ -10,4 +10,5 @@ class chessPiece {
     move(square) {
         
     }
+
 }
