@@ -1,4 +1,4 @@
-import DisplayChessBoard from "./chessBoard.js"
+import DisplayChessBoard from "./DisplayChessBoard.js"
 
 const board = new DisplayChessBoard()
 board.setupPieces()

@@ -1,3 +1,5 @@
+const H_CHAR_CODE = 73
+
 class Square {
     constructor(x, y) {
         if (x < 0 || x >= 8 || y < 0 || y >= 8) {
@@ -5,10 +7,7 @@ class Square {
         }
         this.x = x;
         this.y = y;
+        this.name = `${String.fromCharCode(H_CHAR_CODE - y)}${x+1}`
+        Object.freeze(this)
     }
-
-    squareName() {
-        let charCodeForG = 72
-        return `${String.fromCharCode(charCodeForG - y)}${x+1}`
-    }    
 }
