@@ -21,9 +21,9 @@ describe('ChessBoard', function() {
         });
         it('should create a board property set to a null-filled 8*8 matrix', () => {
             const chess = new ChessBoard()
-            expect(chess.board.length).toEqual(8)
+            expect(chess.collisions.length).toEqual(8)
 
-            chess.board.forEach(column => {
+            chess.collisions.forEach(column => {
                 expect(column.length).toEqual(8)
                 column.forEach((square) => expect(square).toBe(null))
             })

@@ -12,4 +12,8 @@ class ChessPiece {
         this.pos = square
         return this
     }
+
+    targets(ChessPiece) {
+        return false
+    }
 }
