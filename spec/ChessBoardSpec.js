@@ -31,4 +31,24 @@ describe('ChessBoard', function() {
             })
         });
     });
+    describe('initCollisionBoard utility function', () => {
+        it('should be declared', () => {
+            expect(typeof initCollisionBoard).toEqual("function")
+        });
+        it('should return a 8*8 grid', () => {
+            let board = initCollisionBoard()
+            expect(board.length).toEqual(8)
+            board.forEach(column => {
+                expect(column.length).toEqual(8)
+            })
+        });
+        it('should initialize all cells to null', () => {
+            let board = initCollisionBoard()
+            board.forEach(column => {
+                column.forEach(cell => {
+                    expect(cell).toEqual(null)
+                })
+            })
+        });
+    });
 });  
