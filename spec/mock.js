@@ -38,11 +38,11 @@ const mockChessBoard = () => {
 }
 
 /**
- *
- * @param {Integer} x
- * @param {Integer} y
+ * ## mocks a square object
+ * @param {Number} x - should be an integer
+ * @param {Number} y - should be an integer
  * @param {String} name the square name (A1 for <0,0> to H8 for <7,7>)
- * @returns a Square mockup
+ * @returns {Object} a Square mockup
  */
 const mockSquare = (x, y, name) => {
     return {
