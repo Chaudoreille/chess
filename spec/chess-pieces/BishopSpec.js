@@ -46,7 +46,7 @@ describe('Bishop', function() {
             bishop.updateLegalMoves()
             let legalSquares = []
 
-            for (let i = 0; i < 8; i++) {
+            for (let i = 1; i < 8; i++) {
                 pushIfInBounds(legalSquares, mockSquare(bishop.pos.x+i, bishop.pos.y+i))
                 pushIfInBounds(legalSquares, mockSquare(bishop.pos.x+i, bishop.pos.y-i))
                 pushIfInBounds(legalSquares, mockSquare(bishop.pos.x-i, bishop.pos.y-i))

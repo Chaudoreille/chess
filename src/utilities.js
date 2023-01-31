@@ -5,9 +5,23 @@ function cmpPositions(a, b) {
     return a.x - b.x
 }
 
+
+/**
+ * ## checks if a x,y position is within board bounds
+ * @param {Number} x 
+ * @param {Number} y 
+ * @returns 
+ */
+function inBounds(x, y) {
+    if (x < 0 || x > 7 ||
+        y < 0 || y > 7) {
+        return false
+    }
+    return true
+}
+
 function pushIfInBounds(container, position) {
-    if (position.x >= 0 && position.x < 8 && 
-        position.y >= 0 && position.y < 8) {
+    if (inBounds(position.x, position.y)) {
         container.push(position)
     }
 }
