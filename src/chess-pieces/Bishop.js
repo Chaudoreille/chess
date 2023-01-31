@@ -1,4 +1,4 @@
-class Bishop {
+class Bishop extends ChessPiece {
     updateLegalMoves() {
     }
 

@@ -1,4 +1,4 @@
-class Pawn {
+class Pawn extends ChessPiece {
     constructor(direction) {
         super()
         this.direction = direction

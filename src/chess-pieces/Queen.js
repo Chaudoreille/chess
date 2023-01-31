@@ -1,4 +1,4 @@
-class Queen {
+class Queen extends ChessPiece {
     updateLegalMoves() {
     }
 
