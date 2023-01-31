@@ -1,8 +1,13 @@
 class ChessBoard {
     constructor() {
-        this.kings = []
-        this.blackPieces = []
-        this.whitePieces = []
+        this.kings = {
+            [WHITE]: null,
+            [BLACK]: null,
+        }
+        this.pieces = {
+            [WHITE]: [],
+            [BLACK]: [],
+        }
         this.turn = WHITE
         this.collisions = initCollisionBoard()
     }
