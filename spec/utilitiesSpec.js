@@ -64,4 +64,26 @@ describe('utility', function() {
         });
     });
 
+    describe('inBounds function', () => {
+        let container, position
+
+        beforeEach(() => {
+            container = []
+        });
+        it('should be declared', () => {
+            expect(typeof inBounds).toBe('function');
+        });
+        it('should return false when position is out of bounds', () => {
+            expect(inBounds(-1, 0)).toEqual(false)
+            expect(inBounds(8, 0)).toEqual(false)
+            expect(inBounds(0, -1)).toEqual(false)
+            expect(inBounds(0, 8)).toEqual(false)
+        });
+        it('should return true when position is within bounds', () => {
+            expect(inBounds(0, 7)).toEqual(true)
+            expect(inBounds(7, 0)).toEqual(true)
+            expect(inBounds(2, 6)).toEqual(true)
+        });
+    });
+
 });  
