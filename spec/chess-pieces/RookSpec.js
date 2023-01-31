@@ -30,8 +30,10 @@ describe('Rook', function() {
         it("should be declared", function() {
             expect(typeof rook.targets).toEqual("function")
         });
-        it("should return false", function() {
-            expect(rook.targets(foes[0])).toEqual(false)
+        it("should return true when chessPiece's position is in bishop's legal moves", function() {
+        });
+
+        it("should return false when chessPiece's position is not in bishop's legal moves", function() {
         });
     });
 
