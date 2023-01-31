@@ -53,14 +53,14 @@ class ChessPiece {
      *     - true if movement should continue
      *     - false if movement should stop
      */
-    pushMoveIfLegal(x, y) {
-        if (this.board[x][y] instanceof ChessPiece) {
-            if (this.board[x][y].color !== this.color) {
-                legalMoves.push(new Square(x, y))
+    legalBoardSpace(x, y) {
+        if (this.board.collisions[x][y] instanceof ChessPiece) {
+            if (this.board.collisions[x][y].color !== this.color) {
+                this.legalMoves.push(new Square(x, y))
             }
             return false
         }
-        legalMoves.push(new position(x, y))
+        this.legalMoves.push(new Square(x, y))
         return true
     }
 }
