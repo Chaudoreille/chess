@@ -7,13 +7,15 @@ describe('ChessBoard', function() {
     });
     
     describe('constructor method', () => {
-        it('should create a whitePieces property, initialized to an empty array', () => {
+        it('should create a pieces object property containing an array for each color', () => {
             const chess = new ChessBoard()
-            expect(chess.whitePieces).toEqual([])
+            expect(chess.pieces[WHITE]).toEqual([])
+            expect(chess.pieces[BLACK]).toEqual([])
         });
-        it('should create a blackPieces property, initialized to an empty array', () => {
+        it('should create a kings object property, with each color set to null', () => {
             const chess = new ChessBoard()
-            expect(chess.blackPieces).toEqual([])
+            expect(chess.kings[WHITE]).toEqual(null)
+            expect(chess.kings[BLACK]).toEqual(null)
         });
         it('should create a turn property set to WHITE', () => {
             const chess = new ChessBoard()
