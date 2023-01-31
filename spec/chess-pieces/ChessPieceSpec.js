@@ -1,13 +1,13 @@
-let chessBoard, chessPiece, friend, foe
-const  position = mockSquare(1, 2, "B3")
-const positionFriend = mockSquare(0, 2, "A3")
-const positionFoe = mockSquare(1, 3, "B4")
-const positionFree = mockSquare(7,7,"H8")
-const color = BLACK
-const opposingColor = WHITE
-
 describe('ChessPiece', function() {
-    beforeEach(() => {
+    let chessBoard, chessPiece, friend, foe
+    const  position = mockSquare(1, 2, "B3")
+    const positionFriend = mockSquare(0, 2, "A3")
+    const positionFoe = mockSquare(1, 3, "B4")
+    const positionFree = mockSquare(7,7,"H8")
+    const color = BLACK
+    const opposingColor = WHITE
+
+        beforeEach(() => {
         chessBoard = mockChessBoard()
         chessPiece = new ChessPiece(chessBoard, color, position)
         friend = new ChessPiece(chessBoard, color, positionFriend)
