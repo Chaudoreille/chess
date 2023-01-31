@@ -31,7 +31,6 @@ describe('Square', function() {
             square.x = 23
             square.y = 23
             square.name = ""
-            console.log(square)
             expect(square).toEqual(new Square(0,0))
         })
     })
