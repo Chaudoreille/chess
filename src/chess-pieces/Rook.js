@@ -12,8 +12,8 @@ class Rook extends ChessPiece {
     }
 
     updateLeft() {
-        for (let i = thix.x; i >= 0; i--) {
-            if (!this.legalBoardSpace(i, this.y)) {
+        for (let i = this.pos.x-1; i >= 0; i--) {
+            if (!this.legalBoardSpace(i, this.pos.y)) {
                 return
             }
         }
@@ -21,8 +21,8 @@ class Rook extends ChessPiece {
     }
 
     updateRight() {
-        for (let i = thix.x; i < 8; i++) {
-            if (!this.legalBoardSpace(i, this.y)) {
+        for (let i = this.pos.x+1; i < 8; i++) {
+            if (!this.legalBoardSpace(i, this.pos.y)) {
                 return
             }
         }
@@ -30,8 +30,8 @@ class Rook extends ChessPiece {
     }
 
     updateDown() {
-        for (let j = thix.y; j >= 0; j--) {
-            if (!this.legalBoardSpace(this.x, j)) {
+        for (let j = this.pos.y-1; j >= 0; j--) {
+            if (!this.legalBoardSpace(this.pos.x, j)) {
                 return
             }
         }
@@ -39,8 +39,8 @@ class Rook extends ChessPiece {
     }
 
     updateUp() {
-        for (let j = thix.y; j < 8; i++) {
-            if (!this.legalBoardSpace(this.x, j)) {
+        for (let j = this.pos.y+1; j < 8; j++) {
+            if (!this.legalBoardSpace(this.pos.x, j)) {
                 return
             }
         }
