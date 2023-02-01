@@ -1,6 +1,5 @@
 import * as utils from "./utilities.js"
 import {WHITE, BLACK, KING, Direction} from "./constants.js"
-import King from "./chess-pieces/King.js"
 
 class ChessBoard {
     constructor() {
@@ -9,6 +8,10 @@ class ChessBoard {
             [BLACK]: null,
         }
         this.pieces = {
+            [WHITE]: [],
+            [BLACK]: [],
+        }
+        this.checks = {
             [WHITE]: [],
             [BLACK]: [],
         }
@@ -31,6 +34,15 @@ class ChessBoard {
     update() {
         this.pieces[WHITE].forEach(piece => piece.update())
         this.pieces[BLACK].forEach(piece => piece.update())
+    }
+
+    updateChecks() {
+        Object.values(this.kings).forEach((king) => {
+            king.getChecks()
+        })
+
+        this.pieces[WHITE].forEach(piece => piece.breakChecks())
+        this.pieces[BLACK].forEach(piece => piece.breakChecks())
     }
 
     getCellList() {

@@ -1,4 +1,3 @@
-import { A_CHAR_CODE } from "./constants.js"
 import { getSquareName } from "./utilities.js";
 
 class Square {

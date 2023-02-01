@@ -49,12 +49,12 @@ class Pawn extends ChessPiece {
             }
         }
 
-        x = this.pos.x
-        y = this.pos.y
-
+        
         /**
          * this crashes the program on update
-         */
+        */
+        // x = this.pos.x
+        // y = this.pos.y
         // if (inBounds(x-1, y)  && this.board.collisions[x-1][y] &&
         // this.board.collisions[x-1][y].type === PAWN &&
         // this.board.collisions[x-1][y].color !== this.color &&
@@ -68,6 +68,7 @@ class Pawn extends ChessPiece {
         // this.board.collisions[x+1][y].enPassant) {
         //     this.legalBoardSpace(x+1, y+this.direction)
         // }
+        this.breakChecks()
     }
 }
 export default Pawn

@@ -15,7 +15,22 @@ class Rook extends ChessPiece {
         this.updateRight()
         this.updateDown()
         this.updateUp()
+        this.breakChecks()
     }
+
+    // chessBreakerMoves() {
+    //     super.chessBreakerMoves()
+
+    //     let kingPos = this.board.kings[oppositeColor(this.color)].pos
+    //     let positions = [kingPos, this.pos]
+    //     positions.sort(utils.cmpPositions)
+
+    //     for (let i = positions[0].x + 1; i < positions[1].x; i++) {
+    //         for (let j = positions[0].y + 1; j < positions[1].y; j++) {
+    //             this.checkBreakers.push(new Square(i,j))
+    //         }
+    //     }
+    // }
 
     updateLeft() {
         for (let i = this.pos.x-1; i >= 0; i--) {
