@@ -12,22 +12,14 @@ class Knight extends ChessPiece {
 
     update() {
         super.update()
-        const potentialPositions = [
-            [this.pos.x-2, this.pos.y-1],
-            [this.pos.x-2, this.pos.y+1],
-            [this.pos.x-1, this.pos.y-2],
-            [this.pos.x-1, this.pos.y+2],
-            [this.pos.x+1, this.pos.y-2],
-            [this.pos.x+1, this.pos.y+2],
-            [this.pos.x+2, this.pos.y-1],
-            [this.pos.x+2, this.pos.y+1]
-        ]
-
-        potentialPositions.forEach(pos => {
-            if (inBounds(pos[0], pos[1])) {
-                this.legalBoardSpace(pos[0], pos[1])
-            }
-        })
+        this.legalBoardSpace(this.pos.x-2, this.pos.y-1)
+        this.legalBoardSpace(this.pos.x-2, this.pos.y+1)
+        this.legalBoardSpace(this.pos.x-1, this.pos.y-2)
+        this.legalBoardSpace(this.pos.x-1, this.pos.y+2)
+        this.legalBoardSpace(this.pos.x+1, this.pos.y-2)
+        this.legalBoardSpace(this.pos.x+1, this.pos.y+2)
+        this.legalBoardSpace(this.pos.x+2, this.pos.y-1)
+        this.legalBoardSpace(this.pos.x+2, this.pos.y+1)
     }
 
 }

@@ -1,6 +1,5 @@
 import ChessPiece from "./ChessPiece.js"
 import { QUEEN } from "../constants.js"
-import { inBounds } from "../utilities.js"
 
 class Queen extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -56,12 +55,12 @@ class Queen extends ChessPiece {
         }
         return
     }
+
     updateTopLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y++
         }
@@ -72,36 +71,30 @@ class Queen extends ChessPiece {
         let x = this.pos.x + 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y++
         }
-        return
     }
 
     updateBottomLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y--
         }
-        return
     }
 
     updateBottomRight() {
         let x = this.pos.x + 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y--
         }
-        return
     }
 }
 export default Queen

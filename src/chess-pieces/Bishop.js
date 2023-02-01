@@ -1,6 +1,5 @@
 import ChessPiece from "./ChessPiece.js"
 import { BISHOP } from "../constants.js"
-import { inBounds } from "../utilities.js"
 
 class Bishop extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -21,8 +20,7 @@ class Bishop extends ChessPiece {
         let x = this.pos.x - 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y++
         }
@@ -33,36 +31,30 @@ class Bishop extends ChessPiece {
         let x = this.pos.x + 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y++
         }
-        return
     }
 
     updateBottomLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y--
         }
-        return
     }
 
     updateBottomRight() {
         let x = this.pos.x + 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y--
         }
-        return
     }
 }
 export default Bishop

@@ -1,5 +1,5 @@
 import Square from "../Square.js"
-import { oppositeColor } from "../utilities.js"
+import { inBounds, oppositeColor } from "../utilities.js"
 import { PAWN } from "../constants.js"
 
 class ChessPiece {
@@ -78,6 +78,9 @@ class ChessPiece {
      *     - false if movement should stop
      */
     legalBoardSpace(x, y) {
+        if (!inBounds(x, y)) {
+            return false
+        }
         if (this.board.collisions[x][y] instanceof ChessPiece) {
             if (this.board.collisions[x][y].color !== this.color) {
                 this.legalMoves.push(new Square(x, y))
