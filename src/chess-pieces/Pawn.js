@@ -8,23 +8,58 @@ class Pawn extends ChessPiece {
         this.type = PAWN
         this.dom.classList.add(`${this.color}-${this.type}`)
         this.direction = chessBoard.directions[color]
+        this.starterPawn = true
+        this.enPassant = false
+    }
+
+    move(square) {
+        let enPassant = false;
+
+        if (this.starterPawn == true) {
+            this.starterPawn = false
+            this.enPassant = true
+        }
+        let taken =  super.move(square)
     }
 
     update() {
         this.legalMoves = []
-        let x = this.pos.x-1
-        const y = this.pos.y + this.direction
+        let blocked = false
+        let x = this.pos.x
+        let y = this.pos.y + this.direction
 
-        if (inBounds(x, y) && this.board.collisions[x][y]) {
-            this.legalBoardSpace(x, y)
+        if (inBounds(x-1, y) && this.board.collisions[x-1][y]) {
+            this.legalBoardSpace(x-1, y)
         }
+        if (inBounds(x, y)) {
+           if (!this.board.collisions[x][y]) {
+            this.legalBoardSpace(x, y)
+        } else {
+            blocked = true
+           }
+        }
+        if (inBounds(x+1, y) && this.board.collisions[x+1][y]) {
+            this.legalBoardSpace(x+1, y)
+        }
+
+        if (this.starterPawn && !blocked) {
+            y += this.direction
+            if (inBounds(x, y) && !this.board.collisions[x][y]) {
+                this.legalBoardSpace(x, y)
+            }
+        }
+
         x = this.pos.x
-        if (inBounds(x, y) && !this.board.collisions[x][y]) {
-            this.legalBoardSpace(x, y)
+        y = this.pos.y
+        if (inBounds(x-1, y)  && this.board.collisions[x-1][y] &&
+        this.board.collisions[x-1][y].type === PAWN &&
+        this.board.collisions[x-1][y].enPassant) {
+            this.legalBoardSpace(x-1, y+this.direction)
         }
-        x = this.pos.x + 1
-        if (inBounds(x, y) && this.board.collisions[x][y]) {
-            this.legalBoardSpace(x, y)
+        if (inBounds(x+1, y)  && this.board.collisions[x+1][y] &&
+        this.board.collisions[x+1][y].type === PAWN &&
+        this.board.collisions[x+1][y].enPassant) {
+            this.legalBoardSpace(x+1, y+this.direction)
         }
     }
 }

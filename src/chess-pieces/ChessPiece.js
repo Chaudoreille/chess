@@ -1,4 +1,6 @@
 import Square from "../Square.js"
+import { oppositeColor } from "../utilities.js"
+import { PAWN } from "../constants.js"
 
 class ChessPiece {
     constructor(chessBoard, color, square) {
@@ -49,6 +51,10 @@ class ChessPiece {
         this.board.collisions[square.x][square.y] = this
         this.pos = square
         this.board.update()
+
+        this.board.pieces[oppositeColor(this.color)].forEach(element => {
+            if (element.type == PAWN) element.enPassant = false
+        });
 
         if (takenPiece) {
             return takenPiece

@@ -75,6 +75,12 @@ export function initCollisionBoard() {
     return board
 }
 
+export function oppositeColor(color) {
+    if (color === BLACK) return WHITE
+    if (color === WHITE) return BLACK
+    throw new Error("Calling oppositeColor with wrong argument")
+}
+
 /**
  * Dom Manipulation Utility Functions
  */
