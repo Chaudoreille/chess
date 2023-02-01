@@ -2,11 +2,15 @@ class ChessPiece {
     constructor(chessBoard, color, square) {
         this.pos = square
         this.board = chessBoard
+        this.type = null
+        this.targets = []
         this.legalMoves = []
+        this.pinned = []
         this.color = color
+        this.dom = createDomChessPiece()
     }
 
-    updateLegalMoves() {}
+    update() {}
 
     /**
      * moves chess piece on the board
@@ -31,17 +35,13 @@ class ChessPiece {
 
         this.board.collisions[square.x][square.y] = this
         this.pos = square
-        this.updateLegalMoves()
+        this.update()
 
         if (takenPiece) {
             return takenPiece
         } else {
             return false
         }
-    }
-
-    targets(ChessPiece) {
-        return false
     }
 
     /**
@@ -62,5 +62,16 @@ class ChessPiece {
         }
         this.legalMoves.push(new Square(x, y))
         return true
+    }
+
+    createDomChessPiece() {
+        let chessPieceDom = document.createElement("div")
+        chessPiece.className = "chess-piece"
+
+        return chessPieceDom
+    }
+
+    remove() {
+        this.dom.remove()
     }
 }

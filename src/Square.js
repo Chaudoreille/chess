@@ -1,4 +1,4 @@
-const A_CHAR_CODE = 65
+const A_CHAR_CODE = 97
 
 class Square {
     constructor(x, y) {
@@ -7,7 +7,7 @@ class Square {
         }
         this.x = x;
         this.y = y;
-        this.name = `${String.fromCharCode(A_CHAR_CODE + x)}${y+1}`
+        this.name = getSquareName(x, y)
         Object.freeze(this)
     }
 }

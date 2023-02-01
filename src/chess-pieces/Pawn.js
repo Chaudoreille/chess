@@ -1,13 +1,11 @@
 class Pawn extends ChessPiece {
-    constructor(chessBoard, color, square, direction) {
+    constructor(chessBoard, color, square) {
         super(chessBoard, color, square)
-        this.direction = direction
+        this.type = PAWN
+        this.dom.classList.add(`${this.color}-${this.type}`)
+        this.direction = chessBoard.directions[color]
     }
 
-    updateLegalMoves() {
-    }
-
-    targets(ChessPiece) {
-        return false
+    update() {
     }
 }

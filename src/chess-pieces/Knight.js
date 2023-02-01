@@ -1,8 +1,11 @@
 class Knight extends ChessPiece {
-    updateLegalMoves() {
+    constructor(chessBoard, color, square) {
+        super(chessBoard, color, square)
+        this.type = KNIGHT
+        this.dom.classList.add(`${this.color}-${this.type}`)
     }
 
-    targets(ChessPiece) {
-        return false
+    update() {
     }
+
 }

@@ -1,9 +1,11 @@
 class King extends ChessPiece {
-    updateLegalMoves() {
+    constructor(chessBoard, color, square) {
+        super(chessBoard, color, square)
+        this.type = KING
+        this.dom.classList.add(`${this.color}-${this.type}`)
     }
 
-    targets(ChessPiece) {
-        return false
+    update() {
     }
 
     isCheck() {
