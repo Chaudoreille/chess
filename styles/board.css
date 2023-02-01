@@ -25,3 +25,11 @@
 #chess-board .square.light.highlight {
     background-color:var(--light-square-highlight)
 }
+
+#chess-board .light.legal {
+    background-color: var(--light-square-legal);
+}
+
+#chess-board .dark.legal {
+    background-color: var(--dark-square-legal);
+}

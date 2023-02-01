@@ -1,9 +1,15 @@
+import ChessPiece from "./ChessPiece.js"
+import { BISHOP } from "../constants.js"
+import { inBounds } from "../utilities.js"
+
 class Bishop extends ChessPiece {
-    targets(ChessPiece) {
-        return false
+    constructor(chessBoard, color, square) {
+        super(chessBoard, color, square)
+        this.type = BISHOP
+        this.dom.classList.add(`${this.color}-${this.type}`)
     }
 
-    updateLegalMoves() {
+    update() {
         this.legalMoves = []
         this.updateTopLeft()
         this.updateTopRight()
@@ -59,3 +65,4 @@ class Bishop extends ChessPiece {
         return
     }
 }
+export default Bishop

@@ -1,9 +1,14 @@
+import ChessPiece from "./ChessPiece.js"
+import { ROOK } from "../constants.js"
+
 class Rook extends ChessPiece {
-    targets(ChessPiece) {
-        return false
+    constructor(chessBoard, color, square) {
+        super(chessBoard, color, square)
+        this.type = ROOK
+        this.dom.classList.add(`${this.color}-${this.type}`)
     }
 
-    updateLegalMoves() {
+   update() {
         this.legalMoves = []
         this.updateLeft()
         this.updateRight()
@@ -47,3 +52,4 @@ class Rook extends ChessPiece {
         return
     }
 }
+export default Rook

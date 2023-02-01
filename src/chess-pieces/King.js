@@ -1,9 +1,19 @@
+import ChessPiece from "./ChessPiece.js"
+import { KING } from "../constants.js"
+
 class King extends ChessPiece {
-    updateLegalMoves() {
+    constructor(chessBoard, color, square) {
+        super(chessBoard, color, square)
+        this.type = KING
+        this.dom.classList.add(`${this.color}-${this.type}`)
     }
 
-    targets(ChessPiece) {
-        return false
+    spawn() {
+        super.spawn()
+        this.board.kings[this.color] = this
+    }
+
+    update() {
     }
 
     isCheck() {
@@ -14,3 +24,4 @@ class King extends ChessPiece {
         return false
     }
 }
+export default King

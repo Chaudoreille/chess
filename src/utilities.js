@@ -1,10 +1,18 @@
-function cmpPositions(a, b) {
+import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN, A_CHAR_CODE } from "./constants.js"
+import King from "./chess-pieces/King.js"
+import Queen from "./chess-pieces/Queen.js"
+import Rook from "./chess-pieces/Rook.js"
+import Knight from "./chess-pieces/Knight.js"
+import Bishop from "./chess-pieces/Bishop.js"
+import Pawn from "./chess-pieces/Pawn.js"
+import Square from "./Square.js"
+
+export function cmpPositions(a, b) {
     if (a.x === b.x) {
         return a.y - b.y
     }
     return a.x - b.x
 }
-
 
 /**
  * ## checks if a x,y position is within board bounds
@@ -12,7 +20,7 @@ function cmpPositions(a, b) {
  * @param {Number} y 
  * @returns 
  */
-function inBounds(x, y) {
+export function inBounds(x, y) {
     if (x < 0 || x > 7 ||
         y < 0 || y > 7) {
         return false
@@ -20,8 +28,74 @@ function inBounds(x, y) {
     return true
 }
 
-function pushIfInBounds(container, position) {
+export function pushIfInBounds(container, position) {
     if (inBounds(position.x, position.y)) {
         container.push(position)
     }
+}
+
+export function chessPieceFactory(chessBoard, type, color, position, ...rest) {
+    const classes = {
+        [KING]: King,
+        [QUEEN]: Queen,
+        [BISHOP]: Bishop,
+        [KNIGHT]: Knight,
+        [ROOK]: Rook,
+        [PAWN]: Pawn,
+    }
+    const square = createSquareFromName(position)
+    return new classes[type](chessBoard, color, square, rest);
+}
+
+export function createSquareFromName(name) {
+    const x = name.charCodeAt(0) - A_CHAR_CODE
+    const y = +name[1] - 1
+
+    return new Square(x, y)
+}
+
+export function getSquareName(x, y) {
+    return `${String.fromCharCode(A_CHAR_CODE + x)}${y+1}`
+}
+
+/**
+ *
+ * @returns a null - filled 8 * 8 matrix
+ */
+export function initCollisionBoard() {
+    const board = []
+
+    for (let i = 0; i < 8; i++) {
+        board.push([])
+
+        for (let j = 0; j < 8; j++) {
+            board[i].push(null)
+        }
+    }
+    return board
+}
+
+/**
+ * Dom Manipulation Utility Functions
+ */
+
+export function highlight(domElement) {
+    domElement.classList.add("highlight")
+}
+
+export function removeHighlight(domElement) {
+    domElement.classList.remove("highlight")
+}
+
+export function legal(domElement) {
+    domElement.classList.add("legal")
+}
+
+export function illegal(domElement) {
+    domElement.classList.remove("legal")
+}
+
+export function normalize(domElement) {
+    illegal(domElement)
+    removeHighlight(domElement)
 }

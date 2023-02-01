@@ -33,13 +33,13 @@ describe('Pawn', function() {
         });
     });
 
-    describe('updateLegalMoves method', () => {
+    describe('update method', () => {
         it("should be declared", function() {
-            expect(typeof pawn.updateLegalMoves).toEqual("function")
+            expect(typeof pawn.update).toEqual("function")
         });
 
         it("should update pawn.legalMoves with single square on an empty board", function () {
-            pawn.updateLegalMoves()
+            pawn.update()
             let legalSquares = [
                 mockSquare(pawn.x, pawn.y + pawn.direction)
             ]
@@ -53,7 +53,7 @@ describe('Pawn', function() {
         it(`should update pawn.legalMoves with two squares
         when on it's starting position on an empty board`, function () {
             let starterPawn = new Pawn(pawn.chessBoard, WHITE, mockSquare(6,1), Direction.UP)
-            pawn.updateLegalMoves()
+            pawn.update()
 
             let legalSquares = [
                 mockSquare(pawn.x, pawn.y + pawn.direction),
@@ -67,7 +67,7 @@ describe('Pawn', function() {
         });
 
         it("should update pawn.legalMoves with a different square when changing it's direction", function () {
-            pawn.updateLegalMoves()
+            pawn.update()
             let legalSquares = [
                 mockSquare(pawn.x, pawn.y + pawn.direction)
             ]
@@ -80,13 +80,13 @@ describe('Pawn', function() {
 
         it("should leave pawn.legalMoves empty when behind a same color piece", function () {
             chessBoard.populate(friends)
-            pawn.updateLegalMoves()
+            pawn.update()
 
             expect(pawn.legalMoves.length).toEqual(0)
         });
         it("should leave pawn.legalMoves empty when in front of an opposing color piece", function () {
             chessBoard.populate(foes)
-            pawn.updateLegalMoves()
+            pawn.update()
 
             expect(pawn.legalMoves.length).toEqual(0)
         });

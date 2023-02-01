@@ -5,7 +5,9 @@
     --light-background: #C0D6DF;
     --light-text: #dbe9ee;
     --light-square: #E9EDDE;
-    --light-square-highlight: #BDA689;
+    --light-square-highlight: rgb(200, 200, 0);
     --dark-square: #6D3D14;
-    --dark-square-highlight: #4C2B0E;
+    --dark-square-highlight: rgb(120, 120, 0);
+    --light-square-legal: rgb(255 0 255);
+    --dark-square-legal: rgb(120 0 120);
 }

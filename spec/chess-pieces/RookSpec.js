@@ -37,13 +37,13 @@ describe('Rook', function() {
         });
     });
 
-    describe('updateLegalMoves method', () => {
+    describe('update method', () => {
         it("should be declared", function() {
-            expect(typeof rook.updateLegalMoves).toEqual("function")
+            expect(typeof rook.update).toEqual("function")
         });
 
         it("should update rook.legalMoves with a complete row and column on an empty board", function () {
-            rook.updateLegalMoves()
+            rook.update()
             let legalSquares = []
 
             for (let i = 0; i < 8; i++) {
@@ -64,13 +64,13 @@ describe('Rook', function() {
         });
         it("should leave rook.legalMoves empty when surrounded by same color pieces", function () {
             chessBoard.populate(friends)
-            rook.updateLegalMoves()
+            rook.update()
 
             expect(rook.legalMoves.length).toEqual(0)
         });
         it("should update rook.legalMoves to exactly four elements when surrounded by opposite color pieces", function () {
             chessBoard.populate(foes)
-            rook.updateLegalMoves()
+            rook.update()
 
             expect(rook.legalMoves.length).toEqual(4)
         });

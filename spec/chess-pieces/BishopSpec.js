@@ -37,13 +37,13 @@ describe('Bishop', function() {
         });
     });
 
-    describe('updateLegalMoves method', () => {
+    describe('update method', () => {
         it("should be declared", function() {
-            expect(typeof bishop.updateLegalMoves).toEqual("function")
+            expect(typeof bishop.update).toEqual("function")
         });
 
         it("should update bishop.legalMoves with 2 diagonals centered on it's square on an empty board", function () {
-            bishop.updateLegalMoves()
+            bishop.update()
             let legalSquares = []
 
             for (let i = 1; i < 8; i++) {
@@ -62,13 +62,13 @@ describe('Bishop', function() {
         });
         it("should leave bishop.legalMoves empty when surrounded by same color pieces", function () {
             chessBoard.populate(friends)
-            bishop.updateLegalMoves()
+            bishop.update()
 
             expect(bishop.legalMoves.length).toEqual(0)
         });
         it("should update bishop.legalMoves to exactly four elements when surrounded by opposite color pieces", function () {
             chessBoard.populate(foes)
-            bishop.updateLegalMoves()
+            bishop.update()
 
             expect(bishop.legalMoves.length).toEqual(4)
         });

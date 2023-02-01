@@ -43,13 +43,13 @@ describe('Queen', function() {
         });
     });
 
-    describe('updateLegalMoves method', () => {
+    describe('update method', () => {
         it("should be declared", function() {
-            expect(typeof queen.updateLegalMoves).toEqual("function")
+            expect(typeof queen.update).toEqual("function")
         });
 
         it("should update queen.legalMoves with 2 diagonals, a complete row and column on an empty board", function () {
-            queen.updateLegalMoves()
+            queen.update()
             let legalSquares = []
 
             for (let i = 0; i < 8; i++) {
@@ -77,13 +77,13 @@ describe('Queen', function() {
         });
         it("should leave queen.legalMoves empty when surrounded by same color pieces", function () {
             chessBoard.populate(friends)
-            queen.updateLegalMoves()
+            queen.update()
 
             expect(queen.legalMoves.length).toEqual(0)
         });
         it("should update queen.legalMoves to exactly four elements when surrounded by opposite color pieces", function () {
             chessBoard.populate(foes)
-            queen.updateLegalMoves()
+            queen.update()
 
             expect(queen.legalMoves.length).toEqual(8)
         });
