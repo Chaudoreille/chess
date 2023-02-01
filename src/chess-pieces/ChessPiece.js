@@ -22,7 +22,6 @@ class ChessPiece {
 
 
     update() {
-        console.log(`updating ${this.type} at ${this.pos.name}`)
     }
 
     /**
@@ -52,7 +51,6 @@ class ChessPiece {
         this.board.collisions[square.x][square.y] = this
         this.pos = square
         this.board.update()
-        console.log("moving", this.type)
 
         this.board.pieces[oppositeColor(this.color)].forEach(element => {
             if (element.type == PAWN) {
@@ -60,9 +58,7 @@ class ChessPiece {
             }
         })
 
-        console.log(this.board.turn)
         this.board.turn = oppositeColor(this.color)
-        console.log(this.board.turn)
 
         if (takenPiece) {
             return takenPiece

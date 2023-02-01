@@ -29,10 +29,8 @@ class ChessBoard {
     }
 
     update() {
-        console.log("updating")
         this.pieces[WHITE].forEach(piece => piece.update())
         this.pieces[BLACK].forEach(piece => piece.update())
-        console.log("updating done")
     }
 
     getCellList() {
@@ -48,7 +46,7 @@ class ChessBoard {
         const position = utils.createSquareFromName(cell.id)
         const currentPiece = this.collisions[position.x][position.y]
 
-        if (this.selectedPiece) {
+        if (this.selectedPiece && (!currentPiece || currentPiece.color !== this.turn)) {
             try {
                 this.selectedPiece.move(position)
             } catch (error) {
@@ -61,8 +59,14 @@ class ChessBoard {
             cell.append(this.selectedPiece.dom)
             this.selectedPiece = false
             this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
-        } else if (currentPiece && currentPiece.color == this.turn) {
-            this.getCellList().forEach((singleCell) => utils.removeHighlight(singleCell))
+        }
+        if (currentPiece && currentPiece.color === this.turn) {
+            if (currentPiece === this.selectedPiece) {
+                this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
+                return
+            }
+            this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
+            
             utils.highlight(cell)
             currentPiece.legalMoves.forEach(square => {
                 let potientialMoveCell = document.getElementById(square.name) 
@@ -103,6 +107,7 @@ class ChessBoard {
     }
 
     render() {
+        this.update()
         this.collisions.forEach(row => {
             row.forEach(piece => {
                 if (piece) {
@@ -114,7 +119,6 @@ class ChessBoard {
 
     addPiece(type, color, position) {
         const chessPiece = utils.chessPieceFactory(this, type, color, position)
-        chessPiece.update()
     }
 }
 export default ChessBoard
