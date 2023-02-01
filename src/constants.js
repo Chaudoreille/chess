@@ -1,12 +1,12 @@
-const WHITE = 0
-const BLACK = 1
+const WHITE = "white"
+const BLACK = "black"
 
-const KING = 0
-const QUEEN = 1
-const BISHOP = 2
-const KNIGHT = 3
-const ROOK = 4
-const PAWN = 5
+const KING = "king"
+const QUEEN = "queen"
+const BISHOP = "bishop"
+const KNIGHT = "knight"
+const ROOK = "rook"
+const PAWN = "pawn"
 
 const Direction = {
     UP: 1,
