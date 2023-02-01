@@ -10,5 +10,5 @@ export const
     A_CHAR_CODE = 97,
     Direction = {
         UP: 1,
-        DOWWN: -1
+        DOWN: -1
     }

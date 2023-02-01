@@ -28,6 +28,10 @@ class ChessBoard {
         this.createDomGrid()
     }
 
+    update() {
+        this.pieces[WHITE].forEach(piece => piece.update())
+        this.pieces[BLACK].forEach(piece => piece.update())
+    }
     getCellList() {
         return this.dom.querySelectorAll(".square")
     }
@@ -59,6 +63,7 @@ class ChessBoard {
 
             if (currentPiece) {
                 utils.highlight(cell)
+                console.log(currentPiece.legalMoves)
                 currentPiece.legalMoves.forEach(square => {
                     let potientialMoveCell = document.getElementById(square.name) 
                     utils.legal(potientialMoveCell)

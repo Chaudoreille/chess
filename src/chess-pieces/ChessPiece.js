@@ -48,7 +48,7 @@ class ChessPiece {
         this.board.collisions[this.pos.x][this.pos.y] = null
         this.board.collisions[square.x][square.y] = this
         this.pos = square
-        this.update()
+        this.board.update()
 
         if (takenPiece) {
             return takenPiece
