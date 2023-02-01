@@ -1,5 +1,6 @@
 import ChessPiece from "./ChessPiece.js"
 import { KING } from "../constants.js"
+import { oppositeColor } from "../utilities.js"
 
 class King extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -24,6 +25,13 @@ class King extends ChessPiece {
     }
 
     isCheck() {
+        for (let enemy of this.board.pieces[oppositeColor(this.color)]) {
+            for (let target of enemy.targets) {
+                if (target.name === this.pos.name) {
+                    return true
+                }
+            }
+        }
         return false
     }
 

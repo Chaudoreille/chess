@@ -23,6 +23,7 @@ class ChessPiece {
 
     update() {
         this.legalMoves = []
+        this.targets = []
     }
 
     /**
@@ -81,12 +82,15 @@ class ChessPiece {
         if (!inBounds(x, y)) {
             return false
         }
+        this.targets.push(new Square(x,y))
+
         if (this.board.collisions[x][y] instanceof ChessPiece) {
             if (this.board.collisions[x][y].color !== this.color) {
                 this.legalMoves.push(new Square(x, y))
             }
             return false
         }
+
         this.legalMoves.push(new Square(x, y))
         return true
     }

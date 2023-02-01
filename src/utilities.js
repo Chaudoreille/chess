@@ -93,15 +93,25 @@ export function removeHighlight(domElement) {
     domElement.classList.remove("highlight")
 }
 
-export function legal(domElement) {
-    domElement.classList.add("legal")
+export function showLegalMoves(squares) {
+    squares.forEach(square => {
+        document.getElementById(square.name).classList.add("legal")
+    })
 }
 
-export function illegal(domElement) {
+export function hideLegalMove(domElement) {
     domElement.classList.remove("legal")
 }
 
+export function showCheck(king) {
+    king.dom.parentNode.classList.add("check")
+}
+
+export function hideCheck(king) {
+    king.dom.parentNode.classList.remove("check")
+}
+
 export function normalize(domElement) {
-    illegal(domElement)
+    hideLegalMove(domElement)
     removeHighlight(domElement)
 }

@@ -33,3 +33,8 @@
 #chess-board .dark.legal {
     background-color: var(--dark-square-legal);
 }
+
+#chess-board .check,
+#chess-board .check {
+    background-color: red !important;
+}
