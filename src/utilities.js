@@ -50,14 +50,13 @@ export function chessPieceFactory(chessBoard, type, color, position, ...rest) {
 export function createSquareFromName(name) {
     const x = name.charCodeAt(0) - A_CHAR_CODE
     const y = +name[1] - 1
-    
+
     return new Square(x, y)
 }
 
 export function getSquareName(x, y) {
     return `${String.fromCharCode(A_CHAR_CODE + x)}${y+1}`
 }
-
 
 /**
  *
@@ -85,5 +84,18 @@ export function highlight(domElement) {
 }
 
 export function removeHighlight(domElement) {
-    domElement.classList.remove("hightlight")
+    domElement.classList.remove("highlight")
+}
+
+export function legal(domElement) {
+    domElement.classList.add("legal")
+}
+
+export function illegal(domElement) {
+    domElement.classList.remove("legal")
+}
+
+export function normalize(domElement) {
+    illegal(domElement)
+    removeHighlight(domElement)
 }

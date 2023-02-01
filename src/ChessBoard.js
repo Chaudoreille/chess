@@ -16,7 +16,12 @@ class ChessBoard {
             [WHITE]: Direction.UP,
             [BLACK]: Direction.DOWN
         }
+        this.taken = {
+            [WHITE]: [],
+            [BLACK]: [],
+        }
         this.collisions = utils.initCollisionBoard()
+        this.selectedPiece = false
         this.turn = WHITE
         this.dom = document.getElementById("chess-board")
 
@@ -33,22 +38,32 @@ class ChessBoard {
 
     movePiece = event => {
         const cell = event.currentTarget
-        const position = utils.createSquareFromName(square.id)
-        const piece = this.collisions[position.x, position.y]
+        const position = utils.createSquareFromName(cell.id)
+        const currentPiece = this.collisions[position.x][position.y]
 
         if (this.selectedPiece) {
-            cell.appendChild(this.selectedPiece)
-            if (piece) {
-                piece.remove()
+            try {
+                this.selectedPiece.move(position)
+            } catch (error) {
+                if (error.message === "Illegal Move") {
+                    this.selectedPiece = false;
+                    this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
+                    return
+                }   
             }
+            cell.append(this.selectedPiece.dom)
             this.selectedPiece = false
-            utils.highlight(cell)
+            this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
         } else {
             this.getCellList().forEach((singleCell) => utils.removeHighlight(singleCell))
 
-            if (piece) {
+            if (currentPiece) {
                 utils.highlight(cell)
-                this.selectedPiece = piece
+                currentPiece.legalMoves.forEach(square => {
+                    let potientialMoveCell = document.getElementById(square.name) 
+                    utils.legal(potientialMoveCell)
+                })
+                this.selectedPiece = currentPiece
             }
         }
     }
@@ -95,6 +110,7 @@ class ChessBoard {
 
     addPiece(type, color, position) {
         const chessPiece = utils.chessPieceFactory(this, type, color, position)
+        chessPiece.update()
     }
 }
 export default ChessBoard

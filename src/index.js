@@ -22,10 +22,10 @@ board.addPiece(BISHOP, BLACK, "f8")
 board.addPiece(KNIGHT, BLACK, "g8")
 board.addPiece(ROOK, BLACK, "h8")
 
-for (let i = 0; i < 8; i++) {
-    board.addPiece(PAWN, WHITE, getSquareName(i, 1))
-    board.addPiece(PAWN, BLACK, getSquareName(i, 6))
-}
+// for (let i = 0; i < 8; i++) {
+//     board.addPiece(PAWN, WHITE, getSquareName(i, 1))
+//     board.addPiece(PAWN, BLACK, getSquareName(i, 6))
+// }
 
 board.addEvents()
 board.render()

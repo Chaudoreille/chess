@@ -1,5 +1,6 @@
 import ChessPiece from "./ChessPiece.js"
 import { BISHOP } from "../constants.js"
+import { inBounds } from "../utilities.js"
 
 class Bishop extends ChessPiece {
     constructor(chessBoard, color, square) {
