@@ -9,6 +9,7 @@ class Queen extends ChessPiece {
     }
 
     update() {
+        super.update()
     }
 }
 export default Queen

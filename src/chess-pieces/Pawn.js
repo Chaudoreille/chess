@@ -23,6 +23,7 @@ class Pawn extends ChessPiece {
     }
 
     update() {
+        super.update()
         this.legalMoves = []
         let blocked = false
         let x = this.pos.x
@@ -51,16 +52,23 @@ class Pawn extends ChessPiece {
 
         x = this.pos.x
         y = this.pos.y
-        if (inBounds(x-1, y)  && this.board.collisions[x-1][y] &&
-        this.board.collisions[x-1][y].type === PAWN &&
-        this.board.collisions[x-1][y].enPassant) {
-            this.legalBoardSpace(x-1, y+this.direction)
-        }
-        if (inBounds(x+1, y)  && this.board.collisions[x+1][y] &&
-        this.board.collisions[x+1][y].type === PAWN &&
-        this.board.collisions[x+1][y].enPassant) {
-            this.legalBoardSpace(x+1, y+this.direction)
-        }
+
+        /**
+         * this crashes the program on update
+         */
+        // if (inBounds(x-1, y)  && this.board.collisions[x-1][y] &&
+        // this.board.collisions[x-1][y].type === PAWN &&
+        // this.board.collisions[x-1][y].color !== this.color &&
+        // this.board.collisions[x-1][y].enPassant) {
+        //     this.legalBoardSpace(x-1, y+this.direction)
+        // }
+
+        // if (inBounds(x+1, y)  && this.board.collisions[x+1][y] &&
+        // this.board.collisions[x+1][y].type === PAWN &&
+        // this.board.collisions[x-1][y].color !== this.color &&
+        // this.board.collisions[x+1][y].enPassant) {
+        //     this.legalBoardSpace(x+1, y+this.direction)
+        // }
     }
 }
 export default Pawn

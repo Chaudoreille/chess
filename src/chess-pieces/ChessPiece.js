@@ -21,7 +21,9 @@ class ChessPiece {
     }
 
 
-    update() {}
+    update() {
+        console.log(`updating ${this.type} at ${this.pos.name}`)
+    }
 
     /**
      * moves chess piece on the board
@@ -37,24 +39,30 @@ class ChessPiece {
         if (!this.legalMoves.find((move) => move.name === square.name)) {
             throw(new Error("Illegal Move"))
         }
-
         const takenPiece = this.board.collisions[square.x][square.y]
-
-        if (takenPiece && takenPiece.color === this.color) {
-            throw(new Error("Friendly Fire"))
-        }
         if (takenPiece) {
-            takenPiece.remove()
+            if (takenPiece.color === this.color) {
+                throw(new Error("Friendly Fire"))
+            } else if (takenPiece) {
+                takenPiece.remove()
+            }
         }
 
         this.board.collisions[this.pos.x][this.pos.y] = null
         this.board.collisions[square.x][square.y] = this
         this.pos = square
         this.board.update()
+        console.log("moving", this.type)
 
         this.board.pieces[oppositeColor(this.color)].forEach(element => {
-            if (element.type == PAWN) element.enPassant = false
-        });
+            if (element.type == PAWN) {
+                element.enPassant = false
+            }
+        })
+
+        console.log(this.board.turn)
+        this.board.turn = oppositeColor(this.color)
+        console.log(this.board.turn)
 
         if (takenPiece) {
             return takenPiece

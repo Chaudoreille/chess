@@ -11,6 +11,7 @@ class Knight extends ChessPiece {
     }
 
     update() {
+        super.update()
         this.legalMoves = []
         const potentialPositions = [
             [this.pos.x-2, this.pos.y-1],

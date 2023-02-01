@@ -29,9 +29,12 @@ class ChessBoard {
     }
 
     update() {
+        console.log("updating")
         this.pieces[WHITE].forEach(piece => piece.update())
         this.pieces[BLACK].forEach(piece => piece.update())
+        console.log("updating done")
     }
+
     getCellList() {
         return this.dom.querySelectorAll(".square")
     }
@@ -58,18 +61,14 @@ class ChessBoard {
             cell.append(this.selectedPiece.dom)
             this.selectedPiece = false
             this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
-        } else {
+        } else if (currentPiece && currentPiece.color == this.turn) {
             this.getCellList().forEach((singleCell) => utils.removeHighlight(singleCell))
-
-            if (currentPiece) {
-                utils.highlight(cell)
-                console.log(currentPiece.legalMoves)
-                currentPiece.legalMoves.forEach(square => {
-                    let potientialMoveCell = document.getElementById(square.name) 
-                    utils.legal(potientialMoveCell)
-                })
-                this.selectedPiece = currentPiece
-            }
+            utils.highlight(cell)
+            currentPiece.legalMoves.forEach(square => {
+                let potientialMoveCell = document.getElementById(square.name) 
+                utils.legal(potientialMoveCell)
+            })
+            this.selectedPiece = currentPiece
         }
     }
 

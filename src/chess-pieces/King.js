@@ -14,6 +14,7 @@ class King extends ChessPiece {
     }
 
     update() {
+        super.update()
     }
 
     isCheck() {
