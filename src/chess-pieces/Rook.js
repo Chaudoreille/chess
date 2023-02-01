@@ -1,3 +1,6 @@
+import ChessPiece from "./ChessPiece.js"
+import { ROOK } from "../constants.js"
+
 class Rook extends ChessPiece {
     constructor(chessBoard, color, square) {
         super(chessBoard, color, square)
@@ -49,3 +52,4 @@ class Rook extends ChessPiece {
         return
     }
 }
+export default Rook

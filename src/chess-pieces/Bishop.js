@@ -1,3 +1,6 @@
+import ChessPiece from "./ChessPiece.js"
+import { BISHOP } from "../constants.js"
+
 class Bishop extends ChessPiece {
     constructor(chessBoard, color, square) {
         super(chessBoard, color, square)
@@ -61,3 +64,4 @@ class Bishop extends ChessPiece {
         return
     }
 }
+export default Bishop

@@ -1,3 +1,6 @@
+import ChessPiece from "./ChessPiece.js"
+import { PAWN } from "../constants.js"
+
 class Pawn extends ChessPiece {
     constructor(chessBoard, color, square) {
         super(chessBoard, color, square)
@@ -9,3 +12,4 @@ class Pawn extends ChessPiece {
     update() {
     }
 }
+export default Pawn

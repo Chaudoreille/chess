@@ -1,3 +1,12 @@
+import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN, A_CHAR_CODE } from "./constants.js"
+import King from "./chess-pieces/King.js"
+import Queen from "./chess-pieces/Queen.js"
+import Rook from "./chess-pieces/Rook.js"
+import Knight from "./chess-pieces/Knight.js"
+import Bishop from "./chess-pieces/Bishop.js"
+import Pawn from "./chess-pieces/Pawn.js"
+import Square from "./Square.js"
+
 export function cmpPositions(a, b) {
     if (a.x === b.x) {
         return a.y - b.y
@@ -26,20 +35,22 @@ export function pushIfInBounds(container, position) {
 }
 
 export function chessPieceFactory(chessBoard, type, color, position, ...rest) {
-    const constructors = {
-        [KING]: King.constructor,
-        [QUEEN]: Queen.constructor,
-        [BISHOP]: Bishop.constructor,
-        [KNIGHT]: Knight.constructor,
-        [ROOK]: Rook.constructor,
-        [PAWN]: Pawn.constructor,
+    const classes = {
+        [KING]: King,
+        [QUEEN]: Queen,
+        [BISHOP]: Bishop,
+        [KNIGHT]: Knight,
+        [ROOK]: Rook,
+        [PAWN]: Pawn,
     }
-    return constructors[type](chessBoard, color, position, rest)
+    const square = createSquareFromName(position)
+    return new classes[type](chessBoard, color, square, rest);
 }
 
 export function createSquareFromName(name) {
     const x = name.charCodeAt(0) - A_CHAR_CODE
     const y = +name[1] - 1
+    
     return new Square(x, y)
 }
 

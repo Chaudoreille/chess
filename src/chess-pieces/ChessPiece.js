@@ -7,8 +7,15 @@ class ChessPiece {
         this.legalMoves = []
         this.pinned = []
         this.color = color
-        this.dom = createDomChessPiece()
+        this.dom = this.createDomChessPiece()
+        this.spawn()
     }
+
+    spawn() {
+        this.board.collisions[this.pos.x][this.pos.y] = this
+        this.board.pieces[this.color].push(this)
+    }
+
 
     update() {}
 
@@ -66,7 +73,7 @@ class ChessPiece {
 
     createDomChessPiece() {
         let chessPieceDom = document.createElement("div")
-        chessPiece.className = "chess-piece"
+        chessPieceDom.className = "chess-piece"
 
         return chessPieceDom
     }
@@ -75,3 +82,4 @@ class ChessPiece {
         this.dom.remove()
     }
 }
+export default ChessPiece

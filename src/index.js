@@ -1,13 +1,6 @@
-import DisplayChessBoard from "./DisplayChessBoard.js"
-import Square from "./Square.js"
-import * as utils from "./utilities.js"
-import ChessPiece from "./chess-pieces/ChessPiece.js"
-import ChessPiece from "./chess-pieces/King.js"
-import ChessPiece from "./chess-pieces/Queen.js"
-import ChessPiece from "./chess-pieces/Bishop.js"
-import ChessPiece from "./chess-pieces/Knight.js"
-import ChessPiece from "./chess-pieces/Rook.js"
-import ChessPiece from "./chess-pieces/Pawn.js"
+import ChessBoard from "./ChessBoard.js"
+import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN } from "./constants.js"
+import { getSquareName } from "./utilities.js"
 
 const board = new ChessBoard()
 
@@ -30,8 +23,8 @@ board.addPiece(KNIGHT, BLACK, "g8")
 board.addPiece(ROOK, BLACK, "h8")
 
 for (let i = 0; i < 8; i++) {
-    board.addPiece(PAWN, WHITE, utils.getSquareName(i, 2))
-    board.addPiece(PAWN, BLACK, utils.getSquareName(i, 6))
+    board.addPiece(PAWN, WHITE, getSquareName(i, 1))
+    board.addPiece(PAWN, BLACK, getSquareName(i, 6))
 }
 
 board.addEvents()

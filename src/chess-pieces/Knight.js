@@ -1,3 +1,6 @@
+import ChessPiece from "./ChessPiece.js"
+import { KNIGHT } from "../constants.js"
+
 class Knight extends ChessPiece {
     constructor(chessBoard, color, square) {
         super(chessBoard, color, square)
@@ -9,3 +12,4 @@ class Knight extends ChessPiece {
     }
 
 }
+export default Knight

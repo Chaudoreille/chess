@@ -1,3 +1,7 @@
+import * as utils from "./utilities.js"
+import {WHITE, BLACK, Direction} from "./constants.js"
+
+
 class ChessBoard {
     constructor() {
         this.kings = {
@@ -9,11 +13,11 @@ class ChessBoard {
             [BLACK]: [],
         }
         this.directions = {
-            [WHITE]: Directions.UP,
-            [BLACK]: Directions.DOWN
+            [WHITE]: Direction.UP,
+            [BLACK]: Direction.DOWN
         }
+        this.collisions = utils.initCollisionBoard()
         this.turn = WHITE
-        this.collisions = initCollisionBoard()
         this.dom = document.getElementById("chess-board")
 
         this.createDomGrid()
@@ -29,7 +33,7 @@ class ChessBoard {
 
     movePiece = event => {
         const cell = event.currentTarget
-        const position = createSquareFromName(square.id)
+        const position = utils.createSquareFromName(square.id)
         const piece = this.collisions[position.x, position.y]
 
         if (this.selectedPiece) {
@@ -38,12 +42,12 @@ class ChessBoard {
                 piece.remove()
             }
             this.selectedPiece = false
-            highlight(cell)
+            utils.highlight(cell)
         } else {
-            this.getCellList().forEach((singleCell) => removeHighlight(singleCell))
+            this.getCellList().forEach((singleCell) => utils.removeHighlight(singleCell))
 
             if (piece) {
-                highlight(cell)
+                utils.highlight(cell)
                 this.selectedPiece = piece
             }
         }
@@ -60,16 +64,17 @@ class ChessBoard {
         const grid = []
 
         for (let i = 0; i < 8; i++) {
-            const row = []
+            const column = []
+
             for (let j = 0; j < 8; j++) {
                 const square = document.createElement("div")
-                const evenRow = Math.floor(i / 8) % 2
-                const squareColor = (i % 2 === evenRow) ? "light" : "dark"
+                const evenRow = i % 2
+                const squareColor = (j % 2 === evenRow) ? "light" : "dark"
                 square.className = `square ${squareColor}`
-                square.id = getSquareName(x,y)
-                row.push(square)
+                square.id = utils.getSquareName(j, i)
+                column.push(square)
             }
-            grid.unshift(row)
+            grid.unshift(column)
         }
         grid.forEach(row => {
             row.forEach(cell => {
@@ -79,16 +84,17 @@ class ChessBoard {
     }
 
     render() {
-        this.createDomGrid()
-        for (piece in this.collisions) {
-            if (piece) {
-                this.dom.querySelector(`#${piece.pos.name}`).appendChild(piece.dom)
-            }
-        }
+        this.collisions.forEach(row => {
+            row.forEach(piece => {
+                if (piece) {
+                    this.dom.querySelector(`#${piece.pos.name}`).appendChild(piece.dom)
+                }
+            })            
+        })
     }
 
     addPiece(type, color, position) {
-        chessPiece = chessPieceFactory(this, piece.type, piece.color, piece.position)
+        const chessPiece = utils.chessPieceFactory(this, type, color, position)
     }
 }
-
+export default ChessBoard
