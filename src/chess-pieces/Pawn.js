@@ -24,7 +24,6 @@ class Pawn extends ChessPiece {
 
     update() {
         super.update()
-        this.legalMoves = []
         let blocked = false
         let x = this.pos.x
         let y = this.pos.y + this.direction

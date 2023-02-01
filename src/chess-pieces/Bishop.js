@@ -11,7 +11,6 @@ class Bishop extends ChessPiece {
 
     update() {
         super.update()
-        this.legalMoves = []
         this.updateTopLeft()
         this.updateTopRight()
         this.updateBottomLeft()

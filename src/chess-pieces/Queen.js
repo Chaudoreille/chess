@@ -1,5 +1,6 @@
 import ChessPiece from "./ChessPiece.js"
 import { QUEEN } from "../constants.js"
+import { inBounds } from "../utilities.js"
 
 class Queen extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -10,6 +11,97 @@ class Queen extends ChessPiece {
 
     update() {
         super.update()
+        this.updateLeft()
+        this.updateRight()
+        this.updateDown()
+        this.updateUp()
+        this.updateTopLeft()
+        this.updateTopRight()
+        this.updateBottomLeft()
+        this.updateBottomRight()
+    }
+
+    updateLeft() {
+        for (let i = this.pos.x-1; i >= 0; i--) {
+            if (!this.legalBoardSpace(i, this.pos.y)) {
+                return
+            }
+        }
+        return
+    }
+
+    updateRight() {
+        for (let i = this.pos.x+1; i < 8; i++) {
+            if (!this.legalBoardSpace(i, this.pos.y)) {
+                return
+            }
+        }
+        return
+    }
+
+    updateDown() {
+        for (let j = this.pos.y-1; j >= 0; j--) {
+            if (!this.legalBoardSpace(this.pos.x, j)) {
+                return
+            }
+        }
+        return
+    }
+
+    updateUp() {
+        for (let j = this.pos.y+1; j < 8; j++) {
+            if (!this.legalBoardSpace(this.pos.x, j)) {
+                return
+            }
+        }
+        return
+    }
+    updateTopLeft() {
+        let x = this.pos.x - 1
+        let y = this.pos.y + 1
+
+        while(inBounds(x,y)) {
+            if (!this.legalBoardSpace(x,y)) return
+            x--
+            y++
+        }
+        return
+    }
+
+    updateTopRight() {
+        let x = this.pos.x + 1
+        let y = this.pos.y + 1
+
+        while(inBounds(x,y)) {
+            if (!this.legalBoardSpace(x,y)) return
+            x++
+            y++
+        }
+        return
+    }
+
+    updateBottomLeft() {
+        let x = this.pos.x - 1
+        let y = this.pos.y - 1
+
+        while(inBounds(x,y)) {
+            if (!this.legalBoardSpace(x,y)) return
+            x--
+            y--
+        }
+        return
+    }
+
+    updateBottomRight() {
+        let x = this.pos.x + 1
+        let y = this.pos.y - 1
+
+        while(inBounds(x,y)) {
+            if (!this.legalBoardSpace(x,y)) return
+            x++
+            y--
+        }
+        return
     }
 }
 export default Queen

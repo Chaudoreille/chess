@@ -22,6 +22,7 @@ class ChessPiece {
 
 
     update() {
+        this.legalMoves = []
     }
 
     /**

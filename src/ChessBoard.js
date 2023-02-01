@@ -59,8 +59,7 @@ class ChessBoard {
             cell.append(this.selectedPiece.dom)
             this.selectedPiece = false
             this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
-        }
-        if (currentPiece && currentPiece.color === this.turn) {
+        } else if (currentPiece && currentPiece.color === this.turn) {
             if (currentPiece === this.selectedPiece) {
                 this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
                 return

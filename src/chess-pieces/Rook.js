@@ -11,7 +11,6 @@ class Rook extends ChessPiece {
    update() {
         super.update()
 
-        this.legalMoves = []
         this.updateLeft()
         this.updateRight()
         this.updateDown()
