@@ -13,6 +13,12 @@
     border: 2px solid var(--dark-background);
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     text-align: center;
+    font-size: 1.8rem;
+}
+
+#modal-window .title {
+    text-transform: capitalize;
+    font-size: 2rem;
 }
 
 #modal-window .btn-container {
