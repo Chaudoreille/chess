@@ -13,6 +13,18 @@ A Javascritp implementation of the noble and ancient Chess game, with some twist
 
 Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev Bootcamp.
 
+## table of contents
+
+1. [Implementation](#implementation)
+2. [Demo](#demo)
+3. [What's next](#whats-next-)
+    1. [Logic](#logic)
+    2. [Bonus Fun](#bonus-fun)
+4. [Biggest Challenges](#biggest-challenges)
+5. [There was an attempt](#there-was-an-attempt)
+6. [Credits](#credits)
+
+
 ## **Implementation**
 
 - **A ChessBoard object contains**
