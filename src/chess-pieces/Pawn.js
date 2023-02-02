@@ -77,7 +77,6 @@ class Pawn extends ChessPiece {
         // this.board.collisions[x+1][y].enPassant) {
         //     this.legalBoardSpace(x+1, y+this.direction)
         // }
-        this.breakChecks()
     }
 }
 export default Pawn

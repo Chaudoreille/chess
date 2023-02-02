@@ -17,7 +17,6 @@ class Rook extends ChessPiece {
         this.updateRight()
         this.updateDown()
         this.updateUp()
-        this.breakChecks()
     }
 
     checkBreakerMoves() {

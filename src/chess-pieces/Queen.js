@@ -20,7 +20,6 @@ class Queen extends ChessPiece {
         this.updateTopRight()
         this.updateBottomLeft()
         this.updateBottomRight()
-        this.breakChecks()
     }
 
     checkBreakerMoves() {

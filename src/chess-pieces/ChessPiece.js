@@ -1,6 +1,6 @@
 import Square from "../Square.js"
 import { inBounds, oppositeColor } from "../utilities.js"
-import { PAWN } from "../constants.js"
+import { KING, PAWN } from "../constants.js"
 
 class ChessPiece {
     constructor(chessBoard, color, square) {
@@ -62,6 +62,18 @@ class ChessPiece {
 
         this.board.update()
         this.board.updateChecks()
+
+        for (let color in this.board.pieces) {
+            if (this.board.pieces[color].every(p => p.legalMoves.length === 0)) {
+                console.log(`${oppositeColor(color)} wins !`)
+            }
+        }
+        /**
+         * temporary measure : discovered check is checkMate
+         */
+        if (this.board.kings[this.color].isCheck()) {
+            console.log(`${oppositeColor(this.color)} wins !`)
+        }
         this.board.turn = oppositeColor(this.color)
 
         if (takenPiece) {
@@ -106,14 +118,15 @@ class ChessPiece {
             return false
         }
         this.targets.push(new Square(x, y))
+        const target = this.board.collisions[x][y]
 
-        if (this.board.collisions[x][y] instanceof ChessPiece) {
-            if (this.board.collisions[x][y].color !== this.color) {
+        if (target instanceof ChessPiece &&
+            (target.type !== KING || target.color === this.color)) {
+            if (target.color !== this.color) {
                 this.legalMoves.push(new Square(x, y))
             }
             return false
         }
-
         this.legalMoves.push(new Square(x, y))
         return true
     }
