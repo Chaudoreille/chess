@@ -66,14 +66,14 @@ class ChessPiece {
 
         for (let color in this.board.pieces) {
             if (this.board.pieces[color].every(p => p.legalMoves.length === 0)) {
-                modal(`${oppositeColor(color)} wins !`, false, "New Game", newGame, "OK")
+                modal("Checkmate", `${oppositeColor(color)} wins !`, "New Game", newGame, "OK")
             }
         }
         /**
          * temporary measure : discovered check is checkMate
          */
         if (this.board.kings[this.color].isCheck()) {
-            modal(`${oppositeColor(this.color)} wins !`, false, "New Game", newGame, "OK")
+            modal("CheckMate", `${oppositeColor(this.color)} wins !`, false, "New Game", newGame, "OK")
         }
         this.board.turn = oppositeColor(this.color)
 

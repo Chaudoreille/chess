@@ -5,7 +5,7 @@ import { getSquareName, modal } from "./utilities.js"
 let board;
 
 document.querySelector("#new-game-btn").addEventListener("click", event => {
-    modal("Are you sure you want to restart ?", false, "Yes", newGame, "No")
+    modal("Are you sure you want to restart ?", "Your current game will be lost", "Yes", newGame, "No")
 })
 
 

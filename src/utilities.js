@@ -117,7 +117,6 @@ export function normalize(domElement) {
 }
 
 export function modal(title, message, validateText, validateCallback, cancelText, cancelCallback) {
-    console.log("start modaling")
     const modal = document.querySelector("#modal-window")
 
     if (validateCallback) {
@@ -136,9 +135,21 @@ export function modal(title, message, validateText, validateCallback, cancelText
 
         modal.querySelector(".btn-cancel").addEventListener("click", cancelCallback)
     }
-    if (title) modal.querySelector(".title").innerText = title
-    if (message) modal.querySelector(".message").innerText = message
-    if (validateText) modal.querySelector(".btn-validate").innerText = validateText
+    if (title) {
+        modal.querySelector(".title").innerText = title
+    } else {
+        modal.querySelector(".title").innerText = ""
+    }
+    if (message) {
+        modal.querySelector(".message").innerText = message
+    } else {
+        modal.querySelector(".message").innerText = ""
+    }
+    if (validateText) {
+        modal.querySelector(".btn-validate").innerText = validateText
+    } else {
+        modal.querySelector(".btn-validate").innerText = "OK"
+    }
 
     if (cancelText) {
         modal.querySelector(".btn-cancel").innerText = cancelText
@@ -147,7 +158,6 @@ export function modal(title, message, validateText, validateCallback, cancelText
         modal.querySelector(".btn-cancel").classList.add("hidden")
     }
     modal.classList.remove("hidden")
-    console.log("end modaling")
 }
 
 document.querySelector("#modal-window .btn-cancel").addEventListener("click", event => document.querySelector("#modal-window").classList.add("hidden"))
