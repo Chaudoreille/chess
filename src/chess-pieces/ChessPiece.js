@@ -77,6 +77,7 @@ class ChessPiece {
         this.board.turn = oppositeColor(this.color)
 
         if (takenPiece) {
+            document.querySelector(`#${takenPiece.color}-prison .square:empty`).appendChild(takenPiece.dom)
             return takenPiece
         } else {
             return false

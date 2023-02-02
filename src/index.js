@@ -29,3 +29,17 @@ for (let i = 0; i < 8; i++) {
 
 board.addEvents()
 board.render()
+
+const whitePieceNumber = board.pieces[WHITE].length - 1
+const blackPieceNumber = board.pieces[BLACK].length - 1
+
+for (let i = 0; i < whitePieceNumber; i++) {
+    const cell = document.createElement("div")
+    cell.className = "square"
+    document.querySelector("#white-prison .taken").appendChild(cell)
+}
+for (let i = 0; i < blackPieceNumber; i++) {
+    const cell = document.createElement("div")
+    cell.className = "square"
+    document.querySelector("#black-prison .taken").appendChild(cell)
+}
