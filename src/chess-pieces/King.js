@@ -22,7 +22,19 @@ class King extends ChessPiece {
                 this.legalBoardSpace(this.pos.x + i, this.pos.y + j)
             }
         }
-        this.breakChecks()
+    }
+
+    breakChecks() {
+        this.legalMoves = this.legalMoves.filter(move => {
+            for (let enemy of this.board.pieces[oppositeColor(this.color)]) {
+                for (let  target of enemy.targets) {
+                    if (target.name === move.name) {
+                        return false
+                    }
+                }
+            }
+            return true
+        })
     }
 
     isCheck() {
@@ -44,6 +56,7 @@ class King extends ChessPiece {
     }
 
     isCheckmate() {
+        this.board.pieces[this.color]
         return false
     }
 }

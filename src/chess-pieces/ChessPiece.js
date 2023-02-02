@@ -72,8 +72,7 @@ class ChessPiece {
     }
 
     checkBreakerMoves() {
-        this.checkBreakers = []
-        this.checkBreakers.push(this.pos)
+        this.checkBreakers = [this.pos]
     }
 
     breakChecks() {

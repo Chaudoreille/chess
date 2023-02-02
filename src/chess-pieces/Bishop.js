@@ -22,8 +22,8 @@ class Bishop extends ChessPiece {
     checkBreakerMoves() {
         super.checkBreakerMoves()
         const king = this.board.kings[oppositeColor(this.color)]
-        const inc_x = (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x)
-        const inc_y = (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y)
+        const inc_x = king.pos.x - this.pos.x !== 0 ? (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x) : 0
+        const inc_y = king.pos.y - this.pos.y !== 0 ? (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y) : 0
         let x = this.pos.x + inc_x
         let y = this.pos.y + inc_y
 
