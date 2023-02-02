@@ -68,6 +68,12 @@ class ChessPiece {
                 console.log(`${oppositeColor(color)} wins !`)
             }
         }
+        /**
+         * temporary measure : discovered check is checkMate
+         */
+        if (this.board.kings[this.color].isCheck()) {
+            console.log(`${oppositeColor(this.color)} wins !`)
+        }
         this.board.turn = oppositeColor(this.color)
 
         if (takenPiece) {
