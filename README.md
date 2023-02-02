@@ -1,8 +1,8 @@
-# Sshtress
+# **Sshtress**
 
 By Arthur Chaudoreille
 
-## Description
+## **Description**
 
 A Javascritp implementation of the noble and ancient Chess game, with some twists:
 
@@ -13,9 +13,9 @@ A Javascritp implementation of the noble and ancient Chess game, with some twist
 
 Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev Bootcamp.
 
-## Implementation
+## **Implementation**
 
-- A ChessBoard object contains
+- **A ChessBoard object contains**
   - 2 lists of chess pieces (for each color)
   - 2 Kings for easy access to check situation detection
   - a collision board to calculate legal moves
@@ -25,7 +25,7 @@ Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev B
     - allowing or disallowing pieces to move based on their legal moves
     - dispatching instructions to chess pieces
     - being the access hub for chess pieces
-- A ChessPiece object contains
+- **A ChessPiece object contains**
   - a square object representing it's position on the board
   - a list of legal moves
   - a list of squares it targets on the board
@@ -41,11 +41,11 @@ Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev B
   - being a regular chess piece
   - indicating checks
 
-**[DEMO](https://chaudoreille.github.io/chess/)**
+# **[DEMO](https://chaudoreille.github.io/chess/)**
 
-## What's next ?
+## **What's next ?**
 
-### Logic
+### **Logic**
 
 - Implementing pawn promotion, these little guys do a very important and often underrated job, they deserve it
 - Implementing pins
@@ -54,7 +54,7 @@ Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev B
 - implementing rock
 - implementing en-passant
 
-### Bonus Fun
+### **Bonus Fun**
 
 - implementing a clock to force a faster game, nobody ain't got time for that
 - implementing a game interface allowing to change starting pieces, set the clock, etc..
@@ -65,18 +65,18 @@ Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev B
 - linking the game to an AI API to play solo
 - deploying a server to enable online duels
 
-## Biggest challenges
+## **Biggest challenges**
 
     - check situations and resolution
     - Debugging without proper tests
     - Overconfidence is a slow and insidious killer
     - Sshtress management & organisation (hence the name)
 
-## There was an attempt
+## **There was an attempt**
 
 - to develop it using a Test Driven Development approach.
 - to remain calm and collected and do it in an orderly fashion
 
-### Credits
+## **Credits**
 
 [Chess Sprites: SVG chess pieces by Maurizio Monge](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces/Maurizio_Monge)
