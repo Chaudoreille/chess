@@ -62,8 +62,11 @@ class ChessPiece {
 
         this.board.update()
         this.board.updateChecks()
-        if (this.board.pieces[oppositeColor(this.color)].every(p => p.legalMoves.length === 0)) {
-            console.log("CHECKMATE")
+
+        for (let color in this.board.pieces) {
+            if (this.board.pieces[color].every(p => p.legalMoves.length === 0)) {
+                console.log(`${oppositeColor(color)} wins !`)
+            }
         }
         this.board.turn = oppositeColor(this.color)
 
