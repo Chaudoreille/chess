@@ -9,36 +9,113 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: 'Vollkorn', serif;
 }
 
 header {
     min-height: 100px;
     width: 100%;
     background-color: var(--dark-background);
+    color: var(--light-square);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+header .title-container {
+    position: relative;
+    width: fit-content;
+    padding: 0 10vw;
+}
+
+header h1 {
+    font-size: calc(2rem + 2vh);
+    text-transform: uppercase;
+    margin: 0
+}
+
+header h1::before,
+header h1::after {
+    content: "";
+    width: calc(2rem + 2vh);
+    height: calc(2rem + 2vh);
+    top: -.5vh;
+    position: absolute;
+    display: inline-block;
+    background-size: contain;
+}
+
+header h1::before {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/57/Chess_Maurizio_Monge_Fantasy_wk.svg");
+    right: 5px;
+}
+
+header h1::after {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/d/dd/Chess_Maurizio_Monge_Fantasy_bk.svg");
+    left: 5px;
 }
 
 #section-container {
     display: flex;
     flex-direction: row;
-    justify-content: stretch;
+    justify-content: space-between;
+    height: 85vh;
+    width: 100%;
 }
 
+#ui-container,
 #taken-pieces {
-    height: 100%;
+    height: 80%;
+    min-width: 20vw;
     background-color: var(--dark-background);
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: var(--light-text);
+    text-align: center;
+    border-radius: 15px;
+    margin: auto 0 auto 20px
 }
+
+#taken-pieces #white-prison,
+#taken-pieces #black-prison {
+    border: 2px solid var(--light-text);
+    margin: 20px 40px;
+}
+
+#taken-pieces .taken {
+    min-height: 17vh;
+    background-color: var(--light-square);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#taken-pieces .taken.square {
+    aspect-ratio: 1;
+}
+
+#taken-pieces .taken .chess-piece {
+    background-repeat: no-repeat;
+}
+
+
 
 #ui-container {
-    height: 100%;
+    margin-right: 30px;
+    margin-left: 0;
+    /* height: 100%;
+    min-width: 20vw;
     background-color: var(--dark-background);
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: var(--light-text);
+    text-align: center; */
 }
 
 footer {
-    position: relative;
-    bottom: 0;
-    height:100px;
+    height:10vh;
     background-color: var(--dark-background);
     width: 100%;
 }

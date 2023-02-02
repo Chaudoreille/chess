@@ -3,11 +3,12 @@
     --dark-text: #4f6d7a;
     --middle-ground: #4A6FA5;
     --light-background: #C0D6DF;
-    --light-text: #dbe9ee;
+    --light-text: #E9EDDE;
     --light-square: #E9EDDE;
     --light-square-highlight: rgb(200, 200, 0);
     --dark-square: #6D3D14;
     --dark-square-highlight: rgb(120, 120, 0);
     --light-square-legal: rgb(255 0 255);
     --dark-square-legal: rgb(120 0 120);
+    --board-frame: #412001;
 }
