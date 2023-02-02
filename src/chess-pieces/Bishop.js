@@ -16,7 +16,6 @@ class Bishop extends ChessPiece {
         this.updateTopRight()
         this.updateBottomLeft()
         this.updateBottomRight()
-        this.breakChecks()
     }
 
     checkBreakerMoves() {
