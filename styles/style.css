@@ -2,6 +2,11 @@
 @import url(theme.css);
 @import url(board.css);
 @import url(pieces.css);
+@import url(modal.css);
+
+.hidden {
+    display: none !important;
+}
 
 body{
     background-color: var(--light-background);

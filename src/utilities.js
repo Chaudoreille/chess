@@ -115,3 +115,40 @@ export function normalize(domElement) {
     hideLegalMove(domElement)
     removeHighlight(domElement)
 }
+
+export function modal(title, message, validateText, validateCallback, cancelText, cancelCallback) {
+    console.log("start modaling")
+    const modal = document.querySelector("#modal-window")
+
+    if (validateCallback) {
+        let btn = modal.querySelector(".btn-validate")
+        let newBtn = btn.cloneNode()
+        modal.querySelector(".btn-container").replaceChild(newBtn, btn)
+        newBtn.addEventListener("click", validateCallback)
+        newBtn.addEventListener("click", event => modal.classList.add("hidden"))
+    }
+    if (cancelCallback) {
+        let btn = modal.querySelector(".btn-cancel")
+        let newBtn = btn.cloneNode()
+        modal.querySelector(".btn-container").replaceChild(newBtn, btn)
+        newBtn.addEventListener("click", cancelCallback)
+        newBtn.addEventListener("click", event => modal.classList.add("hidden"))
+
+        modal.querySelector(".btn-cancel").addEventListener("click", cancelCallback)
+    }
+    if (title) modal.querySelector(".title").innerText = title
+    if (message) modal.querySelector(".message").innerText = message
+    if (validateText) modal.querySelector(".btn-validate").innerText = validateText
+
+    if (cancelText) {
+        modal.querySelector(".btn-cancel").innerText = cancelText
+        modal.querySelector(".btn-cancel").classList.remove("hidden")
+    } else {
+        modal.querySelector(".btn-cancel").classList.add("hidden")
+    }
+    modal.classList.remove("hidden")
+    console.log("end modaling")
+}
+
+document.querySelector("#modal-window .btn-cancel").addEventListener("click", event => document.querySelector("#modal-window").classList.add("hidden"))
+document.querySelector("#modal-window .btn-validate").addEventListener("click", event => document.querySelector("#modal-window").classList.add("hidden"))

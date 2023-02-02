@@ -1,18 +1,17 @@
 import ChessBoard from "./ChessBoard.js"
 import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN } from "./constants.js"
-import { getSquareName } from "./utilities.js"
+import { getSquareName, modal } from "./utilities.js"
 
 let board;
 
 document.querySelector("#new-game-btn").addEventListener("click", event => {
-    document.querySelector("#chess-board").innerHTML = ""
-    document.querySelectorAll("#taken-pieces .taken").forEach(prison => prison.innerHTML = "")
-
-    newGame()
+    modal("Are you sure you want to restart ?", false, "Yes", newGame, "No")
 })
 
 
-function newGame() {
+export function newGame() {
+    document.querySelector("#chess-board").innerHTML = ""
+    document.querySelectorAll("#taken-pieces .taken").forEach(prison => prison.innerHTML = "")
     board = new ChessBoard()
 
     board.addPiece(ROOK, WHITE, "a1" )
