@@ -1,6 +1,7 @@
 import ChessPiece from "./ChessPiece.js"
+import Square from "../Square.js"
 import { BISHOP } from "../constants.js"
-import { inBounds } from "../utilities.js"
+import { oppositeColor } from "../utilities.js"
 
 class Bishop extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -15,14 +16,29 @@ class Bishop extends ChessPiece {
         this.updateTopRight()
         this.updateBottomLeft()
         this.updateBottomRight()
+        this.breakChecks()
+    }
+
+    checkBreakerMoves() {
+        super.checkBreakerMoves()
+        const king = this.board.kings[oppositeColor(this.color)]
+        const inc_x = king.pos.x - this.pos.x !== 0 ? (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x) : 0
+        const inc_y = king.pos.y - this.pos.y !== 0 ? (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y) : 0
+        let x = this.pos.x + inc_x
+        let y = this.pos.y + inc_y
+
+        while (x !== king.pos.x && y !== king.pos.y) {
+            this.checkBreakers.push(new Square(x,y))
+            x += inc_x
+            y += inc_y
+        }
     }
 
     updateTopLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y++
         }
@@ -33,36 +49,30 @@ class Bishop extends ChessPiece {
         let x = this.pos.x + 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y++
         }
-        return
     }
 
     updateBottomLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y--
         }
-        return
     }
 
     updateBottomRight() {
         let x = this.pos.x + 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y--
         }
-        return
     }
 }
 export default Bishop

@@ -1,4 +1,5 @@
 import ChessPiece from "./ChessPiece.js"
+import Square from "../Square.js"
 import { PAWN } from "../constants.js"
 import { inBounds } from "../utilities.js"
 
@@ -49,12 +50,20 @@ class Pawn extends ChessPiece {
             }
         }
 
-        x = this.pos.x
-        y = this.pos.y
+        this.targets = []
+        if (inBounds(this.pos.x-1, this.pos.y + this.direction)) {
+            this.targets.push(new Square(this.pos.x-1, this.pos.y + this.direction))
+        }
+        if (inBounds(this.pos.x+1, this.pos.y + this.direction)) {
+            this.targets.push(new Square(this.pos.x+1, this.pos.y + this.direction))
+        }
 
+        
         /**
          * this crashes the program on update
-         */
+        */
+        // x = this.pos.x
+        // y = this.pos.y
         // if (inBounds(x-1, y)  && this.board.collisions[x-1][y] &&
         // this.board.collisions[x-1][y].type === PAWN &&
         // this.board.collisions[x-1][y].color !== this.color &&
@@ -68,6 +77,7 @@ class Pawn extends ChessPiece {
         // this.board.collisions[x+1][y].enPassant) {
         //     this.legalBoardSpace(x+1, y+this.direction)
         // }
+        this.breakChecks()
     }
 }
 export default Pawn

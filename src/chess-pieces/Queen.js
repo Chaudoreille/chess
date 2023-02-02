@@ -1,6 +1,7 @@
+import Square from "../Square.js"
 import ChessPiece from "./ChessPiece.js"
 import { QUEEN } from "../constants.js"
-import { inBounds } from "../utilities.js"
+import { oppositeColor, cmpPositions } from "../utilities.js"
 
 class Queen extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -19,6 +20,34 @@ class Queen extends ChessPiece {
         this.updateTopRight()
         this.updateBottomLeft()
         this.updateBottomRight()
+        this.breakChecks()
+    }
+
+    checkBreakerMoves() {
+        super.checkBreakerMoves()
+        const king = this.board.kings[oppositeColor(this.color)]
+        const positions = [king.pos, this.pos]
+        positions.sort(cmpPositions)
+
+        if (positions[0].x === positions[1].x) {
+            for (let i = positions[0].y+1; i < positions[1].y; i++) {
+                this.checkBreakers.push(new Square(positions[0].x, i))
+            }
+        } else {
+            for (let i = positions[0].x+1; i < positions[1].x; i++) {
+                this.checkBreakers.push(new Square(i, positions[0].y))
+            }
+        }
+        const inc_x = king.pos.x - this.pos.x !== 0 ? (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x) : 0
+        const inc_y = king.pos.y - this.pos.y !== 0 ? (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y) : 0
+        let x = this.pos.x + inc_x
+        let y = this.pos.y + inc_y
+
+        while (x !== king.pos.x && y !== king.pos.y) {
+            this.checkBreakers.push(new Square(x,y))
+            x += inc_x
+            y += inc_y
+        }
     }
 
     updateLeft() {
@@ -56,12 +85,12 @@ class Queen extends ChessPiece {
         }
         return
     }
+
     updateTopLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y++
         }
@@ -72,36 +101,30 @@ class Queen extends ChessPiece {
         let x = this.pos.x + 1
         let y = this.pos.y + 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y++
         }
-        return
     }
 
     updateBottomLeft() {
         let x = this.pos.x - 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x--
             y--
         }
-        return
     }
 
     updateBottomRight() {
         let x = this.pos.x + 1
         let y = this.pos.y - 1
 
-        while(inBounds(x,y)) {
-            if (!this.legalBoardSpace(x,y)) return
+        while(this.legalBoardSpace(x,y)) {
             x++
             y--
         }
-        return
     }
 }
 export default Queen

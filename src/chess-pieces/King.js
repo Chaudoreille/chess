@@ -1,6 +1,6 @@
 import ChessPiece from "./ChessPiece.js"
 import { KING } from "../constants.js"
-import { inBounds } from "../utilities.js"
+import { oppositeColor } from "../utilities.js"
 
 class King extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -19,20 +19,44 @@ class King extends ChessPiece {
 
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
-                let x = this.pos.x + i
-                let y = this.pos.y + j
-                if (inBounds(x, y)) {
-                    this.legalBoardSpace(x,y)
-                }
+                this.legalBoardSpace(this.pos.x + i, this.pos.y + j)
             }
         }
     }
 
+    breakChecks() {
+        this.legalMoves = this.legalMoves.filter(move => {
+            for (let enemy of this.board.pieces[oppositeColor(this.color)]) {
+                for (let  target of enemy.targets) {
+                    if (target.name === move.name) {
+                        return false
+                    }
+                }
+            }
+            return true
+        })
+    }
+
     isCheck() {
-        return false
+        return this.board.checks[this.color].length > 0
+    }
+
+    getChecks() {
+        this.board.checks[this.color] = []
+
+        this.board.pieces[oppositeColor(this.color)].forEach(enemy => {
+            for (const target of enemy.targets) {
+                if (target.name === this.pos.name) {
+                    enemy.checkBreakerMoves()
+                    this.board.checks[this.color].push(enemy)
+                    return
+                }
+            }
+        })
     }
 
     isCheckmate() {
+        this.board.pieces[this.color]
         return false
     }
 }

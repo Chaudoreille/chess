@@ -1,6 +1,5 @@
 import * as utils from "./utilities.js"
-import {WHITE, BLACK, Direction} from "./constants.js"
-
+import {WHITE, BLACK, KING, Direction} from "./constants.js"
 
 class ChessBoard {
     constructor() {
@@ -9,6 +8,10 @@ class ChessBoard {
             [BLACK]: null,
         }
         this.pieces = {
+            [WHITE]: [],
+            [BLACK]: [],
+        }
+        this.checks = {
             [WHITE]: [],
             [BLACK]: [],
         }
@@ -33,6 +36,15 @@ class ChessBoard {
         this.pieces[BLACK].forEach(piece => piece.update())
     }
 
+    updateChecks() {
+        Object.values(this.kings).forEach((king) => {
+            king.getChecks()
+        })
+
+        this.pieces[WHITE].forEach(piece => piece.breakChecks())
+        this.pieces[BLACK].forEach(piece => piece.breakChecks())
+    }
+
     getCellList() {
         return this.dom.querySelectorAll(".square")
     }
@@ -48,6 +60,9 @@ class ChessBoard {
 
         if (this.selectedPiece && (!currentPiece || currentPiece.color !== this.turn)) {
             try {
+                if (this.selectedPiece.type === KING) {
+                    utils.hideCheck(this.selectedPiece)
+                }
                 this.selectedPiece.move(position)
             } catch (error) {
                 if (error.message === "Illegal Move") {
@@ -59,18 +74,24 @@ class ChessBoard {
             cell.append(this.selectedPiece.dom)
             this.selectedPiece = false
             this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
+
+            Object.values(this.kings).forEach((king) => {
+                if (king.isCheck()) {
+                    utils.showCheck(king)
+                } else {
+                    utils.hideCheck(king)
+                }
+            })
         } else if (currentPiece && currentPiece.color === this.turn) {
             if (currentPiece === this.selectedPiece) {
                 this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
+                this.selectedPiece = null
                 return
             }
             this.getCellList().forEach((singleCell) => utils.normalize(singleCell))
             
             utils.highlight(cell)
-            currentPiece.legalMoves.forEach(square => {
-                let potientialMoveCell = document.getElementById(square.name) 
-                utils.legal(potientialMoveCell)
-            })
+            utils.showLegalMoves(currentPiece.legalMoves)
             this.selectedPiece = currentPiece
         }
     }

@@ -1,5 +1,5 @@
 import Square from "../Square.js"
-import { oppositeColor } from "../utilities.js"
+import { inBounds, oppositeColor } from "../utilities.js"
 import { PAWN } from "../constants.js"
 
 class ChessPiece {
@@ -9,6 +9,7 @@ class ChessPiece {
         this.type = null
         this.targets = []
         this.legalMoves = []
+        this.checkBreakers = []
         this.pinned = []
         this.color = color
         this.dom = this.createDomChessPiece()
@@ -23,6 +24,7 @@ class ChessPiece {
 
     update() {
         this.legalMoves = []
+        this.targets = []
     }
 
     /**
@@ -51,7 +53,6 @@ class ChessPiece {
         this.board.collisions[this.pos.x][this.pos.y] = null
         this.board.collisions[square.x][square.y] = this
         this.pos = square
-        this.board.update()
 
         this.board.pieces[oppositeColor(this.color)].forEach(element => {
             if (element.type == PAWN) {
@@ -59,6 +60,8 @@ class ChessPiece {
             }
         })
 
+        this.board.update()
+        this.board.updateChecks()
         this.board.turn = oppositeColor(this.color)
 
         if (takenPiece) {
@@ -66,6 +69,27 @@ class ChessPiece {
         } else {
             return false
         }
+    }
+
+    checkBreakerMoves() {
+        this.checkBreakers = [this.pos]
+    }
+
+    breakChecks() {
+        if (!this.board.kings[this.color].isCheck()) return
+        
+        this.legalMoves = this.legalMoves.filter(move => {
+            for (const attacker of this.board.checks[this.color]) {
+                for (const interception of attacker.checkBreakers) {
+                    if (move.name === interception.name) {
+                        return true
+                    }
+                }
+            }
+            return false
+        })
+
+        return false
     }
 
     /**
@@ -78,12 +102,18 @@ class ChessPiece {
      *     - false if movement should stop
      */
     legalBoardSpace(x, y) {
+        if (!inBounds(x, y)) {
+            return false
+        }
+        this.targets.push(new Square(x, y))
+
         if (this.board.collisions[x][y] instanceof ChessPiece) {
             if (this.board.collisions[x][y].color !== this.color) {
                 this.legalMoves.push(new Square(x, y))
             }
             return false
         }
+
         this.legalMoves.push(new Square(x, y))
         return true
     }
@@ -97,11 +127,8 @@ class ChessPiece {
 
     remove() {
         const pieceList = this.board.pieces[this.color]
-        console.log(pieceList)
         for (let i = 0; i < pieceList.length; i++) {
             if (pieceList[i] === this) {
-                console.log(pieceList[i])
-                console.log(this)
                 pieceList.splice(i, 1);
             }
         }
