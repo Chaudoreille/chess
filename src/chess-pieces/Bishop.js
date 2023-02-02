@@ -1,5 +1,7 @@
 import ChessPiece from "./ChessPiece.js"
+import Square from "../Square.js"
 import { BISHOP } from "../constants.js"
+import { oppositeColor } from "../utilities.js"
 
 class Bishop extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -15,6 +17,21 @@ class Bishop extends ChessPiece {
         this.updateBottomLeft()
         this.updateBottomRight()
         this.breakChecks()
+    }
+
+    checkBreakerMoves() {
+        super.checkBreakerMoves()
+        const king = this.board.kings[oppositeColor(this.color)]
+        const inc_x = (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x)
+        const inc_y = (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y)
+        let x = this.pos.x + inc_x
+        let y = this.pos.y + inc_y
+
+        while (x !== king.pos.x && y !== king.pos.y) {
+            this.checkBreakers.push(new Square(x,y))
+            x += inc_x
+            y += inc_y
+        }
     }
 
     updateTopLeft() {

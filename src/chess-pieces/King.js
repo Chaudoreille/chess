@@ -35,7 +35,7 @@ class King extends ChessPiece {
         this.board.pieces[oppositeColor(this.color)].forEach(enemy => {
             for (const target of enemy.targets) {
                 if (target.name === this.pos.name) {
-                    enemy.chessBreakerMoves()
+                    enemy.checkBreakerMoves()
                     this.board.checks[this.color].push(enemy)
                     return
                 }

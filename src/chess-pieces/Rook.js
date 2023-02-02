@@ -1,5 +1,7 @@
 import ChessPiece from "./ChessPiece.js"
+import Square from "../Square.js"
 import { ROOK } from "../constants.js"
+import { cmpPositions, oppositeColor } from "../utilities.js"
 
 class Rook extends ChessPiece {
     constructor(chessBoard, color, square) {
@@ -18,19 +20,22 @@ class Rook extends ChessPiece {
         this.breakChecks()
     }
 
-    // chessBreakerMoves() {
-    //     super.chessBreakerMoves()
+    checkBreakerMoves() {
+        super.checkBreakerMoves()
+        let king = this.board.kings[oppositeColor(this.color)]
+        let positions = [king.pos, this.pos]
+        positions.sort(cmpPositions)
 
-    //     let kingPos = this.board.kings[oppositeColor(this.color)].pos
-    //     let positions = [kingPos, this.pos]
-    //     positions.sort(utils.cmpPositions)
-
-    //     for (let i = positions[0].x + 1; i < positions[1].x; i++) {
-    //         for (let j = positions[0].y + 1; j < positions[1].y; j++) {
-    //             this.checkBreakers.push(new Square(i,j))
-    //         }
-    //     }
-    // }
+        if (positions[0].x === positions[1].x) {
+            for (let i = positions[0].y+1; i < positions[1].y; i++) {
+                this.checkBreakers.push(new Square(positions[0].x, i))
+            }
+        } else {
+            for (let i = positions[0].x+1; i < positions[1].x; i++) {
+                this.checkBreakers.push(new Square(i, positions[0].y))
+            }
+        }
+    }
 
     updateLeft() {
         for (let i = this.pos.x-1; i >= 0; i--) {
