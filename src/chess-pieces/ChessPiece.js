@@ -1,6 +1,7 @@
 import Square from "../Square.js"
-import { inBounds, oppositeColor } from "../utilities.js"
+import { inBounds, oppositeColor, modal } from "../utilities.js"
 import { KING, PAWN } from "../constants.js"
+import { newGame } from "../index.js"
 
 class ChessPiece {
     constructor(chessBoard, color, square) {
@@ -65,14 +66,14 @@ class ChessPiece {
 
         for (let color in this.board.pieces) {
             if (this.board.pieces[color].every(p => p.legalMoves.length === 0)) {
-                console.log(`${oppositeColor(color)} wins !`)
+                modal(`${oppositeColor(color)} wins !`, false, "New Game", newGame, "OK")
             }
         }
         /**
          * temporary measure : discovered check is checkMate
          */
         if (this.board.kings[this.color].isCheck()) {
-            console.log(`${oppositeColor(this.color)} wins !`)
+            modal(`${oppositeColor(this.color)} wins !`, false, "New Game", newGame, "OK")
         }
         this.board.turn = oppositeColor(this.color)
 

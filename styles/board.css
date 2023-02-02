@@ -6,6 +6,7 @@
     margin: auto;
     height: fit-content;
     width: fit-content;
+    position: relative;
 }
 #chess-board {
     display: grid;

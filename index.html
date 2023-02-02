@@ -30,8 +30,22 @@
                 <div class="taken"></div>
             </section>
         </section>
-        <section id="board-frame"><div id="chess-board"></div></section>
-        <section id="ui-container"></section>
+        <section id="board-frame">
+            <div id="chess-board"></div>
+            <div id="modal-window" class="hidden">
+                <div class="textbox">
+                    <h2 class="title"></h2>
+                    <span class="message"></span>
+                </div>
+                <div class="btn-container">
+                    <button class="btn-cancel hidden"></button>
+                    <button class="btn-validate">OK</button>
+                </div>
+            </div>
+        </section>
+        <section id="ui-container">
+            <button id="new-game-btn">New Game</button>
+        </section>
     </div>
     <footer></footer>
 </body>
