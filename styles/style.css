@@ -78,6 +78,26 @@ header h1::after {
     margin: auto 0 auto 20px
 }
 
+#ui-container {
+    align-items: center;
+}
+
+#ui-container #new-game-btn {
+    border: none;
+    width: auto;
+    margin: 2rem 0;
+    padding: 1.5rem 3rem;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    color: var(--dark-background);
+    font-weight: 600;
+}
+
+#ui-container #new-game-btn.active {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    padding: 1.6rem 3rem 1.4rem 3rem;
+}
+
 #taken-pieces #white-prison,
 #taken-pieces #black-prison {
     border: 2px solid var(--light-text);
