@@ -82,7 +82,7 @@ Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev B
     - check situations and resolution
     - Debugging without proper tests
     - Overconfidence is a slow and insidious killer
-    - Sshtress management & organisation (hence the name)
+    - Sshtress and time management (hence the name)
 
 ## **There was an attempt**
 
@@ -91,4 +91,5 @@ Build using: HTML; CSS; And JavaScript, as Project no 1 of the Ironhack WebDev B
 
 ## **Credits**
 
-[Chess Sprites: SVG chess pieces by Maurizio Monge](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces/Maurizio_Monge)
+- [Chess Sprites: SVG chess pieces by Maurizio Monge](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces/Maurizio_Monge)  
+- [Jasmine Test Suite Engine](https://jasmine.github.io/)
