@@ -6,12 +6,8 @@ class King extends ChessPiece {
   constructor(chessBoard, color, square) {
     super(chessBoard, color, square);
     this.type = KING;
-    this.dom.classList.add(`${this.color}-${this.type}`);
-  }
-
-  spawn() {
-    super.spawn();
     this.board.kings[this.color] = this;
+    this.dom.classList.add(`${this.color}-${this.type}`);
   }
 
   update() {

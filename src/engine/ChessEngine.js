@@ -1,4 +1,5 @@
 import * as utils from "../utilities.js";
+import { IllegalMoveError } from "./error.js";
 import ChessPiece from "./chess-pieces/ChessPiece.js";
 import { WHITE, BLACK, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN, Direction } from "./constants.js";
 import King from "./chess-pieces/King.js";
@@ -35,6 +36,17 @@ class ChessEngine {
     this.turn = WHITE;
   }
 
+  pieceAt(squareName) {
+    const position = Square.fromName(squareName);
+
+    return this.collisions[position.x][position.y];
+  }
+
+  getKings() {
+    return Object.values(this.kings);
+  }
+
+
   update() {
     this.pieces[WHITE].forEach(piece => piece.update());
     this.pieces[BLACK].forEach(piece => piece.update());
@@ -51,30 +63,23 @@ class ChessEngine {
 
   /**
    * attempt moving a chess piece from <start> position to <end> position on the board
-   * @param {Square} start 
-   * @param {Square} end 
+   * @param {ChessPiece} piece 
+   * @param {Square} position
    * @returns 
    */
-  movePiece(start, end) {
-    const piece = this.collisions[start.x][start.y];
-    const target = this.collisions[end.x][end.y];
+  movePiece(piece, position) {
+    const target = this.collisions[position.x][position.y];
 
-    if (!piece) {
-      return false; // error: no piece found
+    if (!(piece instanceof ChessPiece)) {
+      throw new TypeError(`invalid argument: ${piece} is not a ChessPiece`);
+    }
+    if (!(position instanceof Square)) {
+      throw new TypeError(`invalid argument: ${position} is not a Square`);
     }
     if (piece.color !== this.turn) {
-      return false; // error: wrong player
+      throw new IllegalMoveError(`${this.turn} to play`);
     }
-    if (target.color === this.turn) {
-      return false; // error: Illegal move, square occupied by allied piece
-    }
-    try {
-      piece.move(target);
-    } catch (error) {
-      if (error.message === "Illegal Move") {
-        return false; // actually throw illegal move exception ?
-      }
-    }
+    piece.move(position);
 
     Object.values(this.kings).forEach((king) => {
       if (king.isCheck()) {

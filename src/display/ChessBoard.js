@@ -1,4 +1,5 @@
 import * as utils from "../utilities.js";
+import { IllegalMoveError } from "../engine/error.js";
 import { WHITE, BLACK, KING } from "../engine/constants.js";
 import ChessEngine from "../engine/ChessEngine.js";
 import Square from "../engine/Square.js";
@@ -32,50 +33,47 @@ class ChessBoard {
 
   _click = event => {
     const cell = event.currentTarget;
-    const position = Square.fromName(cell.id);
-    const currentPiece = this.collisions[position.x][position.y];
 
-    if (this._selectedPiece && (!currentPiece || currentPiece.color !== this.turn)) {
-      try {
+    if (!this._selectedPiece) {
+      const currentPiece = this.engine.pieceAt(cell.id);
+
+      if (currentPiece && currentPiece.color === this.engine.turn) {
+        this._selectedPiece = currentPiece;
         if (this._selectedPiece.type === KING) {
           utils.hideCheck(this._selectedPiece);
         }
-        this._selectedPiece.move(position);
-      } catch (error) {
-        if (error.message === "Illegal Move") {
-          this._selectedPiece = false;
-          this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
-          return;
-        }
+        utils.highlight(cell);
+        utils.showLegalMoves(currentPiece.legalMoves);
       }
+      return;
+    }
+
+    this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
+
+    try {
+      this.engine.movePiece(this._selectedPiece, Square.fromName(cell.id));
       cell.append(this._selectedPiece.dom);
       this._selectedPiece = false;
-      this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
-
-      Object.values(this.kings).forEach((king) => {
-        if (king.isCheck()) {
-          utils.showCheck(king);
-        } else {
-          utils.hideCheck(king);
-        }
-      });
-    } else if (currentPiece && currentPiece.color === this.turn) {
-      if (currentPiece === this._selectedPiece) {
-        this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
-        this._selectedPiece = null;
-        return;
+    } catch (error) {
+      if (error instanceof IllegalMoveError) {
+        this._selectedPiece = false;
+      } else {
+        console.error(error);
       }
-      this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
-
-      utils.highlight(cell);
-      utils.showLegalMoves(currentPiece.legalMoves);
-      this._selectedPiece = currentPiece;
     }
+
+    this.engine.getKings().forEach((king) => {
+      if (king.isCheck()) {
+        utils.showCheck(king);
+      } else {
+        utils.hideCheck(king);
+      }
+    });
   };
 
   addEvents() {
     this.getCellList().forEach((cell) => {
-      cell.addEventListener("click", this.click);
+      cell.addEventListener("click", this._click);
     });
     return this;
   }

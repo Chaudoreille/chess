@@ -1,4 +1,5 @@
 import Square from "../Square.js";
+import { IllegalMoveError } from "../error.js";
 import { inBounds, oppositeColor, modal } from "../../utilities.js";
 import { KING, PAWN } from "../constants.js";
 import { newGame } from "../../index.js";
@@ -25,22 +26,20 @@ class ChessPiece {
 
   /**
    * moves chess piece on the board
-   * @throws
-   *      - Illegal Move
-   *      - Friendly Fire
-   * @param {0} square
-   * @returns
-   *      - the taken piece if a piece was taken
-   *      - false otherwise
+   * @throws 
+   *  - TypeError
+   *  - IllegalMoveError
+   * @param {Square} square
+   * @returns {ChessPiece} taken piece or null
    */
   move(square) {
-    if (!this.legalMoves.find((move) => move.name === square.name)) {
-      throw (new Error("Illegal Move"));
+    if (!this.legalMoves.find((move) => move?.name === square.name)) {
+      throw (new IllegalMoveError(`${this.pos.name} to ${square.name}`));
     }
     const takenPiece = this.board.collisions[square.x][square.y];
     if (takenPiece) {
       if (takenPiece.color === this.color) {
-        throw (new Error("Friendly Fire"));
+        throw (new IllegalMoveError(`${this.pos.name} to ${square.name}`));
       } else if (takenPiece) {
         takenPiece.remove();
       }
@@ -76,7 +75,7 @@ class ChessPiece {
       document.querySelector(`#${takenPiece.color}-prison .square:empty`).appendChild(takenPiece.dom);
       return takenPiece;
     } else {
-      return false;
+      return null;
     }
   }
 
