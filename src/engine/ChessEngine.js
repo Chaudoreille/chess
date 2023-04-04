@@ -24,7 +24,7 @@ class ChessEngine {
       [WHITE]: [],
       [BLACK]: [],
     };
-    this.collisions = utils.initCollisionBoard();
+    this.collisions = utils.squareMatrix(8);
     this.turn = WHITE;
   }
 

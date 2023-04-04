@@ -59,20 +59,21 @@ export function getSquareName(x, y) {
 }
 
 /**
- *
- * @returns a null - filled 8 * 8 matrix
+ * returns a null-filled square matrix
+ * @param {number} length
+ * @returns {Array<Array<null>>} matrix
  */
-export function initCollisionBoard() {
-  const board = [];
+export function squareMatrix(length) {
+  const matrix = [];
 
-  for (let i = 0; i < 8; i++) {
-    board.push([]);
+  for (let i = 0; i < length; i++) {
+    matrix.push([]);
 
-    for (let j = 0; j < 8; j++) {
-      board[i].push(null);
+    for (let j = 0; j < length; j++) {
+      matrix[i].push(null);
     }
   }
-  return board;
+  return matrix;
 }
 
 export function oppositeColor(color) {
