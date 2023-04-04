@@ -1,4 +1,4 @@
-import { getSquareName } from "../utilities.js";
+import { A_CHAR_CODE } from "./constants.js";
 
 class Square {
   constructor(x, y) {
@@ -10,8 +10,20 @@ class Square {
     }
     this.x = x;
     this.y = y;
-    this.name = getSquareName(x, y);
+    this.name = Square.name(x, y);
     Object.freeze(this);
   }
+
+  static fromName(name) {
+    const x = name.charCodeAt(0) - A_CHAR_CODE;
+    const y = +name[1] - 1;
+
+    return new Square(x, y);
+  }
+
+  static name(x, y) {
+    return `${String.fromCharCode(A_CHAR_CODE + x)}${y + 1}`;
+  }
 }
+
 export default Square;

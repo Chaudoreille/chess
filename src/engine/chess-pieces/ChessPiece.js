@@ -16,12 +16,6 @@ class ChessPiece {
     this.checkBreakers = [];
 
     this.dom = this.createDomChessPiece();
-    this.spawn();
-  }
-
-  spawn() {
-    this.board.collisions[this.pos.x][this.pos.y] = this;
-    this.board.pieces[this.color].push(this);
   }
 
   update() {

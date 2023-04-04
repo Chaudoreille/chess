@@ -1,6 +1,7 @@
 import ChessBoard from "./display/ChessBoard.js";
 import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN } from "./engine/constants.js";
-import { getSquareName, modal } from "./utilities.js";
+import { modal } from "./utilities.js";
+import Square from "./engine/Square.js";
 
 let board;
 const defaultBackRow = [ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK];
@@ -18,25 +19,24 @@ export function newGame() {
     pieces.push({
       type: defaultBackRow[i],
       color: WHITE,
-      position: getSquareName(i, 0)
+      position: new Square(i, 0)
     });
     pieces.push({
       type: PAWN,
       color: WHITE,
-      position: getSquareName(i, 1)
+      position: new Square(i, 1)
     });
     pieces.push({
       type: defaultBackRow[i],
       color: BLACK,
-      position: getSquareName(i, 7)
+      position: new Square(i, 7)
     });
     pieces.push({
       type: PAWN,
       color: BLACK,
-      position: getSquareName(i, 6)
+      position: new Square(i, 6)
     });
   }
-
   board.populate(pieces);
   board.addEvents();
   board.render();

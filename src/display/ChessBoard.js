@@ -1,6 +1,7 @@
 import * as utils from "../utilities.js";
 import { WHITE, BLACK, KING } from "../engine/constants.js";
 import ChessEngine from "../engine/ChessEngine.js";
+import Square from "../engine/Square.js";
 
 class ChessBoard {
   constructor() {
@@ -31,7 +32,7 @@ class ChessBoard {
 
   _click = event => {
     const cell = event.currentTarget;
-    const position = utils.createSquareFromName(cell.id);
+    const position = Square.fromName(cell.id);
     const currentPiece = this.collisions[position.x][position.y];
 
     if (this._selectedPiece && (!currentPiece || currentPiece.color !== this.turn)) {
@@ -90,7 +91,7 @@ class ChessBoard {
         const evenRow = i % 2;
         const squareColor = (j % 2 === evenRow) ? "light" : "dark";
         square.className = `square ${squareColor}`;
-        square.id = utils.getSquareName(j, i);
+        square.id = Square.name(j, i);
         column.push(square);
       }
       grid.unshift(column);
