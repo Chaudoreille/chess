@@ -1,62 +1,45 @@
-console.log("index.js loaded");
-
-import ChessBoard from "./engine/ChessBoard.js";
+import ChessBoard from "./display/ChessBoard.js";
 import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN } from "./engine/constants.js";
 import { getSquareName, modal } from "./utilities.js";
 
 let board;
+const defaultBackRow = [ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK];
 
 document.querySelector("#new-game-btn").addEventListener("click", event => {
   modal("Are you sure you want to restart ?", "Your current game will be lost", "Yes", newGame, "No");
 });
 
 export function newGame() {
-  console.log("new game");
-  document.querySelector("#chess-board").innerHTML = "";
-  document.querySelectorAll("#taken-pieces .taken").forEach(prison => prison.innerHTML = "");
   board = new ChessBoard();
 
-  board.addPiece(ROOK, WHITE, "a1");
-  board.addPiece(KNIGHT, WHITE, "b1");
-  board.addPiece(BISHOP, WHITE, "c1");
-  board.addPiece(QUEEN, WHITE, "d1");
-  board.addPiece(KING, WHITE, "e1");
-  board.addPiece(BISHOP, WHITE, "f1");
-  board.addPiece(KNIGHT, WHITE, "g1");
-  board.addPiece(ROOK, WHITE, "h1");
-
-  board.addPiece(ROOK, BLACK, "a8");
-  board.addPiece(KNIGHT, BLACK, "b8");
-  board.addPiece(BISHOP, BLACK, "c8");
-  board.addPiece(QUEEN, BLACK, "d8");
-  board.addPiece(KING, BLACK, "e8");
-  board.addPiece(BISHOP, BLACK, "f8");
-  board.addPiece(KNIGHT, BLACK, "g8");
-  board.addPiece(ROOK, BLACK, "h8");
+  const pieces = [];
 
   for (let i = 0; i < 8; i++) {
-    board.addPiece(PAWN, WHITE, getSquareName(i, 1));
-    board.addPiece(PAWN, BLACK, getSquareName(i, 6));
+    pieces.push({
+      type: defaultBackRow[i],
+      color: WHITE,
+      position: getSquareName(i, 0)
+    });
+    pieces.push({
+      type: PAWN,
+      color: WHITE,
+      position: getSquareName(i, 1)
+    });
+    pieces.push({
+      type: defaultBackRow[i],
+      color: BLACK,
+      position: getSquareName(i, 7)
+    });
+    pieces.push({
+      type: PAWN,
+      color: BLACK,
+      position: getSquareName(i, 6)
+    });
   }
 
-  console.log(board);
-
+  board.populate(pieces);
   board.addEvents();
   board.render();
-
-  const whitePieceNumber = board.pieces[WHITE].length - 1;
-  const blackPieceNumber = board.pieces[BLACK].length - 1;
-
-  for (let i = 0; i < whitePieceNumber; i++) {
-    const cell = document.createElement("div");
-    cell.className = "square";
-    document.querySelector("#white-prison .taken").appendChild(cell);
-  }
-  for (let i = 0; i < blackPieceNumber; i++) {
-    const cell = document.createElement("div");
-    cell.className = "square";
-    document.querySelector("#black-prison .taken").appendChild(cell);
-  }
 }
 
 newGame();
