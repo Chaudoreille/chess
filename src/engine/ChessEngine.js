@@ -32,7 +32,7 @@ class ChessEngine {
       [WHITE]: [],
       [BLACK]: [],
     };
-    this.collisions = squareMatrix(8);
+    this.board = squareMatrix(8);
     this.turn = WHITE;
     this.winner = null;
   }
@@ -40,7 +40,7 @@ class ChessEngine {
   square(squareName) {
     const position = Square.fromName(squareName);
 
-    return this.collisions[position.x][position.y];
+    return this.board[position.x][position.y];
   }
 
   getKings() {
@@ -68,7 +68,7 @@ class ChessEngine {
    * @returns 
    */
   movePiece(piece, position) {
-    const target = this.collisions[position.x][position.y];
+    const target = this.board[position.x][position.y];
 
     if (!(piece instanceof ChessPiece)) {
       throw new TypeError(`invalid argument: ${piece} is not a ChessPiece`);
@@ -107,7 +107,7 @@ class ChessEngine {
    * @param {Square} position 
    */
   legalMoves(position) {
-    const piece = this.collisions[position.x][position.y];
+    const piece = this.board[position.x][position.y];
 
     if (piece === null || !piece instanceof ChessPiece) {
       return [];
@@ -127,7 +127,7 @@ class ChessEngine {
     };
     const piece = new classes[type](this, color, square, type);
 
-    this.collisions[square.x][square.y] = piece;
+    this.board[square.x][square.y] = piece;
     this.pieces[color].push(piece);
 
     return this;

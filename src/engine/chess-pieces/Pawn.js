@@ -14,18 +14,19 @@ class Pawn extends ChessPiece {
   }
 
   move(square) {
+    const takenPiece = super.move(square);
+
     if (this.starterPawn) {
       this.starterPawn = false;
       this.enPassant = true;
     }
-    const takenPiece = super.move(square);
 
     if (takenPiece) {
       return takenPiece;
     }
 
     // if there is a pawn behind freshly moved pawn, and no piece was taken, en passant happened 
-    const behind = this.engine.collisions[this.pos.x][this.pos.y - this.direction];
+    const behind = this.engine.board[this.pos.x][this.pos.y - this.direction];
     if (behind instanceof Pawn) {
       this.take(behind);
     }
@@ -36,38 +37,38 @@ class Pawn extends ChessPiece {
     let blocked = false;
     let { x, y } = this.pos;
 
-    if (inBounds(x - 1, y) && this.engine.collisions[x - 1][y] instanceof Pawn &&
-      this.engine.collisions[x - 1][y].color !== this.color &&
-      this.engine.collisions[x - 1][y].enPassant) {
+    if (inBounds(x - 1, y) && this.engine.board[x - 1][y] instanceof Pawn &&
+      this.engine.board[x - 1][y].color !== this.color &&
+      this.engine.board[x - 1][y].enPassant) {
       this.legalBoardSpace(x - 1, y + this.direction);
     }
 
-    if (inBounds(x + 1, y) && this.engine.collisions[x + 1][y] instanceof Pawn &&
-      this.engine.collisions[x + 1][y].color !== this.color &&
-      this.engine.collisions[x + 1][y].enPassant) {
+    if (inBounds(x + 1, y) && this.engine.board[x + 1][y] instanceof Pawn &&
+      this.engine.board[x + 1][y].color !== this.color &&
+      this.engine.board[x + 1][y].enPassant) {
       this.legalBoardSpace(x + 1, y + this.direction);
     }
 
-    y += this.direction;
-
-    if (inBounds(x - 1, y) && this.engine.collisions[x - 1][y]) {
-      this.legalBoardSpace(x - 1, y);
+    if (inBounds(x - 1, y + this.direction) && this.engine.board[x - 1][y + this.direction] instanceof ChessPiece) {
+      this.legalBoardSpace(x - 1, y + this.direction);
     }
-    if (inBounds(x, y)) {
-      if (!this.engine.collisions[x][y]) {
-        this.legalBoardSpace(x, y);
+    if (inBounds(x, y + this.direction)) {
+      if (!this.engine.board[x][y + this.direction]) {
+        this.legalBoardSpace(x, y + this.direction);
       } else {
         blocked = true;
       }
     }
-    if (inBounds(x + 1, y) && this.engine.collisions[x + 1][y]) {
-      this.legalBoardSpace(x + 1, y);
+    if (inBounds(x + 1, y + this.direction) && this.engine.board[x + 1][y + this.direction] instanceof ChessPiece) {
+      this.legalBoardSpace(x + 1, y + this.direction);
     }
 
+    if (!this.starterPawn) {
+      console.log(`${this.pos.name} non-starter`);
+    }
     if (this.starterPawn && !blocked) {
-      y += this.direction;
-      if (inBounds(x, y) && !this.engine.collisions[x][y]) {
-        this.legalBoardSpace(x, y);
+      if (inBounds(x, y + 2 * this.direction) && !(this.engine.board[x][y + 2 * this.direction] instanceof ChessPiece)) {
+        this.legalBoardSpace(x, y + 2 * this.direction);
       }
     }
 

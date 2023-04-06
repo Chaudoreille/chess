@@ -36,11 +36,10 @@ class ChessPiece {
       throw (new IllegalMoveError(`${this.pos.name} to ${square.name}`));
     }
 
-    const board = this.engine.collisions;
-    const takenPiece = this.take(board[square.x][square.y]);
+    const takenPiece = this.take(this.engine.board[square.x][square.y]);
 
-    board[this.pos.x][this.pos.y] = null;
-    board[square.x][square.y] = this;
+    this.engine.board[this.pos.x][this.pos.y] = null;
+    this.engine.board[square.x][square.y] = this;
     this.pos = square;
 
     this.engine.pieces[oppositeColor(this.color)].forEach(element => {
@@ -63,7 +62,7 @@ class ChessPiece {
     const index = this.engine.pieces[piece.color].indexOf(piece);
 
     this.engine.pieces[piece.color].splice(index, 1);
-    this.engine.collisions[piece.pos.x][piece.pos.y] = null;
+    this.engine.board[piece.pos.x][piece.pos.y] = null;
     this.engine.taken[piece.color] = piece;
 
     piece.dom.remove();
@@ -106,7 +105,7 @@ class ChessPiece {
       return false;
     }
     this.targets.push(new Square(x, y));
-    const target = this.engine.collisions[x][y];
+    const target = this.engine.board[x][y];
 
     if (target instanceof ChessPiece && target.color === this.color) {
       return false;

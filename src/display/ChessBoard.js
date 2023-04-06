@@ -113,7 +113,8 @@ class ChessBoard {
 
   render() {
     this.engine.update();
-    this.engine.collisions.forEach(row => {
+
+    this.engine.board.forEach(row => {
       row.forEach(piece => {
         if (piece) {
           this._cells[piece.pos.name].appendChild(piece.dom);
