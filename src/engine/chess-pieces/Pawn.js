@@ -14,20 +14,40 @@ class Pawn extends ChessPiece {
   }
 
   move(square) {
-    let enPassant = false;
-
-    if (this.starterPawn == true) {
+    if (this.starterPawn) {
       this.starterPawn = false;
       this.enPassant = true;
     }
-    let taken = super.move(square);
+    const takenPiece = super.move(square);
+
+    if (takenPiece) {
+      return takenPiece;
+    }
+
+    // if there is a pawn behind moved pawn, and no piece was taken, en passant happened 
+    if (this.board.collisions[this.pos.x][this.pos.y - this.direction] instanceof Pawn) {
+      this.take(this.board.collisions[this.pos.x][this.pos.y - this.direction]);
+    }
   }
 
   update() {
     super.update();
     let blocked = false;
-    let x = this.pos.x;
-    let y = this.pos.y + this.direction;
+    let { x, y } = this.pos;
+
+    if (inBounds(x - 1, y) && this.board.collisions[x - 1][y] instanceof Pawn &&
+      this.board.collisions[x - 1][y].color !== this.color &&
+      this.board.collisions[x - 1][y].enPassant) {
+      this.legalBoardSpace(x - 1, y + this.direction);
+    }
+
+    if (inBounds(x + 1, y) && this.board.collisions[x + 1][y] instanceof Pawn &&
+      this.board.collisions[x + 1][y].color !== this.color &&
+      this.board.collisions[x + 1][y].enPassant) {
+      this.legalBoardSpace(x + 1, y + this.direction);
+    }
+
+    y += this.direction;
 
     if (inBounds(x - 1, y) && this.board.collisions[x - 1][y]) {
       this.legalBoardSpace(x - 1, y);
@@ -57,26 +77,7 @@ class Pawn extends ChessPiece {
     if (inBounds(this.pos.x + 1, this.pos.y + this.direction)) {
       this.targets.push(new Square(this.pos.x + 1, this.pos.y + this.direction));
     }
-
-
-    /**
-     * this crashes the program on update
-    */
-    // x = this.pos.x
-    // y = this.pos.y
-    // if (inBounds(x-1, y)  && this.board.collisions[x-1][y] &&
-    // this.board.collisions[x-1][y].type === PAWN &&
-    // this.board.collisions[x-1][y].color !== this.color &&
-    // this.board.collisions[x-1][y].enPassant) {
-    //     this.legalBoardSpace(x-1, y+this.direction)
-    // }
-
-    // if (inBounds(x+1, y)  && this.board.collisions[x+1][y] &&
-    // this.board.collisions[x+1][y].type === PAWN &&
-    // this.board.collisions[x-1][y].color !== this.color &&
-    // this.board.collisions[x+1][y].enPassant) {
-    //     this.legalBoardSpace(x+1, y+this.direction)
-    // }
   }
 }
+
 export default Pawn;
