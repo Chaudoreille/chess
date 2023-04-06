@@ -4,8 +4,8 @@ import { inBounds, oppositeColor } from "../../utilities.js";
 import { KING, PAWN } from "../constants.js";
 
 class ChessPiece {
-  constructor(chessBoard, color, square) {
-    this.board = chessBoard;
+  constructor(gameEngine, color, square) {
+    this.engine = gameEngine;
 
     this.color = color;
     this.type = null;
@@ -35,13 +35,15 @@ class ChessPiece {
     if (!this.legalMoves.find((move) => move?.name === square.name)) {
       throw (new IllegalMoveError(`${this.pos.name} to ${square.name}`));
     }
-    const takenPiece = this.take(this.board.collisions[square.x][square.y]);
 
-    this.board.collisions[this.pos.x][this.pos.y] = null;
-    this.board.collisions[square.x][square.y] = this;
+    const board = this.engine.collisions;
+    const takenPiece = this.take(board[square.x][square.y]);
+
+    board[this.pos.x][this.pos.y] = null;
+    board[square.x][square.y] = this;
     this.pos = square;
 
-    this.board.pieces[oppositeColor(this.color)].forEach(element => {
+    this.engine.pieces[oppositeColor(this.color)].forEach(element => {
       if (element.type === PAWN) {
         element.enPassant = false;
       }
@@ -58,11 +60,11 @@ class ChessPiece {
       throw (new IllegalMoveError(`${this.pos.name} to ${piece.pos.name}`));
     }
 
-    const index = this.board.pieces[piece.color].indexOf(piece);
+    const index = this.engine.pieces[piece.color].indexOf(piece);
 
-    this.board.pieces[piece.color].splice(index, 1);
-    this.board.collisions[piece.pos.x][piece.pos.y] = null;
-    this.board.taken[piece.color] = piece;
+    this.engine.pieces[piece.color].splice(index, 1);
+    this.engine.collisions[piece.pos.x][piece.pos.y] = null;
+    this.engine.taken[piece.color] = piece;
 
     piece.dom.remove();
 
@@ -74,10 +76,10 @@ class ChessPiece {
   }
 
   breakChecks() {
-    if (!this.board.kings[this.color].isCheck()) return;
+    if (!this.engine.kings[this.color].isCheck()) return;
 
     this.legalMoves = this.legalMoves.filter(move => {
-      for (const attacker of this.board.checks[this.color]) {
+      for (const attacker of this.engine.checks[this.color]) {
         for (const interception of attacker.checkBreakers) {
           if (move.name === interception.name) {
             return true;
@@ -104,7 +106,7 @@ class ChessPiece {
       return false;
     }
     this.targets.push(new Square(x, y));
-    const target = this.board.collisions[x][y];
+    const target = this.engine.collisions[x][y];
 
     if (target instanceof ChessPiece && target.color === this.color) {
       return false;

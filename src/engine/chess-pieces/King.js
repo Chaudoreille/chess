@@ -3,10 +3,10 @@ import { KING } from "../constants.js";
 import { oppositeColor } from "../../utilities.js";
 
 class King extends ChessPiece {
-  constructor(chessBoard, color, square) {
-    super(chessBoard, color, square);
+  constructor(gameEngine, color, square) {
+    super(gameEngine, color, square);
     this.type = KING;
-    this.board.kings[this.color] = this;
+    this.engine.kings[this.color] = this;
     this.dom.classList.add(`${this.color}-${this.type}`);
   }
 
@@ -22,7 +22,7 @@ class King extends ChessPiece {
 
   breakChecks() {
     this.legalMoves = this.legalMoves.filter(move => {
-      for (let enemy of this.board.pieces[oppositeColor(this.color)]) {
+      for (let enemy of this.engine.pieces[oppositeColor(this.color)]) {
         for (let target of enemy.targets) {
           if (target.name === move.name) {
             return false;
@@ -34,17 +34,17 @@ class King extends ChessPiece {
   }
 
   isCheck() {
-    return this.board.checks[this.color].length > 0;
+    return this.engine.checks[this.color].length > 0;
   }
 
   getChecks() {
-    this.board.checks[this.color] = [];
+    this.engine.checks[this.color] = [];
 
-    this.board.pieces[oppositeColor(this.color)].forEach(enemy => {
+    this.engine.pieces[oppositeColor(this.color)].forEach(enemy => {
       for (const target of enemy.targets) {
         if (target.name === this.pos.name) {
           enemy.checkBreakerMoves();
-          this.board.checks[this.color].push(enemy);
+          this.engine.checks[this.color].push(enemy);
           return;
         }
       }
@@ -52,7 +52,7 @@ class King extends ChessPiece {
   }
 
   isCheckmate() {
-    this.board.pieces[this.color];
+    this.engine.pieces[this.color];
     return false;
   }
 }

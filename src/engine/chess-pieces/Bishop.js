@@ -4,8 +4,8 @@ import { BISHOP } from "../constants.js";
 import { oppositeColor } from "../../utilities.js";
 
 class Bishop extends ChessPiece {
-  constructor(chessBoard, color, square) {
-    super(chessBoard, color, square);
+  constructor(gameEngine, color, square) {
+    super(gameEngine, color, square);
     this.type = BISHOP;
     this.dom.classList.add(`${this.color}-${this.type}`);
   }
@@ -20,7 +20,7 @@ class Bishop extends ChessPiece {
 
   checkBreakerMoves() {
     super.checkBreakerMoves();
-    const king = this.board.kings[oppositeColor(this.color)];
+    const king = this.engine.kings[oppositeColor(this.color)];
     const inc_x = king.pos.x - this.pos.x !== 0 ? (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x) : 0;
     const inc_y = king.pos.y - this.pos.y !== 0 ? (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y) : 0;
     let x = this.pos.x + inc_x;

@@ -37,7 +37,7 @@ class ChessEngine {
     this.winner = null;
   }
 
-  pieceAt(squareName) {
+  square(squareName) {
     const position = Square.fromName(squareName);
 
     return this.collisions[position.x][position.y];
@@ -46,7 +46,6 @@ class ChessEngine {
   getKings() {
     return Object.values(this.kings);
   }
-
 
   update() {
     this.pieces[WHITE].forEach(piece => piece.update());
