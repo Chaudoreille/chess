@@ -1,4 +1,5 @@
 import * as utils from "../utilities.js";
+import { newGame } from "../index.js";
 import { IllegalMoveError } from "../engine/error.js";
 import { WHITE, BLACK, KING } from "../engine/constants.js";
 import ChessEngine from "../engine/ChessEngine.js";
@@ -51,7 +52,12 @@ class ChessBoard {
     this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
 
     try {
-      this.engine.movePiece(this._selectedPiece, Square.fromName(cell.id));
+      const takenPiece = this.engine.movePiece(this._selectedPiece, Square.fromName(cell.id));
+
+      if (takenPiece) {
+        this._prison[takenPiece.color].querySelector(".square:empty").appendChild(takenPiece.dom);
+      }
+
       cell.append(this._selectedPiece.dom);
       this._selectedPiece = false;
     } catch (error) {
@@ -69,6 +75,10 @@ class ChessBoard {
         utils.hideCheck(king);
       }
     });
+
+    if (this.engine.winner) {
+      utils.modal("Checkmate", `${this.engine.winner} wins !`, "New Game", newGame, "OK");
+    }
   };
 
   addEvents() {

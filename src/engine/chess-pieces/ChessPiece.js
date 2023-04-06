@@ -1,8 +1,7 @@
 import Square from "../Square.js";
 import { IllegalMoveError } from "../error.js";
-import { inBounds, oppositeColor, modal } from "../../utilities.js";
+import { inBounds, oppositeColor } from "../../utilities.js";
 import { KING, PAWN } from "../constants.js";
-import { newGame } from "../../index.js";
 
 class ChessPiece {
   constructor(chessBoard, color, square) {
@@ -48,34 +47,7 @@ class ChessPiece {
       }
     });
 
-    // TODO: board responsability, BROW !
-    this.board.update();
-    this.board.updateChecks();
-
-    // TODO: checkMate shouldn't be decided in chessPiece movement but in ChessEngine class
-    // TODO: modal shouldn't be invoked from engine but from display class
-    for (let color in this.board.pieces) {
-      if (this.board.pieces[color].every(p => p.legalMoves.length === 0)) {
-        modal("Checkmate", `${oppositeColor(color)} wins !`, "New Game", newGame, "OK");
-      }
-    }
-
-    /**
-     * temporary measure : discovered check is checkMate
-     */
-    if (this.board.kings[this.color].isCheck()) {
-      modal("CheckMate", `${oppositeColor(this.color)} wins !`, false, "New Game", newGame, "OK");
-    }
-    // TODO: this is engine responsability
-    this.board.turn = oppositeColor(this.color);
-
-    if (takenPiece) {
-      // TODO: display responsability
-      document.querySelector(`#${takenPiece.color}-prison .square:empty`).appendChild(takenPiece.dom);
-      return takenPiece;
-    } else {
-      return null;
-    }
+    return takenPiece;
   }
 
   take(piece) {

@@ -1,4 +1,4 @@
-import * as utils from "../utilities.js";
+import { squareMatrix, oppositeColor } from "../utilities.js";
 import { IllegalMoveError } from "./error.js";
 import ChessPiece from "./chess-pieces/ChessPiece.js";
 import { WHITE, BLACK, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN, Direction } from "./constants.js";
@@ -32,8 +32,9 @@ class ChessEngine {
       [WHITE]: [],
       [BLACK]: [],
     };
-    this.collisions = utils.squareMatrix(8);
+    this.collisions = squareMatrix(8);
     this.turn = WHITE;
+    this.winner = null;
   }
 
   pieceAt(squareName) {
@@ -79,13 +80,27 @@ class ChessEngine {
     if (piece.color !== this.turn) {
       throw new IllegalMoveError(`${this.turn} to play`);
     }
-    piece.move(position);
+    const takenPiece = piece.move(position);
 
-    Object.values(this.kings).forEach((king) => {
-      if (king.isCheck()) {
-        return true; // mention that specific king is checked 
+    this.update();
+    this.updateChecks();
+
+    for (let color in this.pieces) {
+      if (this.pieces[color].every(p => p.legalMoves.length === 0)) {
+        this.winner = oppositeColor(color);
       }
-    });
+    }
+
+    /**
+     * temporary measure : discovered check is checkMate
+     */
+    if (this.kings[this.turn].isCheck()) {
+      this.winner = oppositeColor(this.turn);
+    }
+
+    this.turn = oppositeColor(this.turn);
+
+    return takenPiece;
   }
 
   /**
