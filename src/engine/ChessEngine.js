@@ -1,5 +1,5 @@
 import { squareMatrix, oppositeColor } from "../utilities.js";
-import { IllegalMoveError } from "./error.js";
+import { IllegalMoveError, BoundaryError } from "./error.js";
 import ChessPiece from "./chess-pieces/ChessPiece.js";
 import { WHITE, BLACK, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN, Direction } from "./constants.js";
 import King from "./chess-pieces/King.js";
@@ -11,7 +11,8 @@ import Pawn from "./chess-pieces/Pawn.js";
 import Square from "./Square.js";
 
 class ChessEngine {
-  constructor() {
+  constructor(boardSize = 8) {
+    this.boardSize = boardSize;
     this.kings = {
       [WHITE]: null,
       [BLACK]: null,
@@ -32,17 +33,49 @@ class ChessEngine {
       [WHITE]: [],
       [BLACK]: [],
     };
-    this.board = squareMatrix(8);
+    this.board = squareMatrix(boardSize);
     this.turn = WHITE;
     this.winner = null;
   }
 
-  square(squareName) {
-    const position = Square.fromName(squareName);
-
+  /**
+   * returns the ChessPiece at given position o the board
+   * @param {Square} position 
+   * @returns {ChessPiece} ChessPiece or null if empty square
+   */
+  getSquare(position) {
     return this.board[position.x][position.y];
   }
 
+  /**
+   * returns true if the square's coordinates are within the board's boundaries
+   * @param {Square} square 
+   * @returns Boolean
+   */
+  inBounds(square) {
+    if (square.x < 0 || square.x >= this.boardSize ||
+      square.y < 0 || square.y >= this.boardSize) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * raises a BoundaryError if the square's coordinates are out of board's boundaries
+   * @param {Square} square 
+   * @throws {BoundaryError}
+   */
+  assertInBounds(square) {
+    if (!this.inBounds(square)) {
+      throw new BoundaryError(`[${square.x}, ${square.y}] is out of bounds`);
+    }
+    return;
+  }
+
+  /**
+   * returns an array containing both kings
+   * @returns {Array<King>} Both kings
+   */
   getKings() {
     return Object.values(this.kings);
   }
@@ -68,8 +101,6 @@ class ChessEngine {
    * @returns 
    */
   movePiece(piece, position) {
-    const target = this.board[position.x][position.y];
-
     if (!(piece instanceof ChessPiece)) {
       throw new TypeError(`invalid argument: ${piece} is not a ChessPiece`);
     }
@@ -125,6 +156,7 @@ class ChessEngine {
       [ROOK]: Rook,
       [PAWN]: Pawn,
     };
+    this.assertInBounds(square);
     const piece = new classes[type](this, color, square, type);
 
     this.board[square.x][square.y] = piece;

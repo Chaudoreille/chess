@@ -1,7 +1,6 @@
 import ChessPiece from "./ChessPiece.js";
 import Square from "../Square.js";
 import { PAWN } from "../constants.js";
-import { inBounds } from "../../utilities.js";
 
 class Pawn extends ChessPiece {
   constructor(gameEngine, color, square) {
@@ -33,52 +32,55 @@ class Pawn extends ChessPiece {
   }
 
   update() {
+    const pawnTargets = [];
+    const left = new Square(this.pos.x - 1, this.pos.y);
+    const right = new Square(this.pos.x + 1, this.pos.y);
+    const leftDiagonal = new Square(this.pos.x - 1, this.pos.y + this.direction);
+    const rightDiagonal = new Square(this.pos.x + 1, this.pos.y + this.direction);
+
     super.update();
-    let blocked = false;
-    let { x, y } = this.pos;
+    this.updateForwardPath();
 
-    if (inBounds(x - 1, y) && this.engine.board[x - 1][y] instanceof Pawn &&
-      this.engine.board[x - 1][y].color !== this.color &&
-      this.engine.board[x - 1][y].enPassant) {
-      this.legalBoardSpace(x - 1, y + this.direction);
-    }
-
-    if (inBounds(x + 1, y) && this.engine.board[x + 1][y] instanceof Pawn &&
-      this.engine.board[x + 1][y].color !== this.color &&
-      this.engine.board[x + 1][y].enPassant) {
-      this.legalBoardSpace(x + 1, y + this.direction);
+    if (this.engine.inBounds(left) && this.engine.getSquare(left) instanceof Pawn &&
+      this.engine.getSquare(left).color !== this.color &&
+      this.engine.getSquare(left).enPassant
+    ) {
+      this.legalBoardSpace(left.x, left.y + this.direction);
+      pawnTargets.push(left);
     }
 
-    if (inBounds(x - 1, y + this.direction) && this.engine.board[x - 1][y + this.direction] instanceof ChessPiece) {
-      this.legalBoardSpace(x - 1, y + this.direction);
-    }
-    if (inBounds(x, y + this.direction)) {
-      if (!this.engine.board[x][y + this.direction]) {
-        this.legalBoardSpace(x, y + this.direction);
-      } else {
-        blocked = true;
-      }
-    }
-    if (inBounds(x + 1, y + this.direction) && this.engine.board[x + 1][y + this.direction] instanceof ChessPiece) {
-      this.legalBoardSpace(x + 1, y + this.direction);
+    if (this.engine.inBounds(right) && this.engine.getSquare(right) instanceof Pawn &&
+      this.engine.getSquare(right).color !== this.color &&
+      this.engine.getSquare(right).enPassant
+    ) {
+      this.legalBoardSpace(right.x, right.y + this.direction);
+      pawnTargets.push(right);
     }
 
-    if (!this.starterPawn) {
-      console.log(`${this.pos.name} non-starter`);
+    if (this.engine.inBounds(leftDiagonal) && this.engine.getSquare(leftDiagonal) instanceof ChessPiece) {
+      this.legalBoardSpace(leftDiagonal.x, leftDiagonal.y);
+      pawnTargets.push(leftDiagonal);
     }
-    if (this.starterPawn && !blocked) {
-      if (inBounds(x, y + 2 * this.direction) && !(this.engine.board[x][y + 2 * this.direction] instanceof ChessPiece)) {
-        this.legalBoardSpace(x, y + 2 * this.direction);
-      }
+    if (this.engine.inBounds(rightDiagonal) && this.engine.getSquare(rightDiagonal) instanceof ChessPiece) {
+      this.legalBoardSpace(rightDiagonal.x, rightDiagonal.y);
+      pawnTargets.push(rightDiagonal);
     }
+    this.targets = pawnTargets;
+  }
 
-    this.targets = [];
-    if (inBounds(this.pos.x - 1, this.pos.y + this.direction)) {
-      this.targets.push(new Square(this.pos.x - 1, this.pos.y + this.direction));
+  updateForwardPath() {
+    const first = new Square(this.pos.x, this.pos.y + this.direction);
+    const second = new Square(this.pos.x, this.pos.y + this.direction * 2);
+
+    if (!this.engine.inBounds(first) || this.engine.getSquare(first) instanceof ChessPiece) {
+      return;
     }
-    if (inBounds(this.pos.x + 1, this.pos.y + this.direction)) {
-      this.targets.push(new Square(this.pos.x + 1, this.pos.y + this.direction));
+    this.legalBoardSpace(first.x, first.y);
+
+    if (!this.starterPawn || !this.engine.inBounds(second) || this.engine.getSquare(second) instanceof ChessPiece) {
+      return;
     }
+    this.legalBoardSpace(second.x, second.y);
   }
 }
 

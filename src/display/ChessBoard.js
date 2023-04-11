@@ -36,7 +36,7 @@ class ChessBoard {
     const cell = event.currentTarget;
 
     if (!this._selectedPiece) {
-      const currentPiece = this.engine.square(cell.id);
+      const currentPiece = this.engine.getSquare(Square.fromName(cell.id));
 
       if (currentPiece && currentPiece.color === this.engine.turn) {
         this._selectedPiece = currentPiece;

@@ -1,6 +1,6 @@
 import Square from "../Square.js";
 import { IllegalMoveError } from "../error.js";
-import { inBounds, oppositeColor } from "../../utilities.js";
+import { oppositeColor } from "../../utilities.js";
 import { KING, PAWN } from "../constants.js";
 
 class ChessPiece {
@@ -93,7 +93,7 @@ class ChessPiece {
 
   /**
    * utility method
-   * if move is legal, will push to this.legalMoves
+   * if move is legal, will push to this.legalMoves 
    * @param {0} x : column in the chess board
    * @param {1} y : row in the chess board
    * @returns
@@ -101,17 +101,19 @@ class ChessPiece {
    *     - false if movement should stop
    */
   legalBoardSpace(x, y) {
-    if (!inBounds(x, y)) {
+    const space = new Square(x, y);
+
+    if (!this.engine.inBounds(space)) {
       return false;
     }
-    this.targets.push(new Square(x, y));
-    const target = this.engine.board[x][y];
+    this.targets.push(space);
+    const target = this.engine.getSquare(space);
 
     if (target instanceof ChessPiece && target.color === this.color) {
       return false;
     }
 
-    this.legalMoves.push(new Square(x, y));
+    this.legalMoves.push(space);
 
     if (target instanceof ChessPiece && target.type !== KING) {
       return false;

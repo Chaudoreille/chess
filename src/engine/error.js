@@ -4,3 +4,10 @@ export class IllegalMoveError extends Error {
     this.name = "IllegalMoveError";
   }
 };
+
+export class BoundaryError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "BoundaryError";
+  }
+}
