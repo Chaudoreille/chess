@@ -34,10 +34,15 @@ class ChessBoard {
 
   _click = event => {
     const cell = event.currentTarget;
+    const clickedSquare = Square.fromName(cell.id);
+    const currentPiece = this.engine.getSquare(clickedSquare);
+    this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
 
-    if (!this._selectedPiece) {
-      const currentPiece = this.engine.getSquare(Square.fromName(cell.id));
+    if (this._selectedPiece === currentPiece) {
+      return;
+    }
 
+    if (!this._selectedPiece || (currentPiece && this._selectedPiece.color === currentPiece.color)) {
       if (currentPiece && currentPiece.color === this.engine.turn) {
         this._selectedPiece = currentPiece;
         if (this._selectedPiece.type === KING) {
@@ -49,10 +54,8 @@ class ChessBoard {
       return;
     }
 
-    this.getCellList().forEach((singleCell) => utils.normalize(singleCell));
-
     try {
-      const takenPiece = this.engine.movePiece(this._selectedPiece, Square.fromName(cell.id));
+      const takenPiece = this.engine.movePiece(this._selectedPiece, clickedSquare);
 
       if (takenPiece) {
         this._prison[takenPiece.color].querySelector(".square:empty").appendChild(takenPiece.dom);
