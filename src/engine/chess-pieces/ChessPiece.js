@@ -42,12 +42,6 @@ class ChessPiece {
     this.engine.board[square.x][square.y] = this;
     this.pos = square;
 
-    this.engine.pieces[oppositeColor(this.color)].forEach(element => {
-      if (element.type === PAWN) {
-        element.enPassant = false;
-      }
-    });
-
     return takenPiece;
   }
 

@@ -32,43 +32,30 @@ class Pawn extends ChessPiece {
   }
 
   update() {
-    const pawnTargets = [];
     const left = new Square(this.pos.x - 1, this.pos.y);
     const right = new Square(this.pos.x + 1, this.pos.y);
     const leftDiagonal = new Square(this.pos.x - 1, this.pos.y + this.direction);
     const rightDiagonal = new Square(this.pos.x + 1, this.pos.y + this.direction);
 
     super.update();
-    this.updateForwardPath();
 
-    if (this.engine.inBounds(left) && this.engine.getSquare(left) instanceof Pawn &&
-      this.engine.getSquare(left).color !== this.color &&
-      this.engine.getSquare(left).enPassant
-    ) {
-      this.legalBoardSpace(left.x, left.y + this.direction);
-      pawnTargets.push(left);
+    if (this.engine.turn !== this.color) {
+      this.enPassant = false;
     }
 
-    if (this.engine.inBounds(right) && this.engine.getSquare(right) instanceof Pawn &&
-      this.engine.getSquare(right).color !== this.color &&
-      this.engine.getSquare(right).enPassant
-    ) {
-      this.legalBoardSpace(right.x, right.y + this.direction);
-      pawnTargets.push(right);
-    }
+    this._updateForwardPath();
 
-    if (this.engine.inBounds(leftDiagonal) && this.engine.getSquare(leftDiagonal) instanceof ChessPiece) {
-      this.legalBoardSpace(leftDiagonal.x, leftDiagonal.y);
-      pawnTargets.push(leftDiagonal);
-    }
-    if (this.engine.inBounds(rightDiagonal) && this.engine.getSquare(rightDiagonal) instanceof ChessPiece) {
-      this.legalBoardSpace(rightDiagonal.x, rightDiagonal.y);
-      pawnTargets.push(rightDiagonal);
-    }
-    this.targets = pawnTargets;
+    const pawnTargets = [
+      this._updateDiagonal(leftDiagonal),
+      this._updateDiagonal(rightDiagonal),
+      this._updateEnPassant(left),
+      this._updateEnPassant(right),
+    ];
+
+    this.targets = pawnTargets.filter(square => square !== null);
   }
 
-  updateForwardPath() {
+  _updateForwardPath() {
     const first = new Square(this.pos.x, this.pos.y + this.direction);
     const second = new Square(this.pos.x, this.pos.y + this.direction * 2);
 
@@ -81,6 +68,24 @@ class Pawn extends ChessPiece {
       return;
     }
     this.legalBoardSpace(second.x, second.y);
+  }
+
+  _updateEnPassant(square) {
+    if (this.engine.inBounds(square) && this.engine.getSquare(square) instanceof Pawn &&
+      this.engine.getSquare(square).color !== this.color &&
+      this.engine.getSquare(square).enPassant
+    ) {
+      this.legalBoardSpace(square.x, square.y + this.direction);
+      return square;
+    }
+    return null;
+  }
+
+  _updateDiagonal(square) {
+    if (this.engine.inBounds(square) && this.engine.getSquare(square) instanceof ChessPiece) {
+      this.legalBoardSpace(square.x, square.y);
+    }
+    return square;
   }
 }
 
