@@ -135,6 +135,7 @@ class ChessBoard {
       const takenPiece = this.engine.movePiece(saveSelected, destination);
 
       if (takenPiece) {
+        console.log(takenPiece);
         const takenPieceNode = this._getChessPiece(takenPiece.pos);
         this._prisons[takenPiece.color].querySelector(".square:empty").appendChild(takenPieceNode);
       }

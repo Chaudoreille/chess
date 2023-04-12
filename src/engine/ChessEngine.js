@@ -11,8 +11,7 @@ import Pawn from "./chess-pieces/Pawn.js";
 import Square from "./Square.js";
 
 class ChessEngine {
-  constructor(boardSize = 8) {
-    this.boardSize = boardSize;
+  constructor() {
     this.kings = {
       [WHITE]: null,
       [BLACK]: null,
@@ -33,7 +32,7 @@ class ChessEngine {
       [WHITE]: [],
       [BLACK]: [],
     };
-    this.board = squareMatrix(boardSize);
+    this.board = squareMatrix(8);
     this.turn = WHITE;
     this.winner = null;
   }
@@ -53,8 +52,8 @@ class ChessEngine {
    * @returns Boolean
    */
   inBounds(square) {
-    if (square.x < 0 || square.x >= this.boardSize ||
-      square.y < 0 || square.y >= this.boardSize) {
+    if (square.x < 0 || square.x >= 8 ||
+      square.y < 0 || square.y >= 8) {
       return false;
     }
     return true;
