@@ -26,7 +26,7 @@ class Pawn extends ChessPiece {
     // if there is a pawn behind freshly moved pawn, and no piece was taken, en passant happened 
     const behind = this.engine.board[this.pos.x][this.pos.y - this.direction];
     if (behind instanceof Pawn) {
-      this.take(behind);
+      return this.take(behind);
     }
   }
 
