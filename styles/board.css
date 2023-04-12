@@ -1,51 +1,53 @@
 #board-frame {
-    padding: calc(1rem + 1.5vw);
-    background-color: var(--board-frame);
-    border-radius: 15px;
-    box-shadow: rgb(0 0 0 / 70%) 0px 3px 8px;
-    margin: auto;
-    height: fit-content;
-    width: fit-content;
-    position: relative;
+  padding: calc(1rem + 1.5vw);
+  background-color: var(--board-frame);
+  border-radius: 15px;
+  box-shadow: rgb(0 0 0 / 70%) 0px 3px 8px;
+  margin: auto;
+  height: fit-content;
+  width: fit-content;
+  position: relative;
 }
+
 #chess-board {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    min-width: calc(20rem + 25vh);
-    max-width: 50vh;
-    border-radius: 5px;
-    overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  min-width: calc(20rem + 25vh);
+  max-width: 50vh;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 #chess-board .square {
-    aspect-ratio: 1;
+  aspect-ratio: 1;
 }
 
 #chess-board .square.dark {
-    background-color: var(--dark-square);
+  background-color: var(--dark-square);
 }
 
-#chess-board .square.dark.highlight {
-    background-color:var(--dark-square-highlight)
+#chess-board .square.dark.selection {
+  background-color: var(--dark-square-highlight)
 }
+
 #chess-board .square.light {
-    background-color: var(--light-square);
+  background-color: var(--light-square);
 }
 
-#chess-board .square.light.highlight {
-    background-color:var(--light-square-highlight)
+#chess-board .square.light.selection {
+  background-color: var(--light-square-highlight)
 }
 
-#chess-board .light.legal {
-    background-color: var(--light-square-legal);
+#chess-board .light.legal-move {
+  background-color: var(--light-square-legal);
 }
 
-#chess-board .dark.legal {
-    background-color: var(--dark-square-legal);
+#chess-board .dark.legal-move {
+  background-color: var(--dark-square-legal);
 }
 
 #chess-board .check,
 #chess-board .check {
-    background-color: red !important;
+  background-color: red !important;
 }

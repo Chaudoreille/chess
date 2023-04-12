@@ -41,37 +41,6 @@ export function oppositeColor(color) {
  * Dom Manipulation Utility Functions
  */
 
-export function highlight(domElement) {
-  domElement.classList.add("highlight");
-}
-
-export function removeHighlight(domElement) {
-  domElement.classList.remove("highlight");
-}
-
-export function showLegalMoves(squares) {
-  squares.forEach(square => {
-    document.getElementById(square.name).classList.add("legal");
-  });
-}
-
-export function hideLegalMove(domElement) {
-  domElement.classList.remove("legal");
-}
-
-export function showCheck(king) {
-  king.dom.parentNode.classList.add("check");
-}
-
-export function hideCheck(king) {
-  king.dom.parentNode.classList.remove("check");
-}
-
-export function normalize(domElement) {
-  hideLegalMove(domElement);
-  removeHighlight(domElement);
-}
-
 export function modal(title, message, validateText, validateCallback, cancelText, cancelCallback) {
   const modal = document.querySelector("#modal-window");
 

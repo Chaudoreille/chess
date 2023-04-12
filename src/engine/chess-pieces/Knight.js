@@ -5,7 +5,6 @@ class Knight extends ChessPiece {
   constructor(gameEngine, color, square) {
     super(gameEngine, color, square);
     this.type = KNIGHT;
-    this.dom.classList.add(`${this.color}-${this.type}`);
   }
 
   update() {

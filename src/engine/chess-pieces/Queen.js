@@ -7,7 +7,6 @@ class Queen extends ChessPiece {
   constructor(gameEngine, color, square) {
     super(gameEngine, color, square);
     this.type = QUEEN;
-    this.dom.classList.add(`${this.color}-${this.type}`);
   }
 
   update() {

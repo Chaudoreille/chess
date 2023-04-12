@@ -6,7 +6,6 @@ class Pawn extends ChessPiece {
   constructor(gameEngine, color, square) {
     super(gameEngine, color, square);
     this.type = PAWN;
-    this.dom.classList.add(`${this.color}-${this.type}`);
     this.direction = gameEngine.directions[color];
     this.starterPawn = true;
     this.enPassant = false;

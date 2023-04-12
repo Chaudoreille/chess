@@ -38,8 +38,6 @@ export function newGame() {
     });
   }
   board.populate(pieces);
-  board.addEvents();
-  board.render();
 }
 
 newGame();

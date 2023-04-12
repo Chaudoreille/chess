@@ -1,7 +1,6 @@
 import Square from "../Square.js";
 import { IllegalMoveError } from "../error.js";
-import { oppositeColor } from "../../utilities.js";
-import { KING, PAWN } from "../constants.js";
+import { KING } from "../constants.js";
 
 class ChessPiece {
   constructor(gameEngine, color, square) {
@@ -14,8 +13,6 @@ class ChessPiece {
     this.legalMoves = [];
     this.targets = [];
     this.checkBreakers = [];
-
-    this.dom = this.createDomChessPiece();
   }
 
   update() {
@@ -58,8 +55,6 @@ class ChessPiece {
     this.engine.pieces[piece.color].splice(index, 1);
     this.engine.board[piece.pos.x][piece.pos.y] = null;
     this.engine.taken[piece.color] = piece;
-
-    piece.dom.remove();
 
     return piece;
   }
@@ -114,13 +109,6 @@ class ChessPiece {
     }
 
     return true;
-  }
-
-  createDomChessPiece() {
-    let chessPieceDom = document.createElement("div");
-    chessPieceDom.className = "chess-piece";
-
-    return chessPieceDom;
   }
 }
 

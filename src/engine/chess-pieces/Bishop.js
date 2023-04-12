@@ -7,7 +7,6 @@ class Bishop extends ChessPiece {
   constructor(gameEngine, color, square) {
     super(gameEngine, color, square);
     this.type = BISHOP;
-    this.dom.classList.add(`${this.color}-${this.type}`);
   }
 
   update() {

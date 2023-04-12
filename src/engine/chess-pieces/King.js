@@ -7,7 +7,6 @@ class King extends ChessPiece {
     super(gameEngine, color, square);
     this.type = KING;
     this.engine.kings[this.color] = this;
-    this.dom.classList.add(`${this.color}-${this.type}`);
   }
 
   update() {
