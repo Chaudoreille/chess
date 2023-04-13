@@ -194,7 +194,7 @@ class ChessBoard {
   }
 
   /**
-   * highlights board cell.
+   * highlights board cell by adding type in the Node's class list.
    * 
    * available highlights:
    * - "selection"
@@ -208,7 +208,7 @@ class ChessBoard {
   }
 
   /**
-   * removes highlight from board cell.
+   * removes highlight from board cell by removing type from the Node's class list..
    * 
    * available highlight types:
    * - "selection"
