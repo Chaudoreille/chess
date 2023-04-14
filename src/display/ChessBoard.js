@@ -9,13 +9,13 @@ import Square from "../engine/Square.js";
 class ChessBoard {
   constructor() {
     this.engine = new ChessEngine();
-    this._selectedPiece = false;
-    this._prisons = {};
+    this.selectedPiece = false;
+    this.prisons = {};
 
-    this._board = document.getElementById("chess-board");
-    this._createBoard();
+    this.board = document.getElementById("chess-board");
+    this.createBoard();
 
-    this._cells = [...this._board.querySelectorAll(".square")].reduce((obj, element) => {
+    this.cells = [...this.board.querySelectorAll(".square")].reduce((obj, element) => {
       obj[element.id] = element;
       return obj;
     }, {});
@@ -31,7 +31,7 @@ class ChessBoard {
     pieces.forEach(piece => {
       const chessPieceDom = document.createElement("div");
       chessPieceDom.className = `chess-piece ${piece.color}-${piece.type}`;
-      this._getCell(piece.position).appendChild(chessPieceDom);
+      this.getCell(piece.position).appendChild(chessPieceDom);
 
       this.engine.addPiece(
         piece.type,
@@ -40,8 +40,8 @@ class ChessBoard {
       );
     });
 
-    this._createPrison(WHITE);
-    this._createPrison(BLACK);
+    this.createPrison(WHITE);
+    this.createPrison(BLACK);
     this.engine.update();
   }
 
@@ -49,8 +49,8 @@ class ChessBoard {
    * returns a list of all cell Nodes
    * @returns {Array<Node>}
    */
-  _getCellList() {
-    return Object.values(this._cells);
+  getCellList() {
+    return Object.values(this.cells);
   }
 
   /**
@@ -58,8 +58,8 @@ class ChessBoard {
    * @param {Square} position 
    * @returns {Node}
    */
-  _getCell(position) {
-    return this._cells[position.name];
+  getCell(position) {
+    return this.cells[position.name];
   }
 
   /**
@@ -67,8 +67,8 @@ class ChessBoard {
    * @param {Square} position 
    * @returns {Node}
    */
-  _getChessPiece(position) {
-    return this._getCell(position).querySelector('.chess-piece');
+  getChessPiece(position) {
+    return this.getCell(position).querySelector('.chess-piece');
   }
 
   /**
@@ -76,34 +76,34 @@ class ChessBoard {
    * @param {Event} event 
    * @returns 
    */
-  _clickHandler = event => {
+  clickHandler = event => {
     const cell = event.currentTarget;
     const clickedSquare = Square.fromName(cell.id);
     const currentPiece = this.engine.getSquare(clickedSquare);
 
-    if (this._selectedPiece === currentPiece) {
-      this._unSelect();
+    if (this.selectedPiece === currentPiece) {
+      this.unSelect();
       return;
     }
 
     if (currentPiece?.color === this.engine.turn) {
-      this._select(currentPiece);
+      this.select(currentPiece);
       return;
     }
 
-    if (!this._selectedPiece) {
+    if (!this.selectedPiece) {
       return;
     }
 
-    this._moveSelectedPiece(clickedSquare);
+    this.moveSelectedPiece(clickedSquare);
 
     this.engine.getKings().forEach((king) => {
-      const kingCell = this._getCell(king.pos);
+      const kingCell = this.getCell(king.pos);
 
       if (king.isCheck()) {
-        this._highlight(kingCell, "check");
+        this.highlight(kingCell, "check");
       } else {
-        this._clearHighlight(kingCell, "check");
+        this.clearHighlight(kingCell, "check");
       }
     });
 
@@ -119,25 +119,25 @@ class ChessBoard {
    * @param {Square} destination 
    * @returns 
    */
-  _moveSelectedPiece(destination) {
-    const saveSelected = this._selectedPiece;
+  moveSelectedPiece(destination) {
+    const saveSelected = this.selectedPiece;
 
-    if (!this._selectedPiece) {
+    if (!this.selectedPiece) {
       return;
     }
 
-    this._unSelect();
+    this.unSelect();
 
     try {
-      const destinationCell = this._getCell(destination);
-      const selectedPieceNode = this._getChessPiece(saveSelected.pos);
+      const destinationCell = this.getCell(destination);
+      const selectedPieceNode = this.getChessPiece(saveSelected.pos);
 
       const takenPiece = this.engine.movePiece(saveSelected, destination);
 
       if (takenPiece) {
         console.log(takenPiece);
-        const takenPieceNode = this._getChessPiece(takenPiece.pos);
-        this._prisons[takenPiece.color].querySelector(".square:empty").appendChild(takenPieceNode);
+        const takenPieceNode = this.getChessPiece(takenPiece.pos);
+        this.prisons[takenPiece.color].querySelector(".square:empty").appendChild(takenPieceNode);
       }
       destinationCell.append(selectedPieceNode);
 
@@ -145,7 +145,7 @@ class ChessBoard {
       if (error instanceof IllegalMoveError) {
         return;
       } else {
-        this._select(saveSelected);
+        this.select(saveSelected);
         console.error(error);
         return;
       }
@@ -154,26 +154,26 @@ class ChessBoard {
 
   /**
    * selects given piece
-   * - calls this._unselect()
+   * - calls this.unselect()
    * - highlights selected piece's cell and legal moves
    * @param {ChessPiece} piece 
    */
-  _select(piece) {
+  select(piece) {
     if (!piece) {
       return;
     }
-    const cell = this._getCell(piece.pos);
+    const cell = this.getCell(piece.pos);
 
-    this._unSelect();
+    this.unSelect();
 
-    this._selectedPiece = piece;
-    this._highlight(cell, "selection");
+    this.selectedPiece = piece;
+    this.highlight(cell, "selection");
     piece.legalMoves.forEach(square => {
-      this._highlight(this._getCell(square), "legal-move");
+      this.highlight(this.getCell(square), "legal-move");
     });
 
     if (piece.type === KING) {
-      this._clearHighlight(cell, "check");
+      this.clearHighlight(cell, "check");
     }
   }
 
@@ -181,16 +181,16 @@ class ChessBoard {
    * unselects currrently selected piece
    * - clears displayed highlights of selected piece
    */
-  _unSelect() {
-    if (!this._selectedPiece) {
+  unSelect() {
+    if (!this.selectedPiece) {
       return;
     }
 
-    this._clearHighlight(this._getCell(this._selectedPiece.pos), "selection");
-    this._selectedPiece.legalMoves.forEach(square => {
-      this._clearHighlight(this._getCell(square), "legal-move");
+    this.clearHighlight(this.getCell(this.selectedPiece.pos), "selection");
+    this.selectedPiece.legalMoves.forEach(square => {
+      this.clearHighlight(this.getCell(square), "legal-move");
     });
-    this._selectedPiece = null;
+    this.selectedPiece = null;
   }
 
   /**
@@ -203,7 +203,7 @@ class ChessBoard {
    * @param {Node} cell
    * @param {string} type
    */
-  _highlight(cell, type) {
+  highlight(cell, type) {
     cell.classList.add(type);
   }
 
@@ -217,15 +217,15 @@ class ChessBoard {
    * @param {Node} cell
    * @param {string} type
    */
-  _clearHighlight(cell, type) {
+  clearHighlight(cell, type) {
     cell.classList.remove(type);
   }
 
   /**
    * creates a cell Node for every square of the board
    */
-  _createBoard() {
-    this._board.innerHTML = "";
+  createBoard() {
+    this.board.innerHTML = "";
     const grid = [];
 
     for (let i = 0; i < 8; i++) {
@@ -237,14 +237,14 @@ class ChessBoard {
         const cellColor = (j % 2 === evenRow) ? "light" : "dark";
         cell.className = `square ${cellColor}`;
         cell.id = Square.name(j, i);
-        cell.addEventListener("click", this._clickHandler);
+        cell.addEventListener("click", this.clickHandler);
         column.push(cell);
       }
       grid.unshift(column);
     }
     grid.forEach(row => {
       row.forEach(cell => {
-        this._board.appendChild(cell);
+        this.board.appendChild(cell);
       });
     });
   }
@@ -255,16 +255,16 @@ class ChessBoard {
    * the prison will hold the taken pieces for given color
    * @param {string} color - see /src/engine/constants.js for more info
    */
-  _createPrison(color) {
+  createPrison(color) {
     const piecesCardinal = this.engine.pieces[color].length - 1;
-    this._prisons[color] = document.querySelector(`#${color}-prison .taken`);
+    this.prisons[color] = document.querySelector(`#${color}-prison .taken`);
 
-    this._prisons[color].innerHTML = "";
+    this.prisons[color].innerHTML = "";
 
     for (let i = 0; i < piecesCardinal; i++) {
       const cell = document.createElement("div");
       cell.className = "square";
-      this._prisons[color].appendChild(cell);
+      this.prisons[color].appendChild(cell);
     }
   }
 }

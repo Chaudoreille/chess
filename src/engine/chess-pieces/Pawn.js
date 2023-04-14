@@ -42,19 +42,19 @@ class Pawn extends ChessPiece {
       this.enPassant = false;
     }
 
-    this._updateForwardPath();
+    this.updateForwardPath();
 
     const pawnTargets = [
-      this._updateDiagonal(leftDiagonal),
-      this._updateDiagonal(rightDiagonal),
-      this._updateEnPassant(left),
-      this._updateEnPassant(right),
+      this.updateDiagonal(leftDiagonal),
+      this.updateDiagonal(rightDiagonal),
+      this.updateEnPassant(left),
+      this.updateEnPassant(right),
     ];
 
     this.targets = pawnTargets.filter(square => square !== null);
   }
 
-  _updateForwardPath() {
+  updateForwardPath() {
     const first = new Square(this.pos.x, this.pos.y + this.direction);
     const second = new Square(this.pos.x, this.pos.y + this.direction * 2);
 
@@ -69,7 +69,7 @@ class Pawn extends ChessPiece {
     this.legalBoardSpace(second.x, second.y);
   }
 
-  _updateEnPassant(square) {
+  updateEnPassant(square) {
     if (this.engine.inBounds(square) && this.engine.getSquare(square) instanceof Pawn &&
       this.engine.getSquare(square).color !== this.color &&
       this.engine.getSquare(square).enPassant
@@ -80,7 +80,7 @@ class Pawn extends ChessPiece {
     return null;
   }
 
-  _updateDiagonal(square) {
+  updateDiagonal(square) {
     if (this.engine.inBounds(square) && this.engine.getSquare(square) instanceof ChessPiece) {
       this.legalBoardSpace(square.x, square.y);
     }
