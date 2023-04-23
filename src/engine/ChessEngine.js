@@ -79,37 +79,47 @@ class ChessEngine {
     return Object.values(this.kings);
   }
 
+  /**
+   * Updates all pieces on the board.
+   * 
+   * Each piece will update it's list of targets and legal moves
+   */
   update() {
-    this.pieces[WHITE].forEach(piece => piece.update());
-    this.pieces[BLACK].forEach(piece => piece.update());
+    Object.values(this.pieces).forEach(army => {
+      army.forEach(piece => piece.update());
+    });
   }
 
+  /**
+   * Updates the list of legal moves of all pieces on the board according to check situations.
+   */
   updateChecks() {
     Object.values(this.kings).forEach((king) => {
       king.getChecks();
     });
 
-    this.pieces[WHITE].forEach(piece => piece.breakChecks());
-    this.pieces[BLACK].forEach(piece => piece.breakChecks());
+    Object.values(this.pieces).forEach(army => {
+      army.forEach(piece => piece.updateLegalMovesWhenChecked());
+    });
   }
 
   /**
-   * attempt moving a chess piece from <start> position to <end> position on the board
+   * attempt moving a chess piece from current position to destination position on the board
    * @param {ChessPiece} piece 
-   * @param {Square} position
+   * @param {Square} destination
    * @returns 
    */
-  movePiece(piece, position) {
+  movePiece(piece, destination) {
     if (!(piece instanceof ChessPiece)) {
       throw new TypeError(`invalid argument: ${piece} is not a ChessPiece`);
     }
-    if (!(position instanceof Square)) {
-      throw new TypeError(`invalid argument: ${position} is not a Square`);
+    if (!(destination instanceof Square)) {
+      throw new TypeError(`invalid argument: ${destination} is not a Square`);
     }
     if (piece.color !== this.turn) {
       throw new IllegalMoveError(`${this.turn} to play`);
     }
-    const takenPiece = piece.move(position);
+    const takenPiece = piece.move(destination);
 
     this.update();
     this.updateChecks();
@@ -122,6 +132,7 @@ class ChessEngine {
 
     /**
      * temporary measure : discovered check is checkMate
+     * TODO: implement pins and prevent discovered check for current player
      */
     if (this.kings[this.turn].isCheck()) {
       this.winner = oppositeColor(this.turn);

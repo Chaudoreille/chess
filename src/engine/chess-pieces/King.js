@@ -6,7 +6,7 @@ class King extends ChessPiece {
   constructor(gameEngine, color, square) {
     super(gameEngine, color, square);
     this.type = KING;
-    this.engine.kings[this.color] = this;
+    this.game.kings[this.color] = this;
   }
 
   update() {
@@ -19,9 +19,9 @@ class King extends ChessPiece {
     }
   }
 
-  breakChecks() {
+  updateLegalMovesWhenChecked() {
     this.legalMoves = this.legalMoves.filter(move => {
-      for (let enemy of this.engine.pieces[oppositeColor(this.color)]) {
+      for (let enemy of this.game.pieces[oppositeColor(this.color)]) {
         for (let target of enemy.targets) {
           if (target.name === move.name) {
             return false;
@@ -30,20 +30,22 @@ class King extends ChessPiece {
       }
       return true;
     });
+
+    return;
   }
 
   isCheck() {
-    return this.engine.checks[this.color].length > 0;
+    return this.game.checks[this.color].length > 0;
   }
 
   getChecks() {
-    this.engine.checks[this.color] = [];
+    this.game.checks[this.color] = [];
 
-    this.engine.pieces[oppositeColor(this.color)].forEach(enemy => {
+    this.game.pieces[oppositeColor(this.color)].forEach(enemy => {
       for (const target of enemy.targets) {
         if (target.name === this.pos.name) {
-          enemy.checkBreakerMoves();
-          this.engine.checks[this.color].push(enemy);
+          enemy.updateCheckBreakers();
+          this.game.checks[this.color].push(enemy);
           return;
         }
       }
@@ -51,7 +53,7 @@ class King extends ChessPiece {
   }
 
   isCheckmate() {
-    this.engine.pieces[this.color];
+    this.game.pieces[this.color];
     return false;
   }
 }

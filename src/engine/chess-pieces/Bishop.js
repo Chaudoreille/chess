@@ -17,9 +17,11 @@ class Bishop extends ChessPiece {
     this.updateBottomRight();
   }
 
-  checkBreakerMoves() {
-    super.checkBreakerMoves();
-    const king = this.engine.kings[oppositeColor(this.color)];
+  updateCheckBreakers() {
+    super.updateCheckBreakers();
+    if (this.checkBreakers.length === 0) return;
+
+    const king = this.game.kings[oppositeColor(this.color)];
     const xIncrement = king.pos.x - this.pos.x !== 0 ? (king.pos.x - this.pos.x) / Math.abs(king.pos.x - this.pos.x) : 0;
     const yIncrement = king.pos.y - this.pos.y !== 0 ? (king.pos.y - this.pos.y) / Math.abs(king.pos.y - this.pos.y) : 0;
     let x = this.pos.x + xIncrement;

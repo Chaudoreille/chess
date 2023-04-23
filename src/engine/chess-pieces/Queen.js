@@ -21,9 +21,11 @@ class Queen extends ChessPiece {
     this.updateBottomRight();
   }
 
-  checkBreakerMoves() {
-    super.checkBreakerMoves();
-    const king = this.engine.kings[oppositeColor(this.color)];
+  updateCheckBreakers() {
+    super.updateCheckBreakers();
+    if (this.checkBreakers.length === 0) return;
+
+    const king = this.game.kings[oppositeColor(this.color)];
     const positions = [king.pos, this.pos];
     positions.sort(cmpPositions);
 

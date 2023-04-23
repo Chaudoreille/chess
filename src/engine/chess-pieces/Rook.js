@@ -18,9 +18,11 @@ class Rook extends ChessPiece {
     this.updateUp();
   }
 
-  checkBreakerMoves() {
-    super.checkBreakerMoves();
-    let king = this.engine.kings[oppositeColor(this.color)];
+  updateCheckBreakers() {
+    super.updateCheckBreakers();
+    if (this.checkBreakers.length === 0) return;
+
+    let king = this.game.kings[oppositeColor(this.color)];
     let positions = [king.pos, this.pos];
     positions.sort(cmpPositions);
 

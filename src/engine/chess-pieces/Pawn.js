@@ -23,11 +23,15 @@ class Pawn extends ChessPiece {
       return takenPiece;
     }
 
+    // En Passant
     // if there is a pawn behind freshly moved pawn, and no piece was taken, en passant happened 
-    const behind = this.engine.board[this.pos.x][this.pos.y - this.direction];
+    const behind = this.game.board[this.pos.x][this.pos.y - this.direction];
     if (behind instanceof Pawn) {
-      return this.take(behind);
+      this.take(behind);
+      return behind;
     }
+
+    return null;
   }
 
   update() {
@@ -38,7 +42,7 @@ class Pawn extends ChessPiece {
 
     super.update();
 
-    if (this.engine.turn !== this.color) {
+    if (this.game.turn !== this.color) {
       this.enPassant = false;
     }
 
@@ -58,21 +62,21 @@ class Pawn extends ChessPiece {
     const first = new Square(this.pos.x, this.pos.y + this.direction);
     const second = new Square(this.pos.x, this.pos.y + this.direction * 2);
 
-    if (!this.engine.inBounds(first) || this.engine.getSquare(first) instanceof ChessPiece) {
+    if (!this.game.inBounds(first) || this.game.getSquare(first) instanceof ChessPiece) {
       return;
     }
     this.legalBoardSpace(first.x, first.y);
 
-    if (!this.starterPawn || !this.engine.inBounds(second) || this.engine.getSquare(second) instanceof ChessPiece) {
+    if (!this.starterPawn || !this.game.inBounds(second) || this.game.getSquare(second) instanceof ChessPiece) {
       return;
     }
     this.legalBoardSpace(second.x, second.y);
   }
 
   updateEnPassant(square) {
-    if (this.engine.inBounds(square) && this.engine.getSquare(square) instanceof Pawn &&
-      this.engine.getSquare(square).color !== this.color &&
-      this.engine.getSquare(square).enPassant
+    if (this.game.inBounds(square) && this.game.getSquare(square) instanceof Pawn &&
+      this.game.getSquare(square).color !== this.color &&
+      this.game.getSquare(square).enPassant
     ) {
       this.legalBoardSpace(square.x, square.y + this.direction);
       return square;
@@ -81,7 +85,7 @@ class Pawn extends ChessPiece {
   }
 
   updateDiagonal(square) {
-    if (this.engine.inBounds(square) && this.engine.getSquare(square) instanceof ChessPiece) {
+    if (this.game.inBounds(square) && this.game.getSquare(square) instanceof ChessPiece) {
       this.legalBoardSpace(square.x, square.y);
     }
     return square;
