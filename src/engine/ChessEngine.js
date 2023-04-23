@@ -94,8 +94,18 @@ class ChessEngine {
    * Updates the list of legal moves of all pieces on the board according to check situations.
    */
   updateChecks() {
-    Object.values(this.kings).forEach((king) => {
-      king.getChecks();
+    this.getKings().forEach((king) => {
+      this.checks[king.color] = [];
+
+      this.pieces[oppositeColor(king.color)].forEach(enemy => {
+        for (const target of enemy.targets) {
+          if (target.name === king.pos.name) {
+            enemy.updateCheckBreakers();
+            this.checks[king.color].push(enemy);
+            return;
+          }
+        }
+      });
     });
 
     Object.values(this.pieces).forEach(army => {
@@ -120,25 +130,24 @@ class ChessEngine {
       throw new IllegalMoveError(`${this.turn} to play`);
     }
     const takenPiece = piece.move(destination);
+    const opponent = oppositeColor(this.turn);
 
     this.update();
     this.updateChecks();
 
-    for (let color in this.pieces) {
-      if (this.pieces[color].every(p => p.legalMoves.length === 0)) {
-        this.winner = oppositeColor(color);
-      }
+    if (this.isCheckmate(opponent)) {
+      this.winner = this.turn;
     }
 
     /**
      * temporary measure : discovered check is checkMate
      * TODO: implement pins and prevent discovered check for current player
      */
-    if (this.kings[this.turn].isCheck()) {
-      this.winner = oppositeColor(this.turn);
+    if (this.isKingChecked(this.turn)) {
+      this.winner = opponent;
     }
 
-    this.turn = oppositeColor(this.turn);
+    this.turn = opponent;
 
     return takenPiece;
   }
@@ -155,6 +164,20 @@ class ChessEngine {
     } else {
       return [...piece.legalMoves];
     }
+  }
+
+  isKingChecked(color) {
+    return this.checks[color].length > 0;
+  }
+
+  isCheckmate(color) {
+    if (!this.isKingChecked(color)) return false;
+
+    if (this.pieces[color].every(p => p.legalMoves.length === 0)) {
+      return true;
+    }
+
+    return false;
   }
 
   addPiece(type, color, square) {

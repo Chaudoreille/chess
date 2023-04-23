@@ -33,28 +33,5 @@ class King extends ChessPiece {
 
     return;
   }
-
-  isCheck() {
-    return this.game.checks[this.color].length > 0;
-  }
-
-  getChecks() {
-    this.game.checks[this.color] = [];
-
-    this.game.pieces[oppositeColor(this.color)].forEach(enemy => {
-      for (const target of enemy.targets) {
-        if (target.name === this.pos.name) {
-          enemy.updateCheckBreakers();
-          this.game.checks[this.color].push(enemy);
-          return;
-        }
-      }
-    });
-  }
-
-  isCheckmate() {
-    this.game.pieces[this.color];
-    return false;
-  }
 }
 export default King;

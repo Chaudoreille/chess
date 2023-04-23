@@ -115,7 +115,7 @@ class ChessPiece {
    * when the king of this piece's color is checked
    */
   updateLegalMovesWhenChecked() {
-    if (!this.game.kings[this.color].isCheck()) return;
+    if (!this.game.isKingChecked(this.color)) return;
 
     this.legalMoves = this.legalMoves.filter(move => {
       for (const attacker of this.game.checks[this.color]) {

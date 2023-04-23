@@ -100,7 +100,7 @@ class ChessBoard {
     this.engine.getKings().forEach((king) => {
       const kingCell = this.getCell(king.pos);
 
-      if (king.isCheck()) {
+      if (this.engine.isKingChecked(king.color)) {
         this.highlight(kingCell, "check");
       } else {
         this.clearHighlight(kingCell, "check");
