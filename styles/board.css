@@ -23,20 +23,20 @@
   aspect-ratio: 1;
 }
 
-#chess-board .square.dark {
+#chess-board .dark {
   background-color: var(--dark-square);
 }
 
-#chess-board .square.dark.selection {
-  background-color: var(--dark-square-highlight)
-}
-
-#chess-board .square.light {
+#chess-board .light {
   background-color: var(--light-square);
 }
 
-#chess-board .square.light.selection {
-  background-color: var(--light-square-highlight)
+#chess-board .dark.selection {
+  background-color: var(--dark-square-highlight) !important;
+}
+
+#chess-board .light.selection {
+  background-color: var(--light-square-highlight) !important;
 }
 
 #chess-board .light.legal-move {
@@ -47,7 +47,7 @@
   background-color: var(--dark-square-legal);
 }
 
-#chess-board .check,
-#chess-board .check {
-  background-color: red !important;
+#chess-board .square.dark.check,
+#chess-board .square.light.check {
+  background-color: red;
 }

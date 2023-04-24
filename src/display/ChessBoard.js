@@ -170,10 +170,6 @@ class ChessBoard {
     piece.legalMoves.forEach(square => {
       this.highlight(this.getCell(square), "legal-move");
     });
-
-    if (piece.type === KING) {
-      this.clearHighlight(cell, "check");
-    }
   }
 
   /**
@@ -184,8 +180,9 @@ class ChessBoard {
     if (!this.selectedPiece) {
       return;
     }
+    const selectedCell = this.getCell(this.selectedPiece.pos);
+    this.clearHighlight(selectedCell, "selection");
 
-    this.clearHighlight(this.getCell(this.selectedPiece.pos), "selection");
     this.selectedPiece.legalMoves.forEach(square => {
       this.clearHighlight(this.getCell(square), "legal-move");
     });
