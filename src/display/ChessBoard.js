@@ -130,6 +130,7 @@ class ChessBoard {
 
     try {
       const destinationCell = this.getCell(destination);
+      const originCell = this.getCell(saveSelected.pos);
       const selectedPieceNode = this.getChessPiece(saveSelected.pos);
 
       const takenPiece = this.engine.movePiece(saveSelected, destination);
@@ -139,6 +140,7 @@ class ChessBoard {
         this.prisons[takenPiece.color].querySelector(".square:empty").appendChild(takenPieceNode);
       }
       destinationCell.append(selectedPieceNode);
+      this.clearHighlight(originCell, "check");
 
     } catch (error) {
       if (error instanceof IllegalMoveError) {
