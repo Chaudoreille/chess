@@ -3,12 +3,12 @@ import Square from "../Square.js";
 import { PAWN } from "../constants.js";
 
 class Pawn extends ChessPiece {
-  constructor(gameEngine, color, square) {
-    super(gameEngine, color, square);
+  constructor(color, square, gameEngine = null) {
+    super(color, square, gameEngine);
     this.type = PAWN;
-    this.direction = gameEngine.directions[color];
     this.starterPawn = true;
     this.enPassant = false;
+    this.direction;
   }
 
   move(square) {
@@ -25,13 +25,18 @@ class Pawn extends ChessPiece {
 
     // En Passant
     // if there is a pawn behind freshly moved pawn, and no piece was taken, en passant happened 
-    const behind = this.game.board[this.pos.x][this.pos.y - this.direction];
+    const behind = this.getGame().board[this.pos.x][this.pos.y - this.direction];
     if (behind instanceof Pawn) {
       this.take(behind);
       return behind;
     }
 
     return null;
+  }
+
+  setGame(gameEngine) {
+    super.setGame(gameEngine);
+    this.direction = gameEngine.directions[this.color];
   }
 
   update() {
@@ -42,7 +47,7 @@ class Pawn extends ChessPiece {
 
     super.update();
 
-    if (this.game.turn !== this.color) {
+    if (this.getGame().turn !== this.color) {
       this.enPassant = false;
     }
 
@@ -59,24 +64,26 @@ class Pawn extends ChessPiece {
   }
 
   updateForwardPath() {
+    const game = this.getGame();
     const first = new Square(this.pos.x, this.pos.y + this.direction);
     const second = new Square(this.pos.x, this.pos.y + this.direction * 2);
 
-    if (!this.game.inBounds(first) || this.game.getSquare(first) instanceof ChessPiece) {
+    if (!game.inBounds(first) || game.getSquare(first) instanceof ChessPiece) {
       return;
     }
     this.legalBoardSpace(first.x, first.y);
 
-    if (!this.starterPawn || !this.game.inBounds(second) || this.game.getSquare(second) instanceof ChessPiece) {
+    if (!this.starterPawn || !game.inBounds(second) || game.getSquare(second) instanceof ChessPiece) {
       return;
     }
     this.legalBoardSpace(second.x, second.y);
   }
 
   updateEnPassant(square) {
-    if (this.game.inBounds(square) && this.game.getSquare(square) instanceof Pawn &&
-      this.game.getSquare(square).color !== this.color &&
-      this.game.getSquare(square).enPassant
+    const game = this.getGame();
+    if (game.inBounds(square) && game.getSquare(square) instanceof Pawn &&
+      game.getSquare(square).color !== this.color &&
+      game.getSquare(square).enPassant
     ) {
       this.legalBoardSpace(square.x, square.y + this.direction);
       return square;
@@ -85,7 +92,8 @@ class Pawn extends ChessPiece {
   }
 
   updateDiagonal(square) {
-    if (this.game.inBounds(square) && this.game.getSquare(square) instanceof ChessPiece) {
+    const game = this.getGame();
+    if (game.inBounds(square) && game.getSquare(square) instanceof ChessPiece) {
       this.legalBoardSpace(square.x, square.y);
     }
     return square;

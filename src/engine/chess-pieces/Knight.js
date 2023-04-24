@@ -2,8 +2,8 @@ import ChessPiece from "./ChessPiece.js";
 import { KNIGHT } from "../constants.js";
 
 class Knight extends ChessPiece {
-  constructor(gameEngine, color, square) {
-    super(gameEngine, color, square);
+  constructor(color, square, gameEngine = null) {
+    super(color, square, gameEngine);
     this.type = KNIGHT;
   }
 

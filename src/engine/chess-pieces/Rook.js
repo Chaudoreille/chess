@@ -4,8 +4,8 @@ import { ROOK } from "../constants.js";
 import { cmpPositions, oppositeColor } from "../../utilities.js";
 
 class Rook extends ChessPiece {
-  constructor(gameEngine, color, square) {
-    super(gameEngine, color, square);
+  constructor(color, square, gameEngine = null) {
+    super(color, square, gameEngine);
     this.type = ROOK;
   }
 
@@ -22,7 +22,7 @@ class Rook extends ChessPiece {
     super.updateCheckBreakers();
     if (this.checkBreakers.length === 0) return;
 
-    let king = this.game.kings[oppositeColor(this.color)];
+    let king = this.getGame().kings[oppositeColor(this.color)];
     let positions = [king.pos, this.pos];
     positions.sort(cmpPositions);
 

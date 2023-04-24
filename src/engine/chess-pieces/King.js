@@ -3,10 +3,9 @@ import { KING } from "../constants.js";
 import { oppositeColor } from "../../utilities.js";
 
 class King extends ChessPiece {
-  constructor(gameEngine, color, square) {
-    super(gameEngine, color, square);
+  constructor(color, square, gameEngine = null) {
+    super(color, square, gameEngine);
     this.type = KING;
-    this.game.kings[this.color] = this;
   }
 
   update() {
@@ -17,6 +16,11 @@ class King extends ChessPiece {
         this.legalBoardSpace(this.pos.x + i, this.pos.y + j);
       }
     }
+  }
+
+  setGame(gameEngine) {
+    super.setGame(gameEngine);
+    this.game.kings[this.color] = this;
   }
 
   updateLegalMovesWhenChecked() {

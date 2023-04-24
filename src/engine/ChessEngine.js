@@ -180,7 +180,7 @@ class ChessEngine {
     return false;
   }
 
-  addPiece(type, color, square) {
+  addPiece(type, color, position) {
     const classes = {
       [KING]: King,
       [QUEEN]: Queen,
@@ -189,10 +189,10 @@ class ChessEngine {
       [ROOK]: Rook,
       [PAWN]: Pawn,
     };
-    this.assertInBounds(square);
-    const piece = new classes[type](this, color, square, type);
+    this.assertInBounds(position);
+    const piece = new classes[type](color, position, this);
 
-    this.board[square.x][square.y] = piece;
+    this.board[position.x][position.y] = piece;
     this.pieces[color].push(piece);
 
     return this;

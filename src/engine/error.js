@@ -11,3 +11,10 @@ export class BoundaryError extends Error {
     this.name = "BoundaryError";
   }
 }
+
+export class GameError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "GameError";
+  }
+}
