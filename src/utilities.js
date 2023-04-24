@@ -1,16 +1,24 @@
+import Square from "./engine/Square.js";
 import { BLACK, WHITE } from "./engine/constants.js";
 
+/**
+ * Compares 2 squares along x then y axis.
+ * 
+ * a is greater than b if (in order):
+ * 1) a.x > b.x
+ * 2) a.y > b.y
+ * @param {Square} a 
+ * @param {Square} b 
+ * @returns 
+ * - n > 0  - if a is greater than b.
+ * - 0      - if a is equal to b. 
+ * - n < 0  - if a is lower than b.
+ */
 export function cmpPositions(a, b) {
   if (a.x === b.x) {
     return a.y - b.y;
   }
   return a.x - b.x;
-}
-
-export function pushIfInBounds(container, position) {
-  if (inBounds(position.x, position.y)) {
-    container.push(position);
-  }
 }
 
 /**
@@ -31,10 +39,16 @@ export function squareMatrix(length) {
   return matrix;
 }
 
+/**
+ * returns the color opposite to argument
+ * @param {BLACK|WHITE} color 
+ * @returns {BLACK|WHITE}
+ * @throws TypeError
+ */
 export function oppositeColor(color) {
   if (color === BLACK) return WHITE;
   if (color === WHITE) return BLACK;
-  throw new Error("Calling oppositeColor with wrong argument");
+  throw new TypeError(`${color} is not a valid color`);
 }
 
 /**
@@ -60,24 +74,12 @@ export function modal(title, message, validateText, validateCallback, cancelText
 
     modal.querySelector(".btn-cancel").addEventListener("click", cancelCallback);
   }
-  if (title) {
-    modal.querySelector(".title").innerText = title;
-  } else {
-    modal.querySelector(".title").innerText = "";
-  }
-  if (message) {
-    modal.querySelector(".message").innerText = message;
-  } else {
-    modal.querySelector(".message").innerText = "";
-  }
-  if (validateText) {
-    modal.querySelector(".btn-validate").innerText = validateText;
-  } else {
-    modal.querySelector(".btn-validate").innerText = "OK";
-  }
+  modal.querySelector(".title").innerText = title || "";
+  modal.querySelector(".message").innerText = message || "";
+  modal.querySelector(".btn-validate").innerText = validateText || "OK";
+  modal.querySelector(".btn-cancel").innerText = cancelText || "";
 
   if (cancelText) {
-    modal.querySelector(".btn-cancel").innerText = cancelText;
     modal.querySelector(".btn-cancel").classList.remove("hidden");
   } else {
     modal.querySelector(".btn-cancel").classList.add("hidden");
