@@ -1,7 +1,7 @@
 import * as utils from "../utilities.js";
 import { newGame } from "../index.js";
 import { IllegalMoveError } from "../engine/error.js";
-import { WHITE, BLACK, KING } from "../engine/constants.js";
+import { WHITE, BLACK } from "../engine/constants.js";
 import ChessEngine from "../engine/ChessEngine.js";
 import ChessPiece from "../engine/chess-pieces/ChessPiece.js";
 import Square from "../engine/Square.js";
@@ -24,22 +24,18 @@ class ChessBoard {
   // TODO: create chess pieces in index and link them to the engine after creation.
   // cleaner than forcing an object template mimicking an actual chess piece.
   /**
-   * fills the board with given piece list
+   * adds given piece to the board
    * @param {Array} pieces 
    */
-  populate(pieces) {
-    pieces.forEach(piece => {
-      const chessPieceDom = document.createElement("div");
-      chessPieceDom.className = `chess-piece ${piece.color}-${piece.type}`;
-      this.getCell(piece.position).appendChild(chessPieceDom);
+  add(piece) {
+    this.engine.addPiece(piece);
 
-      this.engine.addPiece(
-        piece.type,
-        piece.color,
-        piece.position
-      );
-    });
+    const chessPieceDom = document.createElement("div");
+    chessPieceDom.className = `chess-piece ${piece.color}-${piece.type}`;
+    this.getCell(piece.pos).appendChild(chessPieceDom);
+  }
 
+  start() {
     this.createPrison(WHITE);
     this.createPrison(BLACK);
     this.engine.update();

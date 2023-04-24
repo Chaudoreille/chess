@@ -1,13 +1,8 @@
 import { squareMatrix, oppositeColor } from "../utilities.js";
 import { IllegalMoveError, BoundaryError } from "./error.js";
 import ChessPiece from "./chess-pieces/ChessPiece.js";
-import { WHITE, BLACK, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN, Direction } from "./constants.js";
+import { WHITE, BLACK, Direction } from "./constants.js";
 import King from "./chess-pieces/King.js";
-import Queen from "./chess-pieces/Queen.js";
-import Rook from "./chess-pieces/Rook.js";
-import Bishop from "./chess-pieces/Bishop.js";
-import Knight from "./chess-pieces/Knight.js";
-import Pawn from "./chess-pieces/Pawn.js";
 import Square from "./Square.js";
 
 class ChessEngine {
@@ -180,20 +175,9 @@ class ChessEngine {
     return false;
   }
 
-  addPiece(type, color, position) {
-    const classes = {
-      [KING]: King,
-      [QUEEN]: Queen,
-      [BISHOP]: Bishop,
-      [KNIGHT]: Knight,
-      [ROOK]: Rook,
-      [PAWN]: Pawn,
-    };
-    this.assertInBounds(position);
-    const piece = new classes[type](color, position, this);
-
-    this.board[position.x][position.y] = piece;
-    this.pieces[color].push(piece);
+  addPiece(chessPiece) {
+    this.assertInBounds(chessPiece.pos);
+    chessPiece.setGame(this);
 
     return this;
   }

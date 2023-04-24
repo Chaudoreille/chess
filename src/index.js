@@ -1,43 +1,30 @@
 import ChessBoard from "./display/ChessBoard.js";
-import { BLACK, WHITE, ROOK, BISHOP, KNIGHT, QUEEN, KING, PAWN } from "./engine/constants.js";
+import { BLACK, WHITE } from "./engine/constants.js";
 import { modal } from "./utilities.js";
 import Square from "./engine/Square.js";
+import King from "./engine/chess-pieces/King.js";
+import Queen from "./engine/chess-pieces/Queen.js";
+import Rook from "./engine/chess-pieces/Rook.js";
+import Bishop from "./engine/chess-pieces/Bishop.js";
+import Knight from "./engine/chess-pieces/Knight.js";
+import Pawn from "./engine/chess-pieces/Pawn.js";
 
 let board;
-const defaultBackRow = [ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK];
+const defaultBackRow = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook];
 
-document.querySelector("#new-game-btn").addEventListener("click", event => {
+document.querySelector("#new-game-btn").addEventListener("click", () => {
   modal("Are you sure you want to restart ?", "Your current game will be lost", "Yes", newGame, "No");
 });
 
 export function newGame() {
   board = new ChessBoard();
-
-  const pieces = [];
-
   for (let i = 0; i < 8; i++) {
-    pieces.push({
-      type: defaultBackRow[i],
-      color: WHITE,
-      position: new Square(i, 0)
-    });
-    pieces.push({
-      type: PAWN,
-      color: WHITE,
-      position: new Square(i, 1)
-    });
-    pieces.push({
-      type: defaultBackRow[i],
-      color: BLACK,
-      position: new Square(i, 7)
-    });
-    pieces.push({
-      type: PAWN,
-      color: BLACK,
-      position: new Square(i, 6)
-    });
+    board.add(new defaultBackRow[i](WHITE, new Square(i, 0)));
+    board.add(new defaultBackRow[i](BLACK, new Square(i, 7)));
+    board.add(new Pawn(WHITE, new Square(i, 1)));
+    board.add(new Pawn(BLACK, new Square(i, 6)));
   }
-  board.populate(pieces);
+  board.start();
 }
 
 newGame();

@@ -76,6 +76,8 @@ class ChessPiece {
       throw new TypeError(`${gameEngine} is not a ChessEngine`);
     }
     this.game = gameEngine;
+    this.game.board[this.pos.x][this.pos.y] = this;
+    this.game.pieces[this.color].push(this);
   }
 
   /**
